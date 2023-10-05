@@ -1,12 +1,7 @@
 import './App.css'
-import { InputUi } from './components/UI/input/InputUi'
 
 function App() {
-   return (
-      <div className="App">
-         <InputUi size="small" />
-      </div>
-   )
+   return <div className="App">App</div>
 }
 
 export default App

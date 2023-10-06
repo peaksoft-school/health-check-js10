@@ -1,7 +1,9 @@
-export const themes = {
-   variants: {
+import { createTheme } from '@mui/material'
+
+export const theme = createTheme({
+   palette: {
       primary: {
-         white: '#FFFFFF',
+         main: '#FFFFFF',
          black: '#222222',
          charcoal: '#4D4D51',
          lightLime: 'linear-gradient(#0CBB6B, #027B44)',
@@ -9,7 +11,7 @@ export const themes = {
          background: '#F5F5F5',
       },
       secondary: {
-         input: '#D9D9D9',
+         main: '#D9D9D9',
          silver: '#E0E2E7',
          lightGray: 'linear-gradient(#FDFDFD, #E4E7EE)',
          white: '#F3F1F1',
@@ -17,11 +19,14 @@ export const themes = {
          brown: '#E4772F',
       },
       tertiary: {
-         azure: '#FFFFFF',
+         main: '#FFFFFF',
          mint: '#222222',
          red: '#F91515',
          skyBlue: '#3977C0',
          blue: '#346EFB',
       },
    },
-}
+   typography: {
+      fontFamily: ['Manpore', 'Poppins'],
+   },
+})

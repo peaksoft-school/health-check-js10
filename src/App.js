@@ -1,12 +1,7 @@
 import './App.css'
-import { SelectUi } from './components/UI/Select'
 
 function App() {
-   return (
-      <div className="App">
-         <SelectUi />
-      </div>
-   )
+   return <div className="App">App</div>
 }
 
 export default App

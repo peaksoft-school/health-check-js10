@@ -2,67 +2,73 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import { Box } from '@mui/material'
-import building from '../assets/images/Rectangle 387.png'
-import conference from '../assets/images/Rectangle 388.png'
-import doctors from '../assets/images/Rectangle 389.png'
 import Button from './UI/Button'
-import consilium from '../assets/images/Rectangle 390.png'
-import { ReactComponent as ForwardVector } from '../assets/icons/Vector (4).svg'
-import signature from '../assets/images/image 12.png'
-import { ReactComponent as Rectange } from '../assets/images/Subtract.svg'
-import doctorImg from '../assets/images/mainDoctor.jpg'
+import {
+   Building,
+   Conference,
+   Consilium,
+   DoctorImg,
+   Doctors,
+   ForwardVector,
+   Rectange,
+   Signature,
+} from '../assets'
 
 const AboutClinicLayout = ({ place, onClick }) => {
    return (
       <StyledBox>
          <Container>
-            <NavigatePathTitle>
-               <p>
-                  <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-                  <span>О клинике</span>
-               </p>
-            </NavigatePathTitle>
-            <StyledTitleSubject>
-               Здоровье — самое
-               <span style={{ color: '#048741' }}> ценное в жизни</span>
-            </StyledTitleSubject>
-            <StyledMainContainer>
-               <StyledAboutText>
+            <div>
+               <NavigatePathTitle>
                   <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor <br /> incididunt ut labore et dolore
-                     magna aliqua. Ut enim ad minim veniam, quis <br /> nostrud
-                     exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                     consequat. <br />
-                     Duis aute irure dolor in reprehenderit in voluptate velit
-                     esse cillum dolore eu <br /> fugiat nulla pariatur.
-                     Excepteur sint occaecat cupidatat non proident, sunt in
-                     <br /> culpa qui officia deserunt mollit anim id est
-                     laborum
+                     <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+                     <span>О клинике</span>
                   </p>
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor <br /> incididunt ut labore et dolore
-                     magna aliqua. Ut enim ad minim veniam, quis <br /> nostrud
-                     exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                     consequat. <br />
-                     Duis aute irure dolor in reprehenderit in voluptate velit
-                     esse cillum dolore eu <br /> fugiat nulla pariatur.
-                     Excepteur sint occaecat cupidatat non proident, sunt in
-                     <br /> culpa qui officia deserunt mollit anim id est
-                     laborum
-                  </p>
-                  <StyledSignatureImG>
-                     <img src={signature} alt="main doctor" />
-                  </StyledSignatureImG>
-               </StyledAboutText>
-               <StyledImageContainer>
-                  <Rectange />
-                  <StyledDoctorImG src={doctorImg} alt="" />
-                  <h3>Руководитель клиники Medical Clinic</h3>
-                  <h2> Аниса Михаилова </h2>
-               </StyledImageContainer>
-            </StyledMainContainer>
+               </NavigatePathTitle>
+               <StyledTitleSubject>
+                  Здоровье — самое
+                  <span style={{ color: '#048741' }}> ценное в жизни</span>
+               </StyledTitleSubject>
+               <StyledMainContainer>
+                  <StyledAboutText>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor <br /> incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
+                        <br /> nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. <br />
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu <br /> fugiat nulla
+                        pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in
+                        <br /> culpa qui officia deserunt mollit anim id est
+                        laborum
+                     </p>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor <br /> incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
+                        <br /> nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. <br />
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu <br /> fugiat nulla
+                        pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in
+                        <br /> culpa qui officia deserunt mollit anim id est
+                        laborum
+                     </p>
+                     <StyledSignatureImG>
+                        <img src={Signature} alt="main doctor" />
+                     </StyledSignatureImG>
+                  </StyledAboutText>
+                  <StyledImageContainer>
+                     <img src={Rectange} alt="rectange" />
+                     <StyledDoctorImG src={DoctorImg} alt="" />
+                     <h3>Руководитель клиники Medical Clinic</h3>
+                     <h2> Аниса Михаилова </h2>
+                  </StyledImageContainer>
+               </StyledMainContainer>
+            </div>
          </Container>
 
          <Block>
@@ -117,12 +123,12 @@ const AboutClinicLayout = ({ place, onClick }) => {
                      )}
                   </StyledAboutSecondText>
                   <StyledImageBlock>
-                     <StyledBuildingImG src={building} alt="" />
+                     <StyledBuildingImG src={Building} alt="" />
 
                      <StyledSlidingImG>
-                        <StyledBuildingImG src={conference} alt="conference" />
-                        <StyledCenterBuildingImG src={doctors} alt="doctors" />
-                        <StyledBuildingImG src={consilium} alt="consilium" />
+                        <StyledBuildingImG src={Conference} alt="conference" />
+                        <StyledCenterBuildingImG src={Doctors} alt="doctors" />
+                        <StyledBuildingImG src={Consilium} alt="consilium" />
                      </StyledSlidingImG>
                   </StyledImageBlock>
                </StyledMainBlock>
@@ -136,6 +142,9 @@ export default AboutClinicLayout
 
 const StyledBox = styled(Box)(() => ({
    paddingBottom: '10rem',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '6rem',
 }))
 
 const NavigatePathTitle = styled('div')(() => ({
@@ -153,9 +162,7 @@ const NavLinkStyle = styled(NavLink)(() => ({
    color: '#959595',
 }))
 const StyledAboutText = styled.div`
-   width: 58%;
-   height: 156px;
-
+   flex: 1;
    p {
       font-size: 1.1rem;
       font-weight: 400;
@@ -170,17 +177,13 @@ const StyledAboutText = styled.div`
 
 const StyledMainContainer = styled.div`
    display: flex;
+   gap: 9rem;
    flex-direction: row;
 `
 const StyledImageContainer = styled.div`
    display: flex;
    flex-direction: column;
    text-align: center;
-   margin-left: 140px;
-
-   & svg {
-      margin-top: 25px;
-   }
 
    h3 {
       font-size: 1.13rem;
@@ -188,7 +191,6 @@ const StyledImageContainer = styled.div`
       line-height: 25px;
       color: #048741;
       margin-top: 20px;
-      margin-left: -140px;
    }
 
    h2 {
@@ -196,14 +198,14 @@ const StyledImageContainer = styled.div`
       font-weight: 400;
       line-height: 30px;
       color: #222222;
-      margin-left: -140px;
       margin-top: 5px;
    }
 `
+
 const Container = styled.div`
-   margin-left: 90px;
-   margin-top: 26px;
-   margin-bottom: 120px;
+   display: flex;
+   justify-content: center;
+   margin-left: 10rem;
 `
 const StyledTitleSubject = styled.h1`
    font-size: 2.25rem;

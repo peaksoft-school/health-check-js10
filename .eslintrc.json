@@ -27,6 +27,7 @@
       "import/no-extraneous-dependencies": "off",
       "no-param-reassign": "off",
       "import/no-cycle": "off",
+      "no-irregular-whitespace": "off",
       "max-len": [
          "error",
          {

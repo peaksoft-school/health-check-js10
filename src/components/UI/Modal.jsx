@@ -1,12 +1,12 @@
 import { Box } from '@mui/material'
-import Modal from '@mui/material/Modal'
+import MuiModal from '@mui/material/Modal'
 
-export const UiModal = ({
+export const Modal = ({
    children,
    open,
    onClose,
    bgcolor = '#FFFFFF',
-   width = '303px',
+   width,
    height,
    padding = '30px 20px',
    ...rest
@@ -30,7 +30,7 @@ export const UiModal = ({
    }
 
    return (
-      <Modal
+      <MuiModal
          open={open}
          onClose={onClose}
          aria-labelledby="modal-modal-title"
@@ -38,6 +38,6 @@ export const UiModal = ({
          {...rest}
       >
          <Box sx={style}>{children}</Box>
-      </Modal>
+      </MuiModal>
    )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import { Box } from '@mui/material'
-import Button from './UI/Button'
+// import Button from './UI/Button'
 import {
    Building,
    Conference,
@@ -332,7 +332,7 @@ const StyledNavlink = styled(NavLink)(() => ({
    },
 }))
 
-const StyledButton = styled(Button)(() => ({
+const StyledButton = styled('button')(() => ({
    '&': {
       alignSelf: 'start',
       marginTop: '30px',

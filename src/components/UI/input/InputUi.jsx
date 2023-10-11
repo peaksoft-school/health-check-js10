@@ -1,19 +1,20 @@
 import { TextField } from '@mui/material'
 import React from 'react'
 
-export const InputUi = ({
+export const Input = ({
    value,
    ref,
    onChange,
    placeholder,
    invalid,
    error,
-   size,
+   height = '45px',
+   width = '414px',
 }) => {
    const InputStyled = {
       '& .MuiOutlinedInput-root': {
-         width: '414px',
-         height: size === 'small' ? '38px' : '45px',
+         width: { width },
+         height: { height },
          borderRadius: '8px',
          '& fieldset': {
             borderColor: '#D9D9D9',
@@ -36,7 +37,7 @@ export const InputUi = ({
       <TextField
          sx={InputStyled}
          value={value}
-         ref={ref}
+         inputRef={ref}
          onChange={onChange}
          placeholder={placeholder}
          error={Boolean(error)}

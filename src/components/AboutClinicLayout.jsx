@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import { Box } from '@mui/material'
-// import Button from './UI/Button'
+import Button from './UI/Button'
 import {
    Building,
    Conference,
@@ -14,8 +14,7 @@ import {
    Signature,
 } from '../assets'
 
-const AboutClinicLayout = ({ place }) => {
-   // onClick
+const AboutClinicLayout = ({ place, onClick }) => {
    return (
       <StyledBox>
          <Container>
@@ -117,10 +116,11 @@ const AboutClinicLayout = ({ place }) => {
                         <StyledNavlink to="about">
                            Читать подробнее o клинике <ForwardVector />
                         </StyledNavlink>
-                     ) : // <StyledButton onClick={onClick}>
-                     // Записаться на консультацию
-                     // </StyledButton>
-                     null}
+                     ) : (
+                        <StyledButton onClick={onClick}>
+                           Записаться на консультацию
+                        </StyledButton>
+                     )}
                   </StyledAboutSecondText>
                   <StyledImageBlock>
                      <StyledBuildingImG src={Building} alt="" />
@@ -191,6 +191,7 @@ const StyledImageContainer = styled.div`
       line-height: 25px;
       color: #048741;
       margin-top: 20px;
+      margin-right: 10rem;
    }
 
    h2 {
@@ -198,6 +199,7 @@ const StyledImageContainer = styled.div`
       font-weight: 400;
       line-height: 30px;
       color: #222222;
+      margin-right: 10rem;
       margin-top: 5px;
    }
 `
@@ -330,27 +332,27 @@ const StyledNavlink = styled(NavLink)(() => ({
    },
 }))
 
-// const StyledButton = styled(Button)(() => ({
-//    '&': {
-//       alignSelf: 'start',
-//       marginTop: '30px',
-//       borderRadius: '10px',
-//       padding: '10px 20px',
-//       border: '1px solid #048741',
-//       color: '#048741',
-//       fontWeight: '500',
-//       fontSize: '14px',
-//       lineHeight: '19px',
-//       background: '#fff',
-//       transition: '0.5s',
-//       cursor: 'pointer',
-//    },
-//    '&:hover': {
-//       background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
-//       color: '#FFFFFF',
-//    },
-//    '&:active': {
-//       background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
-//       color: '#FFFFFF',
-//    },
-// }))
+const StyledButton = styled(Button)(() => ({
+   '&': {
+      alignSelf: 'start',
+      marginTop: '30px',
+      borderRadius: '10px',
+      padding: '10px 20px',
+      border: '1px solid #048741',
+      color: '#048741',
+      fontWeight: '500',
+      fontSize: '14px',
+      lineHeight: '19px',
+      background: '#fff',
+      transition: '0.5s',
+      cursor: 'pointer',
+   },
+   '&:hover': {
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
+   },
+   '&:active': {
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
+   },
+}))

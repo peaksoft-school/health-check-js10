@@ -2,8 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NavLink } from 'react-router-dom'
-import Logo from '../assets/icons/group.svg'
-import LogoName from '../assets/icons/medcheck.svg'
+import Logo from '../assets/icons/logo.svg'
 import PhoneIcon from '../assets/icons/phone-outlined1.svg'
 import Email from '../assets/icons/email-outlined.svg'
 import TimeIcon from '../assets/icons/time-outlined.svg'
@@ -19,15 +18,12 @@ const Footer = () => {
             <InfoBlock>
                <LogoContainer>
                   <NavLink to="/homepage">
-                     <img src={Logo} alt="medcheck" />
-                  </NavLink>
-                  <NavLink to="/homepage">
-                     <img src={LogoName} alt="medcheck" />
+                     <img src={Logo} alt="healthcheck" />
                   </NavLink>
                </LogoContainer>
-               <span>Медицинская клиника «MedCheck»</span>
+               <span>Медицинская клиника «HealthCheck»</span>
                <p>
-                  Международная Медицинская клиника <br /> «MedCheck»— это
+                  Международная Медицинская клиника <br /> «HealthCheck»— это
                   клиника, в которой применяются <br />
                   новейшие диагностические и лечебные технологии и<br /> ведут
                   прием лучшие специалисты.
@@ -51,7 +47,7 @@ const Footer = () => {
                </NavLink>
                <NavLink to="/message">
                   <img src={Email} alt="email" />
-                  <p>medchek.kg</p>
+                  <p>healthchek.kg</p>
                </NavLink>
             </InfoBlock>
             <InfoBlock>
@@ -78,7 +74,7 @@ const Footer = () => {
             <NavLink to="/contacts">Контакты</NavLink>
          </Navigations>
          <div className="line" />
-         <p>© Peaksoft House 2023 | MedCheck | Все права защищены</p>
+         <p>© Peaksoft House 2023 | HealthCheck | Все права защищены</p>
       </FooterContainer>
    )
 }

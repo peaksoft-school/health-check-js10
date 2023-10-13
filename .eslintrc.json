@@ -28,6 +28,7 @@
       "no-param-reassign": "off",
       "import/no-cycle": "off",
       "no-irregular-whitespace": "off",
+      "react/no-unknown-property": "off",
       "max-len": [
          "error",
          {
@@ -37,7 +38,7 @@
             "ignoreRegExpLiterals": true
          }
       ],
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": "offs",
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

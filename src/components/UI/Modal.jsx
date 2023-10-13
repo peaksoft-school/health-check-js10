@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import MuiModal from '@mui/material/Modal'
 
-export const Modal = ({
+const Modal = ({
    children,
    open,
    onClose,
@@ -41,3 +41,5 @@ export const Modal = ({
       </MuiModal>
    )
 }
+
+export default Modal

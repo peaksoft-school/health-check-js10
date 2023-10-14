@@ -12,7 +12,10 @@ import Modal from '../../components/UI/Modal'
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
-   const [modal, setModal] = useState(false)
+   const [open, setOpen] = useState(true)
+   console.log(open)
+
+   const handleClose = () => setOpen(false)
 
    const {
       register,
@@ -26,7 +29,7 @@ const ChangePassword = () => {
       },
    })
    function onSubmit(values) {
-      console.log('will come values', values)
+      console.log('values', values)
    }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -40,67 +43,67 @@ const ChangePassword = () => {
    const clickHandler = (e) => {
       e.preventDefault()
    }
-   const closeModalHandler = () => {
-      setModal(false)
-   }
    return (
-      <Modal open={modal} onClose={closeModalHandler}>
+      <Modal open={open} onClose={handleClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" />
             <FormLabel className="topic">смена пароля</FormLabel>
-            <p>Вам будет отправлена ссылка для сброса пароля</p>
-            <input
-               placeholder="Введите новый пароль"
-               className="inputStyle"
-               error={errors.password}
-               {...register('password', {
-                  required: 'поле не заполнено',
-                  maxLength: { value: 15, message: 'слишком много деталей' },
-                  minLength: { value: 5, message: 'слишком мало деталей' },
-               })}
-               type={showPassword ? 'text' : 'password'}
-               InputProps={{
-                  endAdornment: (
-                     <InputAdornment position="end">
-                        <IconButton
-                           onClick={showPasswordHandle}
-                           onMouseDown={clickHandle}
-                        >
-                           {showPassword ? <ShowOff /> : <Show />}
-                        </IconButton>
-                     </InputAdornment>
-                  ),
-               }}
-            />
-            {errors.password && (
-               <p className="message">{errors.password?.message}</p>
-            )}
-            <input
-               placeholder="Повторите пароль"
-               className="inputStyle"
-               error={errors.copyPassword}
-               {...register('copyPassword', {
-                  required: 'поле не заполнено',
-                  maxLength: { value: 15, message: 'слишком много деталей' },
-                  minLength: { value: 5, message: 'слишком мало деталей' },
-               })}
-               type={showPasswordCopy ? 'text' : 'password'}
-               InputProps={{
-                  endAdornment: (
-                     <InputAdornment position="end">
-                        <IconButton
-                           onClick={showPasswordHandler}
-                           onMouseDown={clickHandler}
-                        >
-                           {showPasswordCopy ? <ShowOff /> : <Show />}
-                        </IconButton>
-                     </InputAdornment>
-                  ),
-               }}
-            />
-            {errors.copyPassword && (
-               <p className="message">{errors.copyPassword?.message}</p>
-            )}
+            <CloseIcon className="closeIcon" />
+            <div>
+               <p>Вам будет отправлена ссылка для сброса пароля</p>
+               <input
+                  placeholder="Введите новый пароль"
+                  className="inputStyle"
+                  error={errors.password}
+                  {...register('password', {
+                     required: 'Поле не заполнено',
+                     maxLength: { value: 15, message: 'Слишком много деталей' },
+                     minLength: { value: 5, message: 'Слишком мало деталей' },
+                  })}
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton
+                              onClick={showPasswordHandle}
+                              onMouseDown={clickHandle}
+                           >
+                              {showPassword ? <ShowOff /> : <Show />}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+               {errors.password && (
+                  <p className="message">{errors.password?.message}</p>
+               )}
+            </div>
+            <div>
+               <input
+                  placeholder="Повторите пароль"
+                  className="inputStyle"
+                  error={errors.copyPassword}
+                  {...register('copyPassword', {
+                     required: 'Поле не заполнено',
+                  })}
+                  type={showPasswordCopy ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton
+                              onClick={showPasswordHandler}
+                              onMouseDown={clickHandler}
+                           >
+                              {showPasswordCopy ? <ShowOff /> : <Show />}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+               {errors.copyPassword && (
+                  <p className="message">{errors.copyPassword?.message}</p>
+               )}
+            </div>
+
             <button className="buttonStyle" type="submit">
                подтвердить
             </button>
@@ -112,50 +115,50 @@ const ChangePassword = () => {
 export default ChangePassword
 
 const FormControlStyled = styled('form')(() => ({
-   height: '400px',
-   width: ' 494px',
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent: 'center',
+   gap: '1.3rem',
+   padding: '1.5rem 1.5rem',
    borderRadius: '2px',
    background: '#FFFFFF',
-   marginLeft: ' 35%',
-   boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
       fontSize: '20px',
       fontWeight: 500,
       lineHeight: '25px',
-      marginLeft: '167px',
-      marginTop: ' 17px',
       color: '#222222',
       textTransform: ' uppercase',
    },
    '& p': {
-      margin: '24px 115px 20px 40px',
       color: '#959595',
       fontSize: '16px',
+      marginBottom: '1rem',
+      marginLeft: '2px',
    },
    '& .closeIcon': {
-      marginLeft: '450px',
-      marginTop: '19px',
+      cursor: 'pointer',
+      position: 'absolute',
+      top: '1rem',
+      right: '1.5rem',
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '414px',
-      marginLeft: '40px',
+      width: '390px',
+      height: '42px',
       borderRadius: ' 10px',
-      marginBottom: '10px',
       border: '1px solid #D9D9D9',
+      padding: '0rem 1rem',
+      fontSize: '1rem',
    },
    '& .buttonStyle': {
       height: '47px',
-      width: '414px',
-      marginLeft: '40px',
-      marginTop: '10px',
+      width: '390px',
       borderRadius: ' 10px',
       fontSize: '14px',
    },
    '& .message': {
       color: 'red',
-      marginLeft: '50px',
-      marginTop: '-5px',
    },
 }))

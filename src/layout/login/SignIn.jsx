@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FormLabel, IconButton, InputAdornment } from '@mui/material'
+import { FormLabel, IconButton, InputAdornment, Button } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../utils/constants/firebase'
 import { ReactComponent as CloseIcon } from '../../assets/icons/CloseIcon.svg'
 import { ReactComponent as Show } from '../../assets/icons/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../assets/icons/Password.svg'
-// import { ReactComponent as GoogleIcon } from '../../assets/icons/image 90.svg'
+import { ReactComponent as GoogleIcon } from '../../assets/icons/image 90.svg'
 import Modal from '../../components/UI/Modal'
 // import { signIn } from '../../redux/reducers/auth/authThunk'
 import Spiner from '../../components/UI/Spiner'
@@ -18,10 +20,10 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
    //    const dispatch = useDispatch()
    const { isAuthorized, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
-   const [open, setOpen] = useState(false)
+   const [open, setOpen] = useState(true)
+   const [value, setValue] = useState('')
    console.log(open)
 
-   const handleOpen = () => setOpen(true)
    const handleClose = () => setOpen(false)
 
    const {
@@ -41,6 +43,18 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
          handleClose()
       }
    }, [isAuthorized])
+
+   const handleClick = () => {
+      signInWithPopup(auth, provider).then((data) => {
+         setValue(data.user.email)
+         localStorage.setItem('email', data.user.email)
+         console.log(value)
+      })
+   }
+
+   useEffect(() => {
+      setValue(localStorage.getItem('email'))
+   })
 
    function onSubmit(values) {
       //   dispatch(signIn({ values }))
@@ -66,10 +80,12 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
    }
 
    return (
-      <Modal open={handleOpen} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
-            <FormLabel className="topic">ВОЙТИ</FormLabel>
+            <div>
+               <FormLabel className="topic">ВОЙТИ</FormLabel>
+               <CloseIcon className="closeIcon" onClick={handleClose} />
+            </div>
             <div>
                <input
                   placeholder="Логин"
@@ -83,9 +99,11 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                      },
                   })}
                />
-            </div>
 
-            {errors.email && <p className="message">{errors.email?.message}</p>}
+               {errors.email && (
+                  <p className="message">{errors.email?.message}</p>
+               )}
+            </div>
             <div>
                <input
                   placeholder="Пароль"
@@ -116,11 +134,12 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                      ),
                   }}
                />
+
+               {errors.password && (
+                  <p className="message">{errors.password?.message}</p>
+               )}
             </div>
 
-            {errors.password && (
-               <p className="message">{errors.password?.message}</p>
-            )}
             {isLoading ? (
                <Spiner />
             ) : (
@@ -141,11 +160,15 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            {/*   <Button className="buttonGoogle" startIcon={<GoogleIcon />} />
-            <NavLink to="/" className="google">
+            <Button
+               className="buttonGoogle"
+               startIcon={<GoogleIcon />}
+               onClick={handleClick}
+            >
+               <NavLink to="/" className="google">
                   Продолжить с Google
                </NavLink>
-            </Button> */}
+            </Button>
             <div className="register">
                <span>Нет аккаунта? </span>
                <Link to="/" onClick={navigateToSignUp}>
@@ -165,44 +188,54 @@ const FormControlStyled = styled('form')(() => ({
    alignItems: 'center',
    justifyContent: 'center',
    gap: '1.5rem',
-   width: ' 494px',
-   borderRadius: '2px',
+   padding: '2rem 1.5rem',
    background: '#FFFFFF',
    '& .topic': {
       fontSize: '18px',
       fontWeight: 500,
       lineHeight: '25px',
       color: '#222222',
+      fontFamily: 'Manrope',
    },
    '& .closeIcon': {
       cursor: 'pointer',
+      position: 'absolute',
+      top: '1rem',
+      right: '1.5rem',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '390px',
       height: '42px',
       borderRadius: ' 10px',
       border: '1px solid #D9D9D9',
+      padding: '0rem 1rem',
+      fontSize: '1rem',
    },
    '& .buttonStyle': {
       height: '45px',
       width: '390px',
       borderRadius: ' 10px',
       fontSize: '14px',
+      fontFamily: 'Manrope',
+      cursor: 'pointer',
    },
    '& .buttonGoogle': {
       height: '39px',
       width: '390px',
-      background: '#F5F5F5',
-      fontSize: '12px',
+      fontFamily: 'Manrope',
+      fontSize: '0.9rem',
       fontWeight: 600,
+      borderRadius: ' 8px',
       lineHeight: '16px',
       color: '#222222',
+      background: '#F5F5F5',
       '&:hover': {
-         background: '#F5F5F5',
+         background: '#efeded',
       },
    },
    '& .password': {
-      fontSize: '16px',
+      fontSize: '1rem',
       fontWeight: 400,
       fontFamily: 'Manrope',
       lineHeight: '16px',
@@ -228,25 +261,30 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .message': {
       color: 'red',
+      fontSize: '0.9rem',
    },
 }))
 
 const Line = styled('div')(() => ({
    display: 'flex',
-   justifyContent: 'space-between',
+   gap: '1rem',
    '& .lineFirst': {
-      width: '215px',
+      width: '165px',
       height: '0px',
+      margin: '8px 0',
       color: '#F3F1F1',
    },
    '& span': {
-      fontSize: '14px',
-      fontWeight: 400,
+      //   fontFamily: 'Manrope',
+      fontWeight: '500',
+      textTransform: 'uppercase',
+      fontSize: '12px',
       color: '#222222',
    },
    '& .lineSecond': {
-      width: '215px',
-      height: '0px',
+      width: '165px',
       color: '#F3F1F1',
+      margin: '8px 0',
+      height: '0px',
    },
 }))

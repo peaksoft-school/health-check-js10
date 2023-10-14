@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
@@ -10,7 +10,11 @@ import { ReactComponent as CloseIcon } from '../../assets/icons/Frame.svg'
 import Modal from '../../components/UI/Modal'
 // import { forgotPassword } from '../../redux/reducers/auth/authThunk'
 
-const ForgotPassword = ({ open, onClose }) => {
+const ForgotPassword = () => {
+   const [open, setOpen] = useState(true)
+   console.log(open)
+
+   const handleClose = () => setOpen(false)
    //    const dispatch = useDispatch()
 
    const {
@@ -30,24 +34,29 @@ const ForgotPassword = ({ open, onClose }) => {
    }
 
    return (
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open} onClose={handleClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" onClick={onClose} />
             <FormLabel className="topic">забыли пароль?</FormLabel>
-            <p>Вам будет отправлена ссылка для сброса пароля</p>
-            <input
-               placeholder="Введите ваш Email"
-               className="inputStyle"
-               error={errors.email}
-               {...register('email', {
-                  required: 'Поле не заполнено',
-                  pattern: {
-                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                     message: 'Неверный формат электронной почты',
-                  },
-               })}
-            />
-            {errors.email && <p className="message">{errors.email?.message}</p>}
+            <CloseIcon className="closeIcon" onClick={handleClose} />
+            <div>
+               <p>Вам будет отправлена ссылка для сброса пароля</p>
+               <input
+                  placeholder="Введите ваш Email"
+                  className="inputStyle"
+                  error={errors.email}
+                  {...register('email', {
+                     required: 'Поле не заполнено',
+                     pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Неверный формат электронной почты',
+                     },
+                  })}
+               />
+               {errors.email && (
+                  <p className="message">{errors.email?.message}</p>
+               )}
+            </div>
+
             <button className="buttonStyle" type="submit">
                ОТПРАВИТЬ
             </button>
@@ -62,59 +71,59 @@ const ForgotPassword = ({ open, onClose }) => {
 export default ForgotPassword
 
 const FormControlStyled = styled('form')(() => ({
-   height: '400px',
-   width: ' 494px',
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent: 'center',
+   gap: '1.5rem',
+   padding: '2rem 1.5rem',
    borderRadius: '2px',
    background: '#FFFFFF',
-   boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
       fontSize: '20px',
       fontWeight: 500,
       lineHeight: '25px',
-      marginLeft: '167px',
-      marginTop: ' 17px',
       color: '#222222',
-      textTransform: ' uppercase',
+      textTransform: 'uppercase',
    },
    '& p': {
-      margin: '24px 115px 20px 40px',
       color: '#959595',
       fontSize: '16px',
+      marginBottom: '1rem',
+      marginLeft: '2px',
    },
    '& .closeIcon': {
-      marginLeft: '450px',
-      marginTop: '19px',
       cursor: 'pointer',
+      position: 'absolute',
+      top: '1rem',
+      right: '1.5rem',
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '414px',
-      marginLeft: '40px',
+      width: '390px',
+      height: '42px',
       borderRadius: ' 10px',
       border: '1px solid #D9D9D9',
+      padding: '0rem 1rem',
+      fontSize: '1rem',
    },
    '& .buttonStyle': {
-      height: '52px',
-      width: '414px',
-      marginLeft: '40px',
-      marginTop: '20px',
+      height: '47px',
+      width: '390px',
       borderRadius: ' 10px',
       fontSize: '14px',
-      marginBottom: '30px',
    },
    '& .password': {
       fontFamily: 'Manrope',
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '16px',
-      marginLeft: '215px',
       color: '#959595',
       textDecoration: 'none',
    },
    '& .message': {
       color: 'red',
-      marginLeft: '40px',
-      marginTop: '10px',
+      fontSize: '0.9rem',
    },
 }))

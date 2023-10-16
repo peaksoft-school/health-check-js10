@@ -53,25 +53,49 @@ const Footer = () => {
             <InfoBlock>
                <span>Мы в социальных сетях:</span>
                <SocialLinks>
-                  <NavLink to="/instagram">
+                  <a
+                     href="https://www.instagram.com/"
+                     target="_blank"
+                     rel="noreferrer"
+                  >
                      <img src={InstagramIcon} alt="instagram" />
-                  </NavLink>
-                  <NavLink to="/telegram">
+                  </a>
+                  <a
+                     href="https://telegram.org/"
+                     target="_blank"
+                     rel="noreferrer"
+                  >
                      <img src={TelegramIcon} alt="telegram" />
-                  </NavLink>
-                  <NavLink to="/whatsapp">
+                  </a>
+                  <a
+                     href="https://whatsapp.com/"
+                     target="_blank"
+                     rel="noreferrer"
+                  >
                      <img src={WhatsappIcon} alt="whatsapp" />
-                  </NavLink>
+                  </a>
                </SocialLinks>
             </InfoBlock>
          </InfoContainer>
          <Navigations>
-            <NavLink to="/aboutClinic">О клинике</NavLink>
-            <NavLink to="/services">Услуги</NavLink>
-            <NavLink to="/doctors">Врачи</NavLink>
-            <NavLink to="/price">Прайс</NavLink>
-            <NavLink to="/reviews">Отзывы</NavLink>
-            <NavLink to="/contacts">Контакты</NavLink>
+            <li>
+               <NavLink to="/aboutClinic">О клинике</NavLink>
+            </li>
+            <li>
+               <NavLink to="/services">Услуги</NavLink>
+            </li>
+            <li>
+               <NavLink to="/doctors">Врачи</NavLink>
+            </li>
+            <li>
+               <NavLink to="/price">Прайс</NavLink>
+            </li>
+            <li>
+               <NavLink to="/reviews">Отзывы</NavLink>
+            </li>
+            <li>
+               <NavLink to="/contacts">Контакты</NavLink>
+            </li>
          </Navigations>
          <div className="line" />
          <p>© Peaksoft House 2023 | HealthCheck | Все права защищены</p>
@@ -81,7 +105,7 @@ const Footer = () => {
 
 export default Footer
 
-const FooterContainer = styled('div')`
+const FooterContainer = styled('footer')`
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -144,7 +168,7 @@ const SocialLinks = styled('div')`
    align-items: flex-start;
 `
 
-const Navigations = styled('div')`
+const Navigations = styled('ul')`
    display: flex;
    juflex-direction: row;
    flex-wrap: wrap;
@@ -153,5 +177,8 @@ const Navigations = styled('div')`
    a {
       text-decoration: none;
       color: #ccc;
+   }
+   li {
+      list-style-type: none;
    }
 `

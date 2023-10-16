@@ -61,12 +61,14 @@ const AboutClinicLayout = ({ place, onClick }) => {
                         <img src={Signature} alt="main doctor" />
                      </StyledSignatureImG>
                   </StyledAboutText>
-                  <StyledImageContainer>
-                     <img src={Rectange} alt="rectange" />
-                     <StyledDoctorImG src={DoctorImg} alt="" />
-                     <h3>Руководитель клиники Medical Clinic</h3>
-                     <h2> Аниса Михаилова </h2>
-                  </StyledImageContainer>
+                  <div>
+                     <StyledImageContainer>
+                        <img src={Rectange} alt="rectange" />
+                        <StyledDoctorImG src={DoctorImg} alt="" />
+                        <h3>Руководитель клиники Medical Clinic</h3>
+                        <h2> Аниса Михаилова </h2>
+                     </StyledImageContainer>
+                  </div>
                </StyledMainContainer>
             </div>
          </Container>
@@ -157,7 +159,7 @@ const NavLinkStyle = styled(NavLink)(() => ({
    color: '#959595',
 }))
 const StyledAboutText = styled.div`
-   flex: 1;
+   width: 38.71rem;
    p {
       font-size: 1.1rem;
       font-weight: 400;
@@ -168,20 +170,18 @@ const StyledAboutText = styled.div`
 
 const StyledMainContainer = styled.div`
    display: flex;
-   gap: 9rem;
-   flex-direction: row;
+   gap: 14rem;
 `
 const StyledImageContainer = styled.div`
-   display: flex;
-   flex-direction: column;
+   position: relative;
    text-align: center;
-
    h3 {
       font-size: 1.13rem;
       font-weight: 400;
       line-height: 1.563rem;
       color: #048741;
       margin-right: 10rem;
+      margin-top: 3rem;
    }
 
    h2 {
@@ -206,8 +206,9 @@ const StyledTitleSubject = styled.h1`
 const StyledDoctorImG = styled('img')(() => ({
    width: '59%',
    height: '27.375rem',
-   marginTop: '-25.938rem ',
-   marginLeft: '2.5rem ',
+   position: 'absolute',
+   top: '-1.5rem',
+   left: '2.5rem',
 }))
 
 const StyledSignatureImG = styled('div')(() => ({
@@ -245,9 +246,6 @@ const StyledMainBlock = styled.div`
    gap: 10rem;
 `
 const StyledImageBlock = styled.div`
-   display: flex;
-   flex-direction: column;
-   text-align: center;
    margin-top: 10rem;
    h3 {
       font-size: 1.13rem;

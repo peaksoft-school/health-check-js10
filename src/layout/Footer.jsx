@@ -31,24 +31,24 @@ const Footer = () => {
             </InfoBlock>
             <InfoBlock>
                <span>Контактная информация</span>
-               <NavLink to="/location">
+               <li>
                   <img src={LocationIcon} alt="location" />
                   <p>106452, г. Бишкек, Гражданская 119</p>
-               </NavLink>
-               <NavLink to="/time">
+               </li>
+               <li>
                   <img src={TimeIcon} alt="time" />
                   <p>пн-сб 08:00 до 18:00</p>
-               </NavLink>
-               <NavLink to="/call">
+               </li>
+               <li>
                   <img src={PhoneIcon} alt="phone" />
                   <p>
                      +996(800) 000 000 <br /> +996(505) 000 000
                   </p>
-               </NavLink>
-               <NavLink to="/message">
+               </li>
+               <li>
                   <img src={Email} alt="email" />
                   <p>healthchek.kg</p>
-               </NavLink>
+               </li>
             </InfoBlock>
             <InfoBlock>
                <span>Мы в социальных сетях:</span>
@@ -78,24 +78,12 @@ const Footer = () => {
             </InfoBlock>
          </InfoContainer>
          <Navigations>
-            <li>
-               <NavLink to="/aboutClinic">О клинике</NavLink>
-            </li>
-            <li>
-               <NavLink to="/services">Услуги</NavLink>
-            </li>
-            <li>
-               <NavLink to="/doctors">Врачи</NavLink>
-            </li>
-            <li>
-               <NavLink to="/price">Прайс</NavLink>
-            </li>
-            <li>
-               <NavLink to="/reviews">Отзывы</NavLink>
-            </li>
-            <li>
-               <NavLink to="/contacts">Контакты</NavLink>
-            </li>
+            <NavLink to="/aboutClinic">О клинике</NavLink>
+            <NavLink to="/services">Услуги</NavLink>
+            <NavLink to="/doctors">Врачи</NavLink>
+            <NavLink to="/price">Прайс</NavLink>
+            <NavLink to="/reviews">Отзывы</NavLink>
+            <NavLink to="/contacts">Контакты</NavLink>
          </Navigations>
          <div className="line" />
          <p>© Peaksoft House 2023 | HealthCheck | Все права защищены</p>
@@ -110,9 +98,9 @@ const FooterContainer = styled('footer')`
    flex-direction: column;
    align-items: center;
    background: #212529;
-   padding: 4rem 7.5rem 1.2rem;
+   padding: 4rem 0rem 1.2rem;
    .line {
-      width: 100%;
+      width: 90%;
       height: 0.5px;
       background-color: #ccc;
       margin-bottom: 1.2rem;
@@ -124,7 +112,7 @@ const FooterContainer = styled('footer')`
 const InfoContainer = styled('div')`
    display: flex;
    align-items: flex-start;
-   gap: 7rem;
+   gap: 8.5rem;
    font-family: 'Manrope', sans-serif;
    color: #ccc;
    font-size: 1rem;
@@ -133,28 +121,24 @@ const InfoContainer = styled('div')`
    flex-wrap: wrap;
 `
 const LogoContainer = styled('div')`
-   display: flex;
-   align-items: center;
    padding-bottom: 1.5rem;
 `
 
-const InfoBlock = styled('div')`
+const InfoBlock = styled('ul')`
    display: flex;
-   justify-content: space-between;
    flex-direction: column;
    align-items: flex-start;
-   & > span {
-      padding-bottom: 1.2rem;
+   span {
+      padding-bottom: 0.8rem;
       font-weight: 500;
       color: #fff;
    }
-   a {
+   li {
       display: flex;
-      flex-direction: row;
-      text-decoration: none;
       color: inherit;
+      list-style-type: none;
    }
-   a > img {
+   li > img {
       padding-right: 0.5rem;
    }
    p {
@@ -164,11 +148,12 @@ const InfoBlock = styled('div')`
 `
 const SocialLinks = styled('div')`
    display: flex;
-   juflex-direction: row;
+   flex-direction: row;
    align-items: flex-start;
+   gap: 0.8rem;
 `
 
-const Navigations = styled('ul')`
+const Navigations = styled('div')`
    display: flex;
    juflex-direction: row;
    flex-wrap: wrap;
@@ -177,8 +162,5 @@ const Navigations = styled('ul')`
    a {
       text-decoration: none;
       color: #ccc;
-   }
-   li {
-      list-style-type: none;
    }
 `

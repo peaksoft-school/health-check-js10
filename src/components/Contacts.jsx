@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import Map from '../assets/images/map.png'
 import MapLocation from '../assets/images/maplocation.png'
+import LogoIcon from '../assets/icons/logo1.svg'
 
 const Contacts = () => {
    return (
@@ -53,6 +54,11 @@ const Contacts = () => {
          </StyledContactInnerContainer>
          <StyledMapImage>
             <img src={MapLocation} alt="" />
+            <img
+               style={{ right: '145px', top: '133px' }}
+               src={LogoIcon}
+               alt=""
+            />
          </StyledMapImage>
       </>
    )

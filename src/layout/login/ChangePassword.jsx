@@ -19,7 +19,6 @@ const ChangePassword = () => {
 
    const {
       register,
-      handleSubmit,
       formState: { errors },
    } = useForm({
       mode: 'all',
@@ -28,14 +27,9 @@ const ChangePassword = () => {
          copyPassword: '',
       },
    })
-   function onSubmit(values) {
-      console.log('values', values)
-   }
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
-   }
-   const clickHandle = (e) => {
-      e.preventDefault()
    }
    const showPasswordHandler = () => {
       setShowPasswordCopy(!showPasswordCopy)
@@ -43,11 +37,12 @@ const ChangePassword = () => {
    const clickHandler = (e) => {
       e.preventDefault()
    }
+
    return (
-      <Modal open={open} onClose={handleClose}>
-         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <FormLabel className="topic">смена пароля</FormLabel>
-            <CloseIcon className="closeIcon" />
+      <Modal open={open} onClose={handleClose} borderRadius="5px">
+         <FormControlStyled>
+            <FormLabel className="topic">Смена пароля</FormLabel>
+            <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
                <p>Вам будет отправлена ссылка для сброса пароля</p>
                <input
@@ -55,9 +50,16 @@ const ChangePassword = () => {
                   className="inputStyle"
                   error={errors.password}
                   {...register('password', {
+                     setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
-                     maxLength: { value: 15, message: 'Слишком много деталей' },
-                     minLength: { value: 5, message: 'Слишком мало деталей' },
+                     maxLength: {
+                        value: 12,
+                        message: 'Слишком длинный пароль',
+                     },
+                     minLength: {
+                        value: 8,
+                        message: 'Пароль должен содержать не менее 8 символов',
+                     },
                   })}
                   type={showPassword ? 'text' : 'password'}
                   InputProps={{
@@ -65,7 +67,7 @@ const ChangePassword = () => {
                         <InputAdornment position="end">
                            <IconButton
                               onClick={showPasswordHandle}
-                              onMouseDown={clickHandle}
+                              onMouseDown={clickHandler}
                            >
                               {showPassword ? <ShowOff /> : <Show />}
                            </IconButton>
@@ -83,6 +85,7 @@ const ChangePassword = () => {
                   className="inputStyle"
                   error={errors.copyPassword}
                   {...register('copyPassword', {
+                     setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
                   })}
                   type={showPasswordCopy ? 'text' : 'password'}
@@ -105,7 +108,7 @@ const ChangePassword = () => {
             </div>
 
             <button className="buttonStyle" type="submit">
-               подтвердить
+               Подтвердить
             </button>
          </FormControlStyled>
       </Modal>
@@ -125,15 +128,15 @@ const FormControlStyled = styled('form')(() => ({
    background: '#FFFFFF',
    '& .topic': {
       fontFamily: 'Manrope',
-      fontSize: '20px',
+      fontSize: '1.25rem',
       fontWeight: 500,
-      lineHeight: '25px',
+      lineHeight: '1.563rem',
       color: '#222222',
       textTransform: ' uppercase',
    },
    '& p': {
       color: '#959595',
-      fontSize: '16px',
+      fontSize: '1rem',
       marginBottom: '1rem',
       marginLeft: '2px',
    },
@@ -145,20 +148,22 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '390px',
-      height: '42px',
-      borderRadius: ' 10px',
+      width: '24.375rem',
+      height: '2.625rem',
+      borderRadius: '0.625rem',
       border: '1px solid #D9D9D9',
       padding: '0rem 1rem',
       fontSize: '1rem',
    },
    '& .buttonStyle': {
-      height: '47px',
-      width: '390px',
-      borderRadius: ' 10px',
-      fontSize: '14px',
+      height: '2.938rem',
+      width: '24.375rem',
+      borderRadius: ' 0.625',
+      fontSize: '0.875',
    },
    '& .message': {
       color: 'red',
+      fontSize: '0.8rem',
+      position: 'absolute',
    },
 }))

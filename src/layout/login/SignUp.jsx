@@ -1,52 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, FormLabel, IconButton, InputAdornment } from '@mui/material'
+import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { Link, NavLink } from 'react-router-dom'
-// import { Link, NavLink } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
-import { signInWithPopup } from 'firebase/auth'
-import { auth, provider } from '../../utils/constants/firebase'
-import { ReactComponent as CloseIcon } from '../../assets/icons/CloseIcon.svg'
-import { ReactComponent as Show } from '../../assets/icons/Vector (3).svg'
-import { ReactComponent as ShowOff } from '../../assets/icons/Password.svg'
-import { ReactComponent as GoogleIcon } from '../../assets/icons/image 90.svg'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 // import Input from '../../components/UI/input/Input'
 // import Button from '../../components/UI/Button'
 import Modal from '../../components/UI/Modal'
-// import { signUp } from '../../redux/reducers/auth/authThunk'
-// import { notify } from '../../utils/constants/snackbar'
 
-const SignUp = ({ openSignInHandler }) => {
-   //    const dispatch = useDispatch()
+const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
    const [value, setValue] = useState('')
-   console.log(open)
+   const navigate = useNavigate()
 
    const handleClose = () => setOpen(false)
 
    const {
       register,
-      handleSubmit,
       formState: { errors },
+      watch,
    } = useForm({
       mode: 'all',
       defaultValues: {
          firstName: '',
          lastName: '',
-         phoneNumber: '',
+         phoneNumber: '+996',
          email: '',
          password: '',
          copyPassword: '',
       },
    })
-   const onSubmit = (values) => {
-      //   dispatch(signUp({ values, notify(), onClose }))
-      // eslint-disable-next-line no-console
-      console.log(values)
-   }
+
+   const watchPassword = watch('password', '')
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
@@ -62,33 +51,26 @@ const SignUp = ({ openSignInHandler }) => {
 
    const navigateToSignIn = (e) => {
       e.preventDefault()
-      openSignInHandler()
-   }
-
-   const handleClick = () => {
-      signInWithPopup(auth, provider).then((data) => {
-         setValue(data.user.email)
-         localStorage.setItem('email', data.user.email)
-         console.log(value)
-      })
+      navigate('/login')
    }
 
    useEffect(() => {
       setValue(localStorage.getItem('email'))
+      console.log(value, 'value')
    })
-
    return (
-      <Modal open={open} onClose={handleClose}>
-         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
+      <Modal open={open} onClose={handleClose} borderRadius="5px">
+         <FormControlStyled>
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div className="inputContainer">
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="Имя"
                      className="inputStyle"
                      error={errors.name}
                      {...register('firstName', {
+                        setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
                      })}
                   />
@@ -96,12 +78,13 @@ const SignUp = ({ openSignInHandler }) => {
                      <p className="message">{errors.firstName?.message}</p>
                   )}
                </div>
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="Фамилия"
                      className="inputStyle"
                      error={errors.surname}
                      {...register('lastName', {
+                        setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
                      })}
                   />
@@ -109,26 +92,37 @@ const SignUp = ({ openSignInHandler }) => {
                      <p className="message">{errors.lastName?.message}</p>
                   )}
                </div>
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="+996 (_ _ _) _ _  _ _  _ _ "
                      className="inputStyle"
+                     defaultValue="+996"
                      error={errors.number}
                      {...register('phoneNumber', {
+                        setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
+                        minLength: {
+                           value: 16,
+                           message: 'Номер телефона слишком короткий',
+                        },
+                        maxLength: {
+                           value: 16,
+                           message: 'Номер телефона должен слишком длинный',
+                        },
                      })}
                   />
                   {errors.phoneNumber && (
                      <p className="message">{errors.phoneNumber?.message}</p>
                   )}
                </div>
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="Email"
                      className="inputStyle"
                      error={errors.email}
                      {...register('email', {
                         required: 'Поле не заполнено',
+                        setValueAs: (v) => v.trim(),
                         pattern: {
                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                            message: 'Неверный формат электронной почты',
@@ -139,20 +133,22 @@ const SignUp = ({ openSignInHandler }) => {
                      <p className="message">{errors.email?.message}</p>
                   )}
                </div>
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="Введите пароль"
                      className="inputStyle"
                      error={errors.password}
                      {...register('password', {
+                        setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
                         maxLength: {
-                           value: 15,
+                           value: 12,
                            message: 'Слишком длинный пароль',
                         },
                         minLength: {
-                           value: 5,
-                           message: 'Пароль должен содержать не менее 5 букв',
+                           value: 8,
+                           message:
+                              'Пароль должен содержать не менее 8 символов',
                         },
                      })}
                      type={showPassword ? 'text' : 'password'}
@@ -173,13 +169,16 @@ const SignUp = ({ openSignInHandler }) => {
                      <p className="message">{errors.password?.message}</p>
                   )}
                </div>
-               <div>
+               <div className="inputWrapper">
                   <input
                      placeholder="Повторите пароль"
                      className="inputStyle"
                      error={errors.password}
                      {...register('copyPassword', {
+                        setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
+                        validate: (value) =>
+                           value === watchPassword || 'Пароли не совпадают',
                      })}
                      type={showPasswordCopy ? 'text' : 'password'}
                      InputProps={{
@@ -208,13 +207,9 @@ const SignUp = ({ openSignInHandler }) => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            <Button
-               className="buttonGoogle"
-               startIcon={<GoogleIcon />}
-               onClick={handleClick}
-            >
+            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
                <NavLink to="/" className="google">
-                  Продолжить с Google
+                  Зарегистрироваться с Google
                </NavLink>
             </Button>
             <div className="register">
@@ -243,13 +238,13 @@ const FormControlStyled = styled('form')(() => ({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '1rem',
+      gap: '1.5rem',
    },
    '& .topic': {
       fontFamily: 'Manrope',
-      fontSize: '18px',
+      fontSize: '1.125rem',
       fontWeight: 500,
-      lineHeight: '25px',
+      lineHeight: '1.563rem',
       color: '#222222',
    },
    '& .closeIcon': {
@@ -260,31 +255,32 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '390px',
-      height: '42px',
-      borderRadius: ' 10px',
+      width: '24.375rem',
+      height: '2.625rem',
+      borderRadius: '0.625rem',
       border: '1px solid #D9D9D9',
       padding: '0rem 1rem',
       fontSize: '0.9rem',
    },
    '& .buttonStyle': {
-      height: '45px',
-      width: '390px',
-      borderRadius: ' 10px',
-      fontSize: '14px',
+      height: '2.813rem',
+      width: '24.375rem',
+      borderRadius: '0.625rem',
+      fontSize: '0.875rem',
       fontFamily: 'Manrope',
       cursor: 'pointer',
    },
    '& .buttonGoogle': {
-      height: '39px',
-      width: '390px',
+      height: '2.438rem',
+      width: '24.375rem',
       fontFamily: 'Manrope',
-      fontSize: '0.9rem',
+      fontSize: '1rem',
       fontWeight: 600,
-      borderRadius: ' 8px',
-      lineHeight: '16px',
+      borderRadius: '0.5rem',
+      lineHeight: '1rem',
       color: '#222222',
       background: '#F5F5F5',
+      textTransform: 'none',
       '&:hover': {
          background: '#efeded',
       },
@@ -292,7 +288,7 @@ const FormControlStyled = styled('form')(() => ({
    '& .register': {
       color: '#3772FF',
       fontFamily: 'Manrope',
-      fontSize: '14px',
+      fontSize: '0.875rem',
       fontWeight: 400,
       '& span': {
          color: '#222222',
@@ -309,6 +305,10 @@ const FormControlStyled = styled('form')(() => ({
    '& .message': {
       color: 'red',
       fontSize: '0.8rem',
+      position: 'absolute',
+   },
+   '& .inputWrapper': {
+      position: 'relative',
    },
 }))
 
@@ -316,22 +316,22 @@ const Line = styled('div')(() => ({
    display: 'flex',
    gap: '1rem',
    '& .lineFirst': {
-      width: '165px',
-      height: '0px',
-      margin: '8px 0',
+      width: '10.313rem',
+      height: '0rem',
+      margin: '0.5rem 0',
       color: '#F3F1F1',
    },
    '& span': {
       //   fontFamily: 'Manrope',
       fontWeight: '500',
       textTransform: 'uppercase',
-      fontSize: '12px',
+      fontSize: '0.75rem',
       color: '#222222',
    },
    '& .lineSecond': {
-      width: '165px',
+      width: '10.313rem',
       color: '#F3F1F1',
-      margin: '8px 0',
-      height: '0px',
+      margin: '0.5rem 0',
+      height: '0rem',
    },
 }))

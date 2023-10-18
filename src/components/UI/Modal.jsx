@@ -9,6 +9,7 @@ const Modal = ({
    width,
    height,
    padding = '30px 20px',
+   borderRadius = '16px',
    ...rest
 }) => {
    const style = {
@@ -19,7 +20,7 @@ const Modal = ({
       left: '50%',
       transform: 'translate(-50%, -50%)',
       padding: { padding },
-      borderRadius: '16px',
+      borderRadius: { borderRadius },
       backgroundColor: bgcolor === 'blue' ? '#EBF2FC' : '#FFFFFF',
       display: 'flex',
       justifyContent: 'center',

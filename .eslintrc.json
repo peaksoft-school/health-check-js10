@@ -29,6 +29,7 @@
       "import/no-cycle": "off",
       "no-irregular-whitespace": "off",
       "react/no-unknown-property": "off",
+      "no-unused-vars": "off",
       "max-len": [
          "error",
          {

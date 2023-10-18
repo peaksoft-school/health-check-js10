@@ -2,24 +2,22 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { ReactComponent as CloseIcon } from '../../assets/icons/Frame.svg'
+import Modal from '../../components/UI/Modal'
 // import Input from '../../components/UI/input/Input'
 // import Button from '../../components/UI/Button'
-import Modal from '../../components/UI/Modal'
-// import { forgotPassword } from '../../redux/reducers/auth/authThunk'
 
 const ForgotPassword = () => {
    const [open, setOpen] = useState(true)
    console.log(open)
 
+   const navigate = useNavigate()
+
    const handleClose = () => setOpen(false)
-   //    const dispatch = useDispatch()
 
    const {
       register,
-      handleSubmit,
       formState: { errors },
    } = useForm({
       mode: 'all',
@@ -28,14 +26,14 @@ const ForgotPassword = () => {
       },
    })
 
-   function onSubmit(values) {
-      //   dispatch(forgotPassword(values))
-      console.log(values)
+   const navigateToChangePassword = (e) => {
+      e.preventDefault()
+      navigate('/changePassword')
    }
 
    return (
-      <Modal open={open} onClose={handleClose}>
-         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
+      <Modal open={open} onClose={handleClose} borderRadius="5px">
+         <FormControlStyled>
             <FormLabel className="topic">забыли пароль?</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
@@ -45,6 +43,7 @@ const ForgotPassword = () => {
                   className="inputStyle"
                   error={errors.email}
                   {...register('email', {
+                     setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
                      pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -57,10 +56,14 @@ const ForgotPassword = () => {
                )}
             </div>
 
-            <button className="buttonStyle" type="submit">
+            <button
+               className="buttonStyle"
+               type="submit"
+               onClick={navigateToChangePassword}
+            >
                ОТПРАВИТЬ
             </button>
-            <NavLink className="password" to="/">
+            <NavLink className="password" to="/login">
                ОТМЕНИТЬ
             </NavLink>
          </FormControlStyled>
@@ -81,15 +84,15 @@ const FormControlStyled = styled('form')(() => ({
    background: '#FFFFFF',
    '& .topic': {
       fontFamily: 'Manrope',
-      fontSize: '20px',
+      fontSize: '1.25rem',
       fontWeight: 500,
-      lineHeight: '25px',
+      lineHeight: '1.563rem',
       color: '#222222',
       textTransform: 'uppercase',
    },
    '& p': {
       color: '#959595',
-      fontSize: '16px',
+      fontSize: '1rem',
       marginBottom: '1rem',
       marginLeft: '2px',
    },
@@ -101,29 +104,30 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '390px',
-      height: '42px',
-      borderRadius: ' 10px',
+      width: '24.375rem',
+      height: '2.625rem',
+      borderRadius: '0.625rem',
       border: '1px solid #D9D9D9',
       padding: '0rem 1rem',
       fontSize: '1rem',
    },
    '& .buttonStyle': {
-      height: '47px',
-      width: '390px',
-      borderRadius: ' 10px',
-      fontSize: '14px',
+      height: '2.938rem',
+      width: '24.375rem',
+      borderRadius: '0.625rem',
+      fontSize: '0.875rem',
    },
    '& .password': {
       fontFamily: 'Manrope',
-      fontSize: '14px',
+      fontSize: '0.875rem',
       fontWeight: 400,
-      lineHeight: '16px',
+      lineHeight: '1rem',
       color: '#959595',
       textDecoration: 'none',
    },
    '& .message': {
       color: 'red',
-      fontSize: '0.9rem',
+      fontSize: '0.8rem',
+      position: 'absolute',
    },
 }))

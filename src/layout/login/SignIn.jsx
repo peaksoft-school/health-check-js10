@@ -2,33 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment, Button } from '@mui/material'
 import styled from '@emotion/styled'
-import { Link, NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { signInWithPopup } from 'firebase/auth'
-import { auth, provider } from '../../utils/constants/firebase'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { ReactComponent as CloseIcon } from '../../assets/icons/CloseIcon.svg'
 import { ReactComponent as Show } from '../../assets/icons/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../assets/icons/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/image 90.svg'
 import Modal from '../../components/UI/Modal'
-// import { signIn } from '../../redux/reducers/auth/authThunk'
-import Spiner from '../../components/UI/Spiner'
 // import Button from '../../components/Ui/Button'
 // import Input from '../../components/UI/input/Input'
 
-const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
-   //    const dispatch = useDispatch()
-   const { isAuthorized, isLoading } = useSelector((state) => state.auth)
+const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(true)
    const [value, setValue] = useState('')
-   console.log(open)
+   const navigate = useNavigate()
 
    const handleClose = () => setOpen(false)
 
    const {
       register,
-      handleSubmit,
       formState: { errors },
    } = useForm({
       mode: 'all',
@@ -39,27 +31,9 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
    })
 
    useEffect(() => {
-      if (isAuthorized) {
-         handleClose()
-      }
-   }, [isAuthorized])
-
-   const handleClick = () => {
-      signInWithPopup(auth, provider).then((data) => {
-         setValue(data.user.email)
-         localStorage.setItem('email', data.user.email)
-         console.log(value)
-      })
-   }
-
-   useEffect(() => {
       setValue(localStorage.getItem('email'))
+      console.log(value)
    })
-
-   function onSubmit(values) {
-      //   dispatch(signIn({ values }))
-      console.log(values)
-   }
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -71,17 +45,17 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
 
    const navigateToSignUp = (e) => {
       e.preventDefault()
-      openSignUpHandler()
+      navigate('/register')
    }
 
    const navigateToForgotPassword = (e) => {
       e.preventDefault()
-      openForgotPassword()
+      navigate('/forgotPassword')
    }
 
    return (
-      <Modal open={open} onClose={handleClose}>
-         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
+      <Modal open={open} onClose={handleClose} borderRadius="5px">
+         <FormControlStyled>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
                <CloseIcon className="closeIcon" onClick={handleClose} />
@@ -92,6 +66,7 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                   className="inputStyle"
                   error={errors.email}
                   {...register('email', {
+                     setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
                      pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -110,14 +85,15 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                   className="inputStyle"
                   error={errors.password}
                   {...register('password', {
+                     setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
                      maxLength: {
-                        value: 15,
+                        value: 12,
                         message: 'Слишком длинный пароль',
                      },
                      minLength: {
-                        value: 5,
-                        message: 'Пароль должен содержать не менее 5 букв',
+                        value: 8,
+                        message: 'Пароль должен содержать не менее 8 символов',
                      },
                   })}
                   type={showPassword ? 'text' : 'password'}
@@ -140,14 +116,6 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                )}
             </div>
 
-            {isLoading ? (
-               <Spiner />
-            ) : (
-               <button className="buttonStyle" type="submit">
-                  ВОЙТИ
-               </button>
-            )}
-
             <NavLink
                className="password"
                to="/"
@@ -160,11 +128,7 @@ const SignIn = ({ openSignUpHandler, openForgotPassword }) => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            <Button
-               className="buttonGoogle"
-               startIcon={<GoogleIcon />}
-               onClick={handleClick}
-            >
+            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
                <NavLink to="/" className="google">
                   Продолжить с Google
                </NavLink>
@@ -187,13 +151,13 @@ const FormControlStyled = styled('form')(() => ({
    flexDirection: 'column',
    alignItems: 'center',
    justifyContent: 'center',
-   gap: '1.5rem',
+   gap: '1.6rem',
    padding: '2rem 1.5rem',
    background: '#FFFFFF',
    '& .topic': {
-      fontSize: '18px',
+      fontSize: '1.125rem',
       fontWeight: 500,
-      lineHeight: '25px',
+      lineHeight: '1.563rem',
       color: '#222222',
       fontFamily: 'Manrope',
    },
@@ -205,31 +169,32 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .inputStyle': {
       fontFamily: 'Manrope',
-      width: '390px',
-      height: '42px',
-      borderRadius: ' 10px',
+      width: '24.375rem',
+      height: '2.625rem',
+      borderRadius: '0.625rem',
       border: '1px solid #D9D9D9',
       padding: '0rem 1rem',
       fontSize: '1rem',
    },
    '& .buttonStyle': {
-      height: '45px',
-      width: '390px',
-      borderRadius: ' 10px',
-      fontSize: '14px',
+      height: '2.813rem',
+      width: '24.375rem',
+      borderRadius: '0.625rem',
+      fontSize: '0.875rem',
       fontFamily: 'Manrope',
       cursor: 'pointer',
    },
    '& .buttonGoogle': {
-      height: '39px',
-      width: '390px',
+      height: '2.438rem',
+      width: '24.375rem',
       fontFamily: 'Manrope',
-      fontSize: '0.9rem',
+      fontSize: '1rem',
       fontWeight: 600,
-      borderRadius: ' 8px',
-      lineHeight: '16px',
+      borderRadius: ' 0.5rem',
+      lineHeight: '1rem',
       color: '#222222',
       background: '#F5F5F5',
+      textTransform: 'none',
       '&:hover': {
          background: '#efeded',
       },
@@ -238,7 +203,7 @@ const FormControlStyled = styled('form')(() => ({
       fontSize: '1rem',
       fontWeight: 400,
       fontFamily: 'Manrope',
-      lineHeight: '16px',
+      lineHeight: '1rem',
       color: '#346EFB',
       textDecoration: 'none',
    },
@@ -246,7 +211,7 @@ const FormControlStyled = styled('form')(() => ({
       textDecoration: 'none',
       color: '#3772FF',
       fontWeight: 400,
-      fontSize: '14px',
+      fontSize: '0.875rem',
       '& span': {
          color: '#222222',
       },
@@ -261,7 +226,8 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .message': {
       color: 'red',
-      fontSize: '0.9rem',
+      fontSize: '0.8rem',
+      position: 'absolute',
    },
 }))
 
@@ -269,22 +235,22 @@ const Line = styled('div')(() => ({
    display: 'flex',
    gap: '1rem',
    '& .lineFirst': {
-      width: '165px',
-      height: '0px',
-      margin: '8px 0',
+      width: '10.313rem',
+      margin: '0.5rem 0',
+      height: '0rem',
       color: '#F3F1F1',
    },
    '& span': {
-      //   fontFamily: 'Manrope',
+      fontFamily: 'Manrope',
       fontWeight: '500',
       textTransform: 'uppercase',
-      fontSize: '12px',
+      fontSize: '0.75rem',
       color: '#222222',
    },
    '& .lineSecond': {
-      width: '165px',
+      width: '10.313rem',
       color: '#F3F1F1',
-      margin: '8px 0',
-      height: '0px',
+      margin: '0.5rem 0',
+      height: '0rem',
    },
 }))

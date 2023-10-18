@@ -5,9 +5,9 @@ import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
+import Modal from '../../components/UI/Modal'
 // import Input from '../../components/UI/input/Input'
 // import Button from '../../components/UI/Button'
-import Modal from '../../components/UI/Modal'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -322,7 +322,7 @@ const Line = styled('div')(() => ({
       color: '#F3F1F1',
    },
    '& span': {
-      //   fontFamily: 'Manrope',
+      fontFamily: 'Manrope',
       fontWeight: '500',
       textTransform: 'uppercase',
       fontSize: '0.75rem',

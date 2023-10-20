@@ -2,9 +2,10 @@ import React from 'react'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import styled from '@emotion/styled'
+import { MenuItem } from '@mui/material'
 
-export const SelectUi = ({ options }) => {
-   const [selectedOption, setSelectedOption] = React.useState([])
+export const SelectUi = ({ options, placeholder, value, onChange }) => {
+   const [selectedOption, setSelectedOption] = React.useState(value || [])
 
    const handleChangeMultiple = (event) => {
       setSelectedOption(event.target.value)
@@ -17,8 +18,9 @@ export const SelectUi = ({ options }) => {
                multiple
                native
                value={selectedOption}
-               onChange={handleChangeMultiple}
+               onChange={onChange || handleChangeMultiple}
             >
+               <MenuItem>{placeholder}</MenuItem>
                {options.map((option) => (
                   <option key={option} value={option}>
                      {option}

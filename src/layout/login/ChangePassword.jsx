@@ -2,24 +2,22 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
-import { ReactComponent as CloseIcon } from '../../assets/icons/CloseIcon.svg'
+import { CloseIcon, Show, ShowOff } from '../../assets'
+import Modal from '../../components/UI/Modal'
 // import Input from '../../components/UI/input/Input'
 // import Button from '../../components/UI/Button'
-import { ReactComponent as Show } from '../../assets/icons/Vector (3).svg'
-import { ReactComponent as ShowOff } from '../../assets/icons/Password.svg'
-import Modal from '../../components/UI/Modal'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
-   console.log(open)
 
    const handleClose = () => setOpen(false)
 
    const {
       register,
       formState: { errors },
+      watch,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -27,6 +25,8 @@ const ChangePassword = () => {
          copyPassword: '',
       },
    })
+
+   const watchPassword = watch('password', '')
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -64,7 +64,16 @@ const ChangePassword = () => {
                   type={showPassword ? 'text' : 'password'}
                   InputProps={{
                      endAdornment: (
-                        <InputAdornment position="end">
+                        <InputAdornment
+                           position="end"
+                           {...register('copyPassword', {
+                              setValueAs: (v) => v.trim(),
+                              required: 'Поле не заполнено',
+                              validate: (value) =>
+                                 value === watchPassword ||
+                                 'Пароли не совпадают',
+                           })}
+                        >
                            <IconButton
                               onClick={showPasswordHandle}
                               onMouseDown={clickHandler}

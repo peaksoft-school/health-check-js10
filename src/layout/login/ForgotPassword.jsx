@@ -3,14 +3,13 @@ import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { ReactComponent as CloseIcon } from '../../assets/icons/Frame.svg'
+import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
 // import Input from '../../components/UI/input/Input'
 // import Button from '../../components/UI/Button'
 
 const ForgotPassword = () => {
    const [open, setOpen] = useState(true)
-   console.log(open)
 
    const navigate = useNavigate()
 

@@ -56,7 +56,6 @@ const SignUp = () => {
 
    useEffect(() => {
       setValue(localStorage.getItem('email'))
-      console.log(value, 'value')
    })
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
@@ -96,17 +95,17 @@ const SignUp = () => {
                   <input
                      placeholder="+996 (_ _ _) _ _  _ _  _ _ "
                      className="inputStyle"
-                     defaultValue="+996"
                      error={errors.number}
+                     type="number"
                      {...register('phoneNumber', {
                         setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
                         minLength: {
-                           value: 16,
+                           value: 12,
                            message: 'Номер телефона слишком короткий',
                         },
                         maxLength: {
-                           value: 16,
+                           value: 12,
                            message: 'Номер телефона должен слишком длинный',
                         },
                      })}
@@ -188,7 +187,7 @@ const SignUp = () => {
                                  onClick={showPasswordHandler}
                                  onMouseDown={clickHandler}
                               >
-                                 {showPasswordCopy ? <ShowOff /> : <Show />}
+                                 <h1>Hello</h1>
                               </IconButton>
                            </InputAdornment>
                         ),
@@ -239,6 +238,10 @@ const FormControlStyled = styled('form')(() => ({
       alignItems: 'center',
       justifyContent: 'center',
       gap: '1.5rem',
+      '& input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button':
+         {
+            '-webkit-appearance': 'none',
+         },
    },
    '& .topic': {
       fontFamily: 'Manrope',

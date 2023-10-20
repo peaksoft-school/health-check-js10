@@ -3,10 +3,7 @@ import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment, Button } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { ReactComponent as CloseIcon } from '../../assets/icons/CloseIcon.svg'
-import { ReactComponent as Show } from '../../assets/icons/Vector (3).svg'
-import { ReactComponent as ShowOff } from '../../assets/icons/Password.svg'
-import { ReactComponent as GoogleIcon } from '../../assets/icons/image 90.svg'
+import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 // import Button from '../../components/Ui/Button'
 // import Input from '../../components/UI/input/Input'
@@ -32,7 +29,6 @@ const SignIn = () => {
 
    useEffect(() => {
       setValue(localStorage.getItem('email'))
-      console.log(value)
    })
 
    const showPasswordHandle = () => {

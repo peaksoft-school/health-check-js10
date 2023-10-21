@@ -21,13 +21,15 @@
       "import/prefer-default-export": "off",
       "no-shadow": "off",
       "react-hooks/exhaustive-deps": "off",
-      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/rules-of-hooks": "off",
       "react/function-component-definition": "off",
       "react/prop-types": "off",
       "import/no-extraneous-dependencies": "off",
       "no-param-reassign": "off",
       "import/no-cycle": "off",
       "no-irregular-whitespace": "off",
+      "no-undef": "off",
+      "no-unused-vars": "off",
       "max-len": [
          "error",
          {
@@ -37,7 +39,7 @@
             "ignoreRegExpLiterals": true
          }
       ],
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": "off",
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

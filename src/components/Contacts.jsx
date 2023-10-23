@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
-import Map from '../assets/images/map.png'
-import MapLocation from '../assets/images/maplocation.png'
-import LogoIcon from '../assets/icons/logo1.svg'
+import Map from './Map'
 
 const Contacts = () => {
    return (
@@ -11,12 +9,13 @@ const Contacts = () => {
          <NavigatePathTitle>
             <p>
                <StyledNavLink to="/">Главная {' > '}</StyledNavLink>
-               <span style={{ color: '#048741' }}>Контакты</span>
+               <StyledSpan>Контакты</StyledSpan>
             </p>
          </NavigatePathTitle>
          <StyledContactInnerContainer>
             <h1>
-               Наши <span style={{ color: '#048741' }}>контакты</span>
+               Наши
+               <StyledSpan>контакты</StyledSpan>
             </h1>
             <p>
                Комфорт и спокойствие пациента — это часть качественного лечения!
@@ -28,38 +27,27 @@ const Contacts = () => {
             <p>
                Контактные номера:
                <br />
-               <span style={{ color: '#048741' }}>
-                  +996(800) 000 000 ; +996(505) 000 000
-               </span>
+               <StyledSpan>+996(800) 000 000 ; +996(505) 000 000</StyledSpan>
             </p>
             <p>
                Наш адрес:
                <br />
-               <span style={{ color: '#048741' }}>
-                  Кыргызстан, г. Бишкек, Медерова 44
-               </span>
+               <StyledSpan>Кыргызстан, г. Бишкек, Медерова 44</StyledSpan>
             </p>
             <p>
                Режим работы клиники:
                <br />
-               <span style={{ color: '#048741' }}>
-                  Понедельник - суббота с 08:00 до 18:00.
-               </span>
+               <StyledSpan>Понедельник - суббота с 08:00 до 18:00.</StyledSpan>
             </p>
             <p>
                Электронная почта :
                <br />
-               <span style={{ color: '#048741' }}>healthchek.kg </span>
+               <StyledSpan>healthchek.kg </StyledSpan>
             </p>
          </StyledContactInnerContainer>
-         <StyledMapImage>
-            <img src={MapLocation} alt="" />
-            <img
-               style={{ right: '145px', top: '133px' }}
-               src={LogoIcon}
-               alt=""
-            />
-         </StyledMapImage>
+         <div>
+            <Map />
+         </div>
       </>
    )
 }
@@ -82,6 +70,10 @@ const StyledNavLink = styled(NavLink)(() => ({
    color: '#959595',
 }))
 
+const StyledSpan = styled('span')(() => ({
+   color: '#048741',
+}))
+
 const StyledContactInnerContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
@@ -91,18 +83,5 @@ const StyledContactInnerContainer = styled('div')(() => ({
       color: '#4D4E51',
       fontSize: '1.2rem',
       textAlign: 'start',
-   },
-}))
-
-const StyledMapImage = styled('div')(() => ({
-   backgroundImage: `url(${Map})`,
-   backgroundSize: 'cover',
-   backgroundRepeat: 'no - repeat',
-   backgroundPosition: 'center',
-   height: '400px',
-   width: '100%',
-   img: {
-      position: 'relative',
-      top: '150px',
    },
 }))

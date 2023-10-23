@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { styled } from '@mui/material'
 import Drawer from '../UI/Drawer'
 import { CloseIcon } from '../../assets'
+import ChooseServices from './ChooseServices'
 
 const OnlineAppointment = () => {
    const [open, setOpen] = useState(false)
@@ -17,6 +18,7 @@ const OnlineAppointment = () => {
                <Header>
                   <Title>Онлайн запись</Title>
                </Header>
+               <ChooseServices />
             </Container>
          </Drawer>
          <button type="button" onClick={handleOpen}>
@@ -30,7 +32,7 @@ export default OnlineAppointment
 
 const Container = styled('div')(() => ({
    '&': {
-      background: ' #F3F1F1',
+      backgroundColor: ' #F3F1F1',
    },
 }))
 

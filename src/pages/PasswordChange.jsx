@@ -1,8 +1,14 @@
-import React from 'react'
-import { Formik, Field, ErrorMessage, Form } from 'formik'
+import React, { useState } from 'react'
+import { Formik, ErrorMessage, Form } from 'formik'
 import * as Yup from 'yup'
+import { IconButton, InputAdornment, styled, TextField } from '@mui/material'
+import { HideIcon, ShowIcon } from '../assets'
 
 export const PasswordChange = () => {
+   const [showPassword, setShowPassword] = useState(true)
+   const togglePasswordVisibility = () => {
+      setShowPassword((prevShowPassword) => !prevShowPassword)
+   }
    return (
       <Formik
          initialValues={{
@@ -26,39 +32,113 @@ export const PasswordChange = () => {
             console.log(values)
          }}
       >
-         <Form>
+         <FormStyled>
             <div>
                <label htmlFor="lastpassword">Старый пароль</label>
-               <Field
-                  type="password"
+               <FieldStyled
+                  type={showPassword ? 'text' : 'password'}
                   id="lastpassword"
                   name="lastpassword"
                   placeholder="Введите ваш пароль"
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment>
+                           {showPassword ? (
+                              <ShowIcon
+                                 onClick={togglePasswordVisibility}
+                                 fill="red"
+                              />
+                           ) : (
+                              <HideIcon
+                                 onClick={togglePasswordVisibility}
+                                 fill="red"
+                              />
+                           )}
+                        </InputAdornment>
+                     ),
+                  }}
                />
-               <ErrorMessage name="lastpassword" component="div" />
+
+               <ErrorMessageStyled name="lastpassword" component="div" />
             </div>
             <div>
                <label htmlFor="newpassword">Новый пароль</label>
-               <Field
-                  type="password"
+               <FieldStyled
+                  type={showPassword ? 'text' : 'password'}
                   id="newpassword"
                   name="newpassword"
                   placeholder="Введите новый пароль"
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="start">
+                           <IconButton onClick={togglePasswordVisibility}>
+                              {showPassword ? <ShowIcon /> : <HideIcon />}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
                />
-               <ErrorMessage name="newpassword" component="div" />
+               <ErrorMessageStyled name="newpassword" component="div" />
             </div>
             <div>
                <label htmlFor="confirmpassword">Подтвердить новый пароль</label>
-               <Field
-                  type="password"
+               <FieldStyled
+                  type={showPassword ? 'text' : 'password'}
                   id="confirmpassword"
                   name="confirmpassword"
                   placeholder="Подтвердите пароль"
+                  InputProps={{
+                     endAdornment: (
+                        <IconButton onClick={togglePasswordVisibility}>
+                           {showPassword ? <ShowIcon /> : <HideIcon />}
+                        </IconButton>
+                     ),
+                  }}
                />
-               <ErrorMessage name="confirmpassword" component="div" />
+               <ErrorMessageStyled name="confirmpassword" component="div" />
             </div>
-            <button type="submit">Изменить пароль</button>
-         </Form>
+
+            <nav>
+               <button type="button">назад</button>
+               <button type="submit">подтвердить</button>
+            </nav>
+         </FormStyled>
       </Formik>
    )
 }
+
+const FormStyled = styled(Form)(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   marginTop: '1rem',
+   fontFamily: 'Manrope',
+   '& nav': {
+      maxWidth: '490px',
+      marginTop: '18px',
+      '& button': {
+         marginLeft: '18px',
+         background: '#fff',
+         color: '#048741',
+         borderRadius: '#048741',
+      },
+      '& buttonGreen': {
+         marginLeft: '18px',
+         marginTop: '18px',
+         background: '#0CBB6B',
+         color: '#FFFFFF',
+         size: '4px',
+         border: '1rem#048741',
+      },
+   },
+}))
+const FieldStyled = styled(TextField)(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   width: '18rem',
+   fontFamily: 'Manrope',
+}))
+const ErrorMessageStyled = styled(ErrorMessage)(() => ({
+   color: 'red',
+}))

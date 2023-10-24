@@ -1,12 +1,7 @@
 import './App.css'
-import Profile from './pages/Profile'
 
 function App() {
-   return (
-      <div className="App">
-         <Profile />
-      </div>
-   )
+   return <div className="App">App</div>
 }
 
 export default App

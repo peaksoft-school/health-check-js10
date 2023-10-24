@@ -31,9 +31,12 @@ const OnlineAppointment = () => {
 export default OnlineAppointment
 
 const Container = styled('div')(() => ({
-   '&': {
-      backgroundColor: ' #F3F1F1',
-   },
+   backgroundColor: ' #F3F1F1',
+   height: '100vh',
+   '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root:hover':
+      {
+         height: 'fit-content',
+      },
 }))
 
 const Header = styled('div')(() => ({

@@ -24,22 +24,30 @@ export const SelectUI = ({
    icon,
    ...rest
 }) => {
-   const [open, setOpen] = useState('')
+   const [selectVal, setSelectVal] = useState('')
+   const [selectOpen, setSelectOpen] = useState(false)
 
    const handleChange = (e) => {
-      setOpen(e.target.value)
+      setSelectVal(e.target.value)
    }
+
+   const openSelectHandler = () => {
+      setSelectOpen((prev) => !prev)
+   }
+
    return (
-      <StyledFormControl fullWidth>
+      <StyledFormControl fullWidth isOpen={selectOpen}>
          <Icon>{icon}</Icon>
          <SelectMui
-            value={open}
+            open={selectOpen}
+            value={selectVal}
             label={label}
             onChange={handleChange}
             IconComponent={KeyboardArrowDownIcon}
             inputProps={{ 'aria-label': 'Without label' }}
             MenuProps={menuProps}
             displayEmpty
+            onClick={openSelectHandler}
             {...rest}
          >
             <StyledLabel value="">{placeholder}</StyledLabel>
@@ -54,13 +62,13 @@ export const SelectUI = ({
    )
 }
 
-const StyledFormControl = styled(FormControl)(() => ({
+const StyledFormControl = styled(FormControl)(({ isOpen }) => ({
    '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline':
       {
          border: 'none',
       },
    '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root': {
-      borderRadius: '16px 16px 0px 0px',
+      borderRadius: isOpen ? '16px 16px 0px 0px' : '16px',
    },
 }))
 

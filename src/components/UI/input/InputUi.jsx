@@ -15,7 +15,7 @@ export const Input = React.forwardRef(
       ref
    ) => {
       const InputStyled = {
-         '& .MuiOutlinedInput-root': {
+         '.MuiOutlinedInput-root': {
             width: { width },
             height: { height },
             borderRadius: '8px',
@@ -28,9 +28,10 @@ export const Input = React.forwardRef(
             '&:active fieldset': {
                borderColor: '#rgba(4, 135, 65, 0.80)',
             },
-            '&:invalid fieldset': {
-               borderColor: '#F91515',
-            },
+            '&.css-3ibld1-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline':
+               {
+                  border: '1px solid #F91515',
+               },
             '&.Mui-focused fieldset': {
                borderColor: 'rgba(4, 135, 65, 0.80)',
             },
@@ -38,6 +39,7 @@ export const Input = React.forwardRef(
       }
       return (
          <TextField
+            disabled
             sx={InputStyled}
             value={value}
             ref={ref}

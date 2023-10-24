@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { styled } from '@mui/material'
 
 const Profile = () => {
+   // const [back, setBack] = useState(false)
+
+   // const backHandler = () => {
+   //    setBack(!back)
+   //    console.log('back')
+   // }
    const initialValues = {
       username: '',
       userlastname: '',
@@ -15,9 +21,11 @@ const Profile = () => {
       username: Yup.string().required('Имя обязательно'),
       userlastname: Yup.string().required('Фамилия обязательно'),
       useremail: Yup.string()
-         .email('Email недействителен')
+         .email('Email @ обязателен')
          .required('Email @ обязателен'),
-      usertelefone: Yup.string().required('Телефон обязателен'),
+      usertelefone: Yup.string()
+         .min(13, 'Телефон должен содержать максимум 13 символов')
+         .required('Пожалуйста, напишите старый пароль'),
    })
    const onSubmit = (values) => {
       console.log(values)
@@ -32,81 +40,105 @@ const Profile = () => {
          onSubmit={onSubmit}
       >
          <FormStyled>
-            <div>
-               <label htmlFor="username">Имя</label>
-               <FieldStyled type="text" name="username" placeholder="Имя" />
-               <ErrorMessageStyled name="username" component="span" />
+            <div className="firstContainer">
+               <div>
+                  <div>
+                     <label htmlFor="username">Имя</label>
+                     <FieldStyled
+                        type="text"
+                        name="username"
+                        placeholder="Имя"
+                     />
+                     <ErrorMessageStyled name="username" component="span" />
+                  </div>
+                  <div className="box">
+                     <label htmlFor="useremail">E-mail</label>
+                     <FieldStyled
+                        type="text"
+                        name="useremail"
+                        placeholder="Email"
+                     />
+                     <ErrorMessageStyled name="useremail" component="span" />
+                  </div>
+               </div>
+               <div>
+                  <div>
+                     <label htmlFor="userlastname">Фамилия</label>
+                     <FieldStyled
+                        type="text"
+                        name="userlastname"
+                        placeholder="Фамилия"
+                     />
+                     <ErrorMessageStyled name="userlastname" component="span" />
+                  </div>
+                  <div className="box">
+                     <labelStyled htmlFor="usertelefone">Телефон</labelStyled>
+                     <FieldStyled
+                        type="text"
+                        name="usertelefone"
+                        placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                     />
+                     <ErrorMessageStyled name="usertelefone" component="span" />
+                  </div>
+               </div>
             </div>
-            <div>
-               <label htmlFor="userlastname">Фамилия</label>
-               <FieldStyled
-                  type="text"
-                  name="userlastname"
-                  placeholder="Фамилия"
-               />
-               <ErrorMessageStyled name="userlastname" component="span" />
-            </div>
-            <div>
-               <label htmlFor="useremail">E-mail</label>
-               <FieldStyled type="text" name="useremail" placeholder="E-mail" />
-               <ErrorMessageStyled name="useremail" component="span" />
-            </div>
-            <div>
-               <labelStyled htmlFor="usertelefone">Телефон</labelStyled>
-               <FieldStyled
-                  type="text"
-                  name="usertelefone"
-                  placeholder="+996"
-               />
-               <ErrorMessageStyled name="usertelefone" component="span" />
-            </div>
-            <nav>
-               <button type="submit" onSubmit={handleCancel}>
+
+            <ButtonStyled>
+               <button
+                  className="buttonStyle"
+                  type="button"
+                  onClick={handleCancel}
+               >
                   назад
                </button>
-               <button type="submit">Редактировать</button>
-            </nav>
+               <button className="buttonStyle" type="submit">
+                  Редактировать
+               </button>
+            </ButtonStyled>
          </FormStyled>
       </Formik>
    )
 }
 
 export default Profile
+
+const FormStyled = styled(Form)(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+   fontFamily: 'Manrope',
+   marginLeft: '4.688rem',
+   marginTop: '4rem',
+   '.firstContainer': {
+      display: 'flex',
+      gap: '3rem',
+   },
+   '.box': {
+      marginTop: '1rem',
+   },
+}))
 const FieldStyled = styled(Field)(() => ({
    display: 'flex',
-   width: '18rem',
+   width: '20.625rem',
+   height: '2.375rem',
    fontFamily: 'Manrope',
-   marginTop: '0.3rem',
+   paddingLeft: '1.125rem',
 }))
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
    color: 'red',
-}))
-const FormStyled = styled(Form)(() => ({
-   display: 'flex',
-   flexWrap: 'wrap',
-   justifyContent: 'space-between',
-   maxWidth: '65%',
+   fontSize: '0.7rem',
    fontFamily: 'Manrope',
-   '& div': {
-      marginTop: '0.7rem',
-   },
-   '& nav': {
-      maxWidth: '490px',
-      marginLeft: '580px',
-      marginTop: '18px',
-      '& button': {
-         background: '#fff',
-         color: '#048741',
-         borderRadius: '#048741',
-         marginLeft: '18px',
-      },
-      '& buttonGreen': {
-         marginLeft: '18px',
-         marginTop: '18px',
-         background: '#0CBB6B',
-         color: '#FFFFFF',
-         size: '4px',
-         border: '1rem#048741',
-      },
+   position: 'absolute',
+}))
+const ButtonStyled = styled('div')(() => ({
+   display: 'flex',
+   marginLeft: '24rem',
+   marginTop: '2rem',
+   '& .buttonStyle': {
+      height: '2.813rem',
+      width: '10.375rem',
+      borderRadius: ' 0.625rem',
+      fontSize: '0.875rem',
+      fontFamily: 'Manrope',
+      marginLeft: '1.125rem',
    },
 }))

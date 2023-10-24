@@ -7,18 +7,25 @@ const Button = ({
    variant = 'contained',
    ...rest
 }) => {
+   const commonStyles = {
+      padding: '10px 20px',
+      borderRadius: '10px',
+      fontFamily: 'Manrope',
+      textTransform: 'none',
+   }
+
    const styles = {
       normal: {
+         ...commonStyles,
          borderRadius: '8px',
          padding: '10px 26px',
          border: '1px solid #959595',
          backgroundColor: '#FFFFFF',
          color: '#959595',
-         fontFamily: 'Manrope',
-         textTransform: 'none',
          '&:hover': {
             backgroundColor: ' #F5F5F5',
             border: 'none',
+            padding: '11px 27px',
          },
          '&:active': {
             border: 'none',
@@ -31,15 +38,14 @@ const Button = ({
          },
       },
       outlined: {
-         padding: '10px 20px',
-         borderRadius: '10px',
+         ...commonStyles,
          border: '1px solid #048741',
          color: '#048741',
-         fontFamily: 'Manrope',
          backgroundColor: '#FFFFFF',
          '&:hover': {
             background:
                'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
+            padding: '11px 21px',
             border: 'none',
             color: '#FFF',
          },
@@ -47,6 +53,7 @@ const Button = ({
             background:
                'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
             border: 'none',
+            padding: '11px 21px',
             color: '#FFF',
          },
          '&:disabled': {
@@ -55,10 +62,7 @@ const Button = ({
          },
       },
       contained: {
-         padding: '10px 20px',
-         fontFamily: 'Manrope',
-         textTransform: 'none',
-         borderRadius: '10px',
+         ...commonStyles,
          background: 'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
          color: '#FFF',
          '&:hover': {

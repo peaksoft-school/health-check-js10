@@ -1,6 +1,12 @@
 import { Button as MuiButton, styled } from '@mui/material'
 
-const Button = ({ children, onClick, disabled, variant, ...rest }) => {
+const Button = ({
+   children,
+   onClick,
+   disabled,
+   variant = 'contained',
+   ...rest
+}) => {
    const styles = {
       normal: {
          borderRadius: '8px',
@@ -8,6 +14,8 @@ const Button = ({ children, onClick, disabled, variant, ...rest }) => {
          border: '1px solid #959595',
          backgroundColor: '#FFFFFF',
          color: '#959595',
+         fontFamily: 'Manrope',
+         textTransform: 'none',
          '&:hover': {
             backgroundColor: ' #F5F5F5',
             border: 'none',
@@ -25,8 +33,9 @@ const Button = ({ children, onClick, disabled, variant, ...rest }) => {
       outlined: {
          padding: '10px 20px',
          borderRadius: '10px',
-         border: '1px solid #048741 ',
+         border: '1px solid #048741',
          color: '#048741',
+         fontFamily: 'Manrope',
          backgroundColor: '#FFFFFF',
          '&:hover': {
             background:
@@ -46,7 +55,9 @@ const Button = ({ children, onClick, disabled, variant, ...rest }) => {
          },
       },
       contained: {
-         padding: '14px 140px',
+         padding: '10px 20px',
+         fontFamily: 'Manrope',
+         textTransform: 'none',
          borderRadius: '10px',
          background: 'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
          color: '#FFF',

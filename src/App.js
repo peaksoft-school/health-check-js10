@@ -1,12 +1,7 @@
 import './App.css'
-import { Input } from './components/UI/input/Input'
 
 function App() {
-   return (
-      <div className="App">
-         <Input />
-      </div>
-   )
+   return <div className="App">App </div>
 }
 
 export default App

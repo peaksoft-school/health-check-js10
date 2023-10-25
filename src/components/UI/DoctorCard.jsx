@@ -1,17 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default function Card({ cards }) {
+export default function DoctorCard({ id, image, title, description }) {
    return (
       <Container>
-         {cards.map((card) => (
-            <div key={card.id}>
-               <img src={card.image} alt="" />
-               <p className="title">{card.title}</p>
-               <p className="description">{card.description}</p>
-               <button type="submit">Записаться на прием</button>
-            </div>
-         ))}
+         <div key={id}>
+            <img src={image} alt={title} />
+            <p className="title">{title}</p>
+            <p className="description">{description}</p>
+            <button type="submit">Записаться на прием</button>
+         </div>
       </Container>
    )
 }

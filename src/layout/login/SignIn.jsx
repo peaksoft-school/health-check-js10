@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FormLabel, IconButton, InputAdornment, Button } from '@mui/material'
+import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
-// import Button from '../../components/Ui/Button'
-// import Input from '../../components/UI/input/Input'
+import { Input } from '../../components/UI/input/Input'
+import Button from '../../components/UI/Button'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -29,6 +29,7 @@ const SignIn = () => {
 
    useEffect(() => {
       setValue(localStorage.getItem('email'))
+      console.log(value, 'value')
    })
 
    const showPasswordHandle = () => {
@@ -57,9 +58,8 @@ const SignIn = () => {
                <CloseIcon className="closeIcon" onClick={handleClose} />
             </div>
             <div>
-               <input
+               <Input
                   placeholder="Логин"
-                  className="inputStyle"
                   error={errors.email}
                   {...register('email', {
                      setValueAs: (v) => v.trim(),
@@ -76,9 +76,8 @@ const SignIn = () => {
                )}
             </div>
             <div>
-               <input
+               <Input
                   placeholder="Пароль"
-                  className="inputStyle"
                   error={errors.password}
                   {...register('password', {
                      setValueAs: (v) => v.trim(),
@@ -163,26 +162,9 @@ const FormControlStyled = styled('form')(() => ({
       top: '1rem',
       right: '1.5rem',
    },
-   '& .inputStyle': {
-      fontFamily: 'Manrope',
-      width: '24.375rem',
-      height: '2.625rem',
-      borderRadius: '0.625rem',
-      border: '1px solid #D9D9D9',
-      padding: '0rem 1rem',
-      fontSize: '1rem',
-   },
-   '& .buttonStyle': {
-      height: '2.813rem',
-      width: '24.375rem',
-      borderRadius: '0.625rem',
-      fontSize: '0.875rem',
-      fontFamily: 'Manrope',
-      cursor: 'pointer',
-   },
    '& .buttonGoogle': {
       height: '2.438rem',
-      width: '24.375rem',
+      width: '25.5rem',
       fontFamily: 'Manrope',
       fontSize: '1rem',
       fontWeight: 600,

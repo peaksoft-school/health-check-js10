@@ -5,8 +5,8 @@ import styled from '@emotion/styled'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
-// import Input from '../../components/UI/input/Input'
-// import Button from '../../components/UI/Button'
+import { Input } from '../../components/UI/input/Input'
+import Button from '../../components/UI/Button'
 
 const ForgotPassword = () => {
    const [open, setOpen] = useState(true)
@@ -37,9 +37,8 @@ const ForgotPassword = () => {
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
                <p>Вам будет отправлена ссылка для сброса пароля</p>
-               <input
+               <Input
                   placeholder="Введите ваш Email"
-                  className="inputStyle"
                   error={errors.email}
                   {...register('email', {
                      setValueAs: (v) => v.trim(),
@@ -55,13 +54,13 @@ const ForgotPassword = () => {
                )}
             </div>
 
-            <button
+            <Button
                className="buttonStyle"
                type="submit"
                onClick={navigateToChangePassword}
             >
                ОТПРАВИТЬ
-            </button>
+            </Button>
             <NavLink className="password" to="/login">
                ОТМЕНИТЬ
             </NavLink>
@@ -101,22 +100,14 @@ const FormControlStyled = styled('form')(() => ({
       top: '1rem',
       right: '1.5rem',
    },
-   '& .inputStyle': {
-      fontFamily: 'Manrope',
-      width: '24.375rem',
-      height: '2.625rem',
-      borderRadius: '0.625rem',
-      border: '1px solid #D9D9D9',
-      padding: '0rem 1rem',
-      fontSize: '1rem',
-   },
    '& .buttonStyle': {
-      height: '2.938rem',
-      width: '24.375rem',
+      height: '3rem',
+      width: '26rem',
       borderRadius: '0.625rem',
       fontSize: '0.875rem',
    },
    '& .password': {
+      height: '2rem',
       fontFamily: 'Manrope',
       fontSize: '0.875rem',
       fontWeight: 400,

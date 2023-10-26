@@ -30,6 +30,7 @@
       "no-irregular-whitespace": "off",
       "react/no-unknown-property": "off",
       "no-unused-vars": "off",
+      "import/no-unresolved": "off",
       "max-len": [
          "error",
          {

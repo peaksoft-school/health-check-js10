@@ -4,8 +4,8 @@ import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { CloseIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
-// import Input from '../../components/UI/input/Input'
-// import Button from '../../components/UI/Button'
+import { Input } from '../../components/UI/input/Input'
+import Button from '../../components/UI/Button'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -45,9 +45,8 @@ const ChangePassword = () => {
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
                <p>Вам будет отправлена ссылка для сброса пароля</p>
-               <input
+               <Input
                   placeholder="Введите новый пароль"
-                  className="inputStyle"
                   error={errors.password}
                   {...register('password', {
                      setValueAs: (v) => v.trim(),
@@ -89,9 +88,8 @@ const ChangePassword = () => {
                )}
             </div>
             <div>
-               <input
+               <Input
                   placeholder="Повторите пароль"
-                  className="inputStyle"
                   error={errors.copyPassword}
                   {...register('copyPassword', {
                      setValueAs: (v) => v.trim(),
@@ -116,9 +114,9 @@ const ChangePassword = () => {
                )}
             </div>
 
-            <button className="buttonStyle" type="submit">
+            <Button className="buttonStyle" type="submit">
                Подтвердить
-            </button>
+            </Button>
          </FormControlStyled>
       </Modal>
    )
@@ -155,20 +153,12 @@ const FormControlStyled = styled('form')(() => ({
       top: '1rem',
       right: '1.5rem',
    },
-   '& .inputStyle': {
-      fontFamily: 'Manrope',
-      width: '24.375rem',
-      height: '2.625rem',
-      borderRadius: '0.625rem',
-      border: '1px solid #D9D9D9',
-      padding: '0rem 1rem',
-      fontSize: '1rem',
-   },
    '& .buttonStyle': {
       height: '2.938rem',
-      width: '24.375rem',
+      width: '26rem',
       borderRadius: ' 0.625',
       fontSize: '0.875',
+      marginTop: '0.7rem',
    },
    '& .message': {
       color: 'red',

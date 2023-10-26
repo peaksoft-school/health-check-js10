@@ -3,11 +3,10 @@ import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import Button from '@mui/material/Button'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
-// import Input from '../../components/UI/input/Input'
-// import Button from '../../components/UI/Button'
+import Button from '../../components/UI/Button'
+import { Input } from '../../components/UI/input/Input'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -56,6 +55,7 @@ const SignUp = () => {
 
    useEffect(() => {
       setValue(localStorage.getItem('email'))
+      console.log(value, 'value')
    })
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
@@ -64,9 +64,8 @@ const SignUp = () => {
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div className="inputContainer">
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="Имя"
-                     className="inputStyle"
                      error={errors.name}
                      {...register('firstName', {
                         setValueAs: (v) => v.trim(),
@@ -78,9 +77,8 @@ const SignUp = () => {
                   )}
                </div>
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="Фамилия"
-                     className="inputStyle"
                      error={errors.surname}
                      {...register('lastName', {
                         setValueAs: (v) => v.trim(),
@@ -92,9 +90,8 @@ const SignUp = () => {
                   )}
                </div>
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="+996 (_ _ _) _ _  _ _  _ _ "
-                     className="inputStyle"
                      error={errors.number}
                      type="number"
                      {...register('phoneNumber', {
@@ -115,9 +112,8 @@ const SignUp = () => {
                   )}
                </div>
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="Email"
-                     className="inputStyle"
                      error={errors.email}
                      {...register('email', {
                         required: 'Поле не заполнено',
@@ -133,9 +129,8 @@ const SignUp = () => {
                   )}
                </div>
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="Введите пароль"
-                     className="inputStyle"
                      error={errors.password}
                      {...register('password', {
                         setValueAs: (v) => v.trim(),
@@ -169,9 +164,8 @@ const SignUp = () => {
                   )}
                </div>
                <div className="inputWrapper">
-                  <input
+                  <Input
                      placeholder="Повторите пароль"
-                     className="inputStyle"
                      error={errors.password}
                      {...register('copyPassword', {
                         setValueAs: (v) => v.trim(),
@@ -187,7 +181,7 @@ const SignUp = () => {
                                  onClick={showPasswordHandler}
                                  onMouseDown={clickHandler}
                               >
-                                 <h1>Hello</h1>
+                                 {showPassword ? <ShowOff /> : <Show />}
                               </IconButton>
                            </InputAdornment>
                         ),
@@ -198,9 +192,9 @@ const SignUp = () => {
                   )}
                </div>
             </div>
-            <button className="buttonStyle" type="submit">
+            <Button className="buttonStyle" type="submit">
                СОЗДАТЬ АККАУНТ
-            </button>
+            </Button>
             <Line className="Line">
                <hr className="lineFirst" />
                <span>или</span>
@@ -256,18 +250,8 @@ const FormControlStyled = styled('form')(() => ({
       top: '1rem',
       right: '1.5rem',
    },
-   '& .inputStyle': {
-      fontFamily: 'Manrope',
-      width: '24.375rem',
-      height: '2.625rem',
-      borderRadius: '0.625rem',
-      border: '1px solid #D9D9D9',
-      padding: '0rem 1rem',
-      fontSize: '0.9rem',
-   },
    '& .buttonStyle': {
-      height: '2.813rem',
-      width: '24.375rem',
+      padding: '0.7rem 9rem',
       borderRadius: '0.625rem',
       fontSize: '0.875rem',
       fontFamily: 'Manrope',
@@ -275,7 +259,7 @@ const FormControlStyled = styled('form')(() => ({
    },
    '& .buttonGoogle': {
       height: '2.438rem',
-      width: '24.375rem',
+      width: '26rem',
       fontFamily: 'Manrope',
       fontSize: '1rem',
       fontWeight: 600,

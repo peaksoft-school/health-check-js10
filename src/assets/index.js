@@ -1,20 +1,16 @@
-// Используйте простые импорты для изображений:
-import ForwardVector from './icons/Vector (4).svg'
-import Building from './images/Rectangle 387.png'
-import Conference from './images/Rectangle 388.png'
-import Doctors from './images/Rectangle 389.png'
-import Consilium from './images/Rectangle 390.png'
-import Signature from './images/image 12.png'
-import Rectange from './images/Subtract.svg'
-import DoctorImg from './images/mainDoctor.jpg'
+export { ReactComponent as Pagination } from './icons/dots.svg'
+export { ReactComponent as NextImg } from './icons/nextImg.svg'
+export { ReactComponent as PreviousImg } from './icons/previousImg.svg'
 
-export {
-   ForwardVector,
-   Building,
-   Conference,
-   Doctors,
-   Consilium,
-   Signature,
-   Rectange,
-   DoctorImg,
-}
+export { default as ForwardVector } from './icons/Vector (4).svg'
+export { default as Building } from './images/Rectangle 387.png'
+export { default as Conference } from './images/Rectangle 388.png'
+export { default as Doctors } from './images/Rectangle 389.png'
+export { default as Consilium } from './images/Rectangle 390.png'
+export { default as Signature } from './images/image 12.png'
+export { default as Rectange } from './images/Subtract.svg'
+export { default as DoctorImg } from './images/mainDoctor.jpg'
+export { default as doctor } from './images/doctor.jpg'
+export { default as doctor2 } from './images/doctor2.png'
+export { default as doctor3 } from './images/doctor3.png'
+export { default as doctor4 } from './images/doctor4.png'

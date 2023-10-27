@@ -27,6 +27,6 @@ export const theme = createTheme({
       },
    },
    typography: {
-      fontFamily: ['Manpore', 'Poppins'],
+      fontFamily: ['Manrope', 'Poppins'],
    },
 })

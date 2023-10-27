@@ -1,9 +1,9 @@
 import React from 'react'
 import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
+import MuiSelect from '@mui/material/Select'
 import styled from '@emotion/styled'
 
-export const SelectUi = ({ options }) => {
+export const Select = ({ options }) => {
    const [selectedOption, setSelectedOption] = React.useState([])
 
    const handleChangeMultiple = (event) => {
@@ -13,7 +13,7 @@ export const SelectUi = ({ options }) => {
    return (
       <div>
          <StyledFormControl>
-            <Select
+            <MuiSelect
                multiple
                native
                value={selectedOption}
@@ -24,7 +24,7 @@ export const SelectUi = ({ options }) => {
                      {option}
                   </option>
                ))}
-            </Select>
+            </MuiSelect>
          </StyledFormControl>
       </div>
    )

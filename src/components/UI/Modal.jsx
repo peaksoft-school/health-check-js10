@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import MuiModal from '@mui/material/Modal'
 
-export const Modal = ({
+const Modal = ({
    children,
    open,
    onClose,
@@ -9,6 +9,7 @@ export const Modal = ({
    width,
    height,
    padding = '30px 20px',
+   borderRadius = '16px',
    ...rest
 }) => {
    const style = {
@@ -19,7 +20,7 @@ export const Modal = ({
       left: '50%',
       transform: 'translate(-50%, -50%)',
       padding: { padding },
-      borderRadius: '16px',
+      borderRadius: { borderRadius },
       backgroundColor: bgcolor === 'blue' ? '#EBF2FC' : '#FFFFFF',
       display: 'flex',
       justifyContent: 'center',
@@ -41,3 +42,5 @@ export const Modal = ({
       </MuiModal>
    )
 }
+
+export default Modal

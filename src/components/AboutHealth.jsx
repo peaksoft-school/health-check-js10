@@ -1,67 +1,81 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
+import { Box } from '@mui/material'
 import { DoctorImg, Rectange, Signature } from '../assets'
+import AboutClinicLayout from './AboutClinicLayout'
 
 const AboutHealth = () => {
    return (
-      <Container>
-         <div>
-            <NavigatePathTitle>
-               <p>
-                  <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-                  <span>О клинике</span>
-               </p>
-            </NavigatePathTitle>
-            <StyledTitleSubject>
-               Здоровье — самое
-               <span style={{ color: '#048741' }}> ценное в жизни</span>
-            </StyledTitleSubject>
-            <StyledMainContainer>
-               <StyledAboutText>
+      <StyledBox>
+         <Container>
+            <div>
+               <NavigatePathTitle>
                   <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor <br /> incididunt ut labore et dolore
-                     magna aliqua. Ut enim ad minim veniam, quis <br /> nostrud
-                     exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                     consequat. <br />
-                     Duis aute irure dolor in reprehenderit in voluptate velit
-                     esse cillum dolore eu <br /> fugiat nulla pariatur.
-                     Excepteur sint occaecat cupidatat non proident, sunt in
-                     <br /> culpa qui officia deserunt mollit anim id est
-                     laborum
+                     <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+                     <span>О клинике</span>
                   </p>
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor <br /> incididunt ut labore et dolore
-                     magna aliqua. Ut enim ad minim veniam, quis <br /> nostrud
-                     exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                     consequat. <br />
-                     Duis aute irure dolor in reprehenderit in voluptate velit
-                     esse cillum dolore eu <br /> fugiat nulla pariatur.
-                     Excepteur sint occaecat cupidatat non proident, sunt in
-                     <br /> culpa qui officia deserunt mollit anim id est
-                     laborum
-                  </p>
-                  <StyledSignatureImG>
-                     <img src={Signature} alt="main doctor" />
-                  </StyledSignatureImG>
-               </StyledAboutText>
-               <div>
-                  <StyledImageContainer>
-                     <img src={Rectange} alt="rectange" />
-                     <StyledDoctorImG src={DoctorImg} alt="" />
-                     <h3>Руководитель клиники Medical Clinic</h3>
-                     <h2> Аниса Михаилова </h2>
-                  </StyledImageContainer>
-               </div>
-            </StyledMainContainer>
-         </div>
-      </Container>
+               </NavigatePathTitle>
+               <StyledTitleSubject>
+                  Здоровье — самое
+                  <span style={{ color: '#048741' }}> ценное в жизни</span>
+               </StyledTitleSubject>
+               <StyledMainContainer>
+                  <StyledAboutText>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor <br /> incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
+                        <br /> nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. <br />
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu <br /> fugiat nulla
+                        pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in
+                        <br /> culpa qui officia deserunt mollit anim id est
+                        laborum
+                     </p>
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor <br /> incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
+                        <br /> nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. <br />
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu <br /> fugiat nulla
+                        pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in
+                        <br /> culpa qui officia deserunt mollit anim id est
+                        laborum
+                     </p>
+                     <StyledSignatureImG>
+                        <img src={Signature} alt="main doctor" />
+                     </StyledSignatureImG>
+                  </StyledAboutText>
+                  <div>
+                     <StyledImageContainer>
+                        <img src={Rectange} alt="rectange" />
+                        <StyledDoctorImG src={DoctorImg} alt="" />
+                        <h3>Руководитель клиники Medical Clinic</h3>
+                        <h2> Аниса Михаилова </h2>
+                     </StyledImageContainer>
+                  </div>
+               </StyledMainContainer>
+            </div>
+         </Container>
+         <AboutClinicLayout />
+      </StyledBox>
    )
 }
 
 export default AboutHealth
+
+const StyledBox = styled(Box)(() => ({
+   paddingBottom: '10rem',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '6rem',
+}))
 
 const NavigatePathTitle = styled('div')(() => ({
    fontSize: '0.875rem',

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
-import { Box } from '@mui/material'
 import Button from './UI/Button'
 
 import {
@@ -11,82 +10,71 @@ import {
    Doctors,
    ForwardVector,
 } from '../assets'
-import AboutHealth from './AboutHealth'
 
 const AboutClinicLayout = ({ place, onClick }) => {
    return (
-      <StyledBox>
-         <AboutHealth />
-         <Block>
-            <StyledMainBlock>
-               <StyledAboutSecondText>
-                  <StyledTitleText>
-                     О нашей клинике
-                     <span style={{ color: '#048741' }}> “MedCheck”</span>
-                  </StyledTitleText>
-                  <p>
-                     Вся наша команда готова обеспечить вам медицинский уход
-                     <br /> и заботу на самом высоком уровне. Наша главная
-                     задача — оказать <br /> Вам теплый прием и обеспечить самый
-                     лучший медицинский уход. <br /> У нас Вы в хороших руках! В
-                     нашей клинике используются только <br />
-                     качественные материалы и проверенные технологии. Для
-                     каждого <br />
-                     клиента специалисты нашей клиники разработают <br />
-                     индивидуальный план лечения, подробно рассказывая о каждом
-                     <br /> этапе.
-                  </p>
-                  <p>
-                     Доброжелательность и уважительное отношение к пациентам,
-                     <br /> не только материальная, но и моральная
-                     ответственность <br /> за результаты лечения — все это
-                     взято за основу политики Medical <br /> Clinic.
-                     Профессионализм и высокое качество оказываемых услуг
-                     <br />
-                     помогают нам привлечь пациентов которые рекомендуют нас
-                     <br /> своим родным и близким.
-                  </p>
-                  <p>
-                     Уже 20 лет мы работаем на уровне лучших мировых стандартов,
-                     <br />
-                     внедряя и развивая передовые методы лечения для сохранения
-                     <br />
-                     здоровья наших пациентов.
-                  </p>
+      <Block>
+         <StyledMainBlock>
+            <StyledAboutSecondText>
+               <StyledTitleText>
+                  О нашей клинике
+                  <span> “MedCheck”</span>
+               </StyledTitleText>
+               <p>
+                  Вся наша команда готова обеспечить вам медицинский уход
+                  <br /> и заботу на самом высоком уровне. Наша главная задача —
+                  оказать <br /> Вам теплый прием и обеспечить самый лучший
+                  медицинский уход. <br /> У нас Вы в хороших руках! В нашей
+                  клинике используются только <br />
+                  качественные материалы и проверенные технологии. Для каждого{' '}
+                  <br />
+                  клиента специалисты нашей клиники разработают <br />
+                  индивидуальный план лечения, подробно рассказывая о каждом
+                  <br /> этапе.
+               </p>
+               <p>
+                  Доброжелательность и уважительное отношение к пациентам,
+                  <br /> не только материальная, но и моральная ответственность{' '}
+                  <br /> за результаты лечения — все это взято за основу
+                  политики Medical <br /> Clinic. Профессионализм и высокое
+                  качество оказываемых услуг
+                  <br />
+                  помогают нам привлечь пациентов которые рекомендуют нас
+                  <br /> своим родным и близким.
+               </p>
+               <p>
+                  Уже 20 лет мы работаем на уровне лучших мировых стандартов,
+                  <br />
+                  внедряя и развивая передовые методы лечения для сохранения
+                  <br />
+                  здоровья наших пациентов.
+               </p>
 
-                  {place === 'main' ? (
-                     <StyledNavlink to="about">
-                        Читать подробнее o клинике <ForwardVector />
-                     </StyledNavlink>
-                  ) : (
-                     <StyledButton onClick={onClick}>
-                        Записаться на консультацию
-                     </StyledButton>
-                  )}
-               </StyledAboutSecondText>
-               <StyledImageBlock>
-                  <StyledBuildingImG src={Building} alt="" />
+               {place === 'main' ? (
+                  <StyledNavlink to="about">
+                     Читать подробнее o клинике <ForwardVector />
+                  </StyledNavlink>
+               ) : (
+                  <StyledButton variant="outlined" onClick={onClick}>
+                     Записаться на консультацию
+                  </StyledButton>
+               )}
+            </StyledAboutSecondText>
+            <StyledImageBlock>
+               <StyledBuildingImG src={Building} alt="" />
 
-                  <StyledSlidingImG>
-                     <StyledBuildingImG src={Conference} alt="conference" />
-                     <StyledCenterBuildingImG src={Doctors} alt="doctors" />
-                     <StyledBuildingImG src={Consilium} alt="consilium" />
-                  </StyledSlidingImG>
-               </StyledImageBlock>
-            </StyledMainBlock>
-         </Block>
-      </StyledBox>
+               <StyledSlidingImG>
+                  <StyledBuildingImG src={Conference} alt="conference" />
+                  <StyledCenterBuildingImG src={Doctors} alt="doctors" />
+                  <StyledBuildingImG src={Consilium} alt="consilium" />
+               </StyledSlidingImG>
+            </StyledImageBlock>
+         </StyledMainBlock>
+      </Block>
    )
 }
 
 export default AboutClinicLayout
-
-const StyledBox = styled(Box)(() => ({
-   paddingBottom: '10rem',
-   display: 'flex',
-   flexDirection: 'column',
-   gap: '6rem',
-}))
 
 const StyledAboutSecondText = styled.div`
    width: 50%;
@@ -136,6 +124,9 @@ const Block = styled.div`
    max-width: 100%;
    display: flex;
    justify-content: center;
+   span {
+      color: #048741;
+   }
 `
 
 const StyledTitleText = styled.h1`
@@ -177,26 +168,6 @@ const StyledNavlink = styled(NavLink)(() => ({
 }))
 
 const StyledButton = styled(Button)(() => ({
-   '&': {
-      alignSelf: 'start',
-      marginTop: '1.25rem',
-      borderRadius: '0.625rem',
-      padding: '0.625rem 1.25rem',
-      border: '1px solid #048741',
-      color: '#048741',
-      fontWeight: '500',
-      fontSize: '0.875rem',
-      lineHeight: '1.188rem',
-      background: '#fff',
-      transition: '0.5s',
-      cursor: 'pointer',
-   },
-   '&:hover': {
-      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
-      color: '#FFFFFF',
-   },
-   '&:active': {
-      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
-      color: '#FFFFFF',
-   },
+   alignSelf: 'start',
+   marginTop: '1.25rem',
 }))

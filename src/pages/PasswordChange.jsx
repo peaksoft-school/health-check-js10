@@ -180,6 +180,7 @@ const FieldStyled = styled(TextField)(() => ({
    },
 }))
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
+   marginTop: '1rem',
    color: 'red',
    fontSize: '0.7rem',
    fontFamily: 'Manrope',

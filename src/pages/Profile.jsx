@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { styled } from '@mui/material'
@@ -74,6 +74,7 @@ const Profile = () => {
                   <div className="box">
                      <labelStyled htmlFor="usertelefone">Телефон</labelStyled>
                      <FieldStyled
+                        error={errors.number}
                         type="text"
                         name="usertelefone"
                         placeholder="+996 (_ _ _) _ _  _ _  _ _"
@@ -124,6 +125,7 @@ const FieldStyled = styled(Field)(() => ({
    paddingLeft: '1.125rem',
 }))
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
+   marginTop: '1rem',
    color: 'red',
    fontSize: '0.7rem',
    fontFamily: 'Manrope',

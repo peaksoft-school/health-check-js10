@@ -1,12 +1,6 @@
-import { Profiler } from 'react'
 import './App.css'
 
 function App() {
-   return (
-      <div className="App">
-         <Profiler />
-      </div>
-   )
+   return <div className="App">App</div>
 }
-
 export default App

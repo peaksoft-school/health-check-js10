@@ -3,6 +3,7 @@ import { Formik, ErrorMessage, Form } from 'formik'
 import * as Yup from 'yup'
 import { IconButton, InputAdornment, styled, TextField } from '@mui/material'
 import { HideIcon, ShowIcon } from '../assets'
+import { Input } from '../components/UI/input/Input'
 
 export const PasswordChange = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -50,90 +51,106 @@ export const PasswordChange = () => {
          })}
          onSubmit={(values) => {
             console.log(values)
-            console.log('hello')
          }}
       >
          {({ values, handleChange }) => (
             <FormStyled>
-               <div>
-                  <label htmlFor="lastpassword">Старый пароль</label>
-                  <FieldStyled
-                     type={showPassword ? 'text' : 'password'}
-                     id="lastpassword"
-                     name="lastpassword"
-                     placeholder="Введите ваш пароль"
-                     InputProps={{
-                        endAdornment: (
-                           <InputAdornment position="start">
-                              <IconButton
-                                 onMouseDown={showPasswordHandle}
-                                 onClick={togglePasswordVisibility}
-                              >
-                                 {showPassword ? <ShowIcon /> : <HideIcon />}
-                              </IconButton>
-                           </InputAdornment>
-                        ),
-                     }}
-                     onChange={handleChange}
-                     value={values.lastpassword}
-                  />
+               <DivContainerStyled>
+                  <div className="boxOne">
+                     <label className="label" htmlFor="lastpassword">
+                        Старый пароль
+                     </label>
+                     <InputStyled
+                        type={showPassword ? 'text' : 'password'}
+                        id="lastpassword"
+                        name="lastpassword"
+                        placeholder="Введите ваш пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment position="start">
+                                 <IconButton
+                                    onMouseDown={showPasswordHandle}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPassword ? <ShowIcon /> : <HideIcon />}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.lastpassword}
+                     />
 
-                  <ErrorMessageStyled name="lastpassword" component="div" />
-               </div>
-               <div>
-                  <label htmlFor="newpassword"> Новый пароль</label>
-                  <FieldStyled
-                     type={showPasswordCopy ? 'text' : 'password'}
-                     id="newpassword"
-                     name="newpassword"
-                     placeholder="Введите новый пароль"
-                     InputProps={{
-                        endAdornment: (
-                           <InputAdornment className="Eyes">
-                              <IconButton
-                                 onMouseDown={showPasswordHandler}
-                                 onClick={togglePasswordVisibility}
-                              >
-                                 {showPasswordCopy ? (
-                                    <ShowIcon />
-                                 ) : (
-                                    <HideIcon />
-                                 )}
-                              </IconButton>
-                           </InputAdornment>
-                        ),
-                     }}
-                     onChange={handleChange}
-                     value={values.newpassword}
-                  />
-                  <ErrorMessageStyled name="newpassword" component="div" />
-               </div>
-               <div>
-                  <label htmlFor="confirmpassword">
-                     Подтвердить новый пароль
-                  </label>
-                  <FieldStyled
-                     type={showPasswordEnd ? 'text' : 'password'}
-                     id="confirmpassword"
-                     name="confirmpassword"
-                     placeholder="Подтвердите пароль"
-                     InputProps={{
-                        endAdornment: (
-                           <InputAdornment className="Eyes">
-                              <IconButton
-                                 onMouseDown={showPasswordEndHandler}
-                                 onClick={togglePasswordVisibility}
-                              >
-                                 {showPasswordEnd ? <ShowIcon /> : <HideIcon />}
-                              </IconButton>
-                           </InputAdornment>
-                        ),
-                     }}
-                     onChange={handleChange}
-                     value={values.confirmpassword}
-                  />
-                  <ErrorMessageStyled name="confirmpassword" component="div" />
-               </div>
+                     <ErrorMessageStyled name="lastpassword" component="div" />
+                  </div>
+
+                  <div className="boxOne">
+                     <label className="label" htmlFor="newpassword">
+                        {' '}
+                        Новый пароль
+                     </label>
+                     <InputStyled
+                        type={showPasswordCopy ? 'text' : 'password'}
+                        id="newpassword"
+                        name="newpassword"
+                        placeholder="Введите новый пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment className="Eyes">
+                                 <IconButton
+                                    onMouseDown={showPasswordHandler}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPasswordCopy ? (
+                                       <ShowIcon />
+                                    ) : (
+                                       <HideIcon />
+                                    )}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.newpassword}
+                     />
+                     <ErrorMessageStyled name="newpassword" component="div" />
+                  </div>
+
+                  <div className="boxOne">
+                     <label className="label" htmlFor="confirmpassword">
+                        Подтвердить новый пароль
+                     </label>
+                     <InputStyled
+                        type={showPasswordEnd ? 'text' : 'password'}
+                        id="confirmpassword"
+                        name="confirmpassword"
+                        placeholder="Подтвердите пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment className="Eyes">
+                                 <IconButton
+                                    onMouseDown={showPasswordEndHandler}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPasswordEnd ? (
+                                       <ShowIcon />
+                                    ) : (
+                                       <HideIcon />
+                                    )}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.confirmpassword}
+                     />
+                     <ErrorMessageStyled
+                        name="confirmpassword"
+                        component="div"
+                     />
+                  </div>
+               </DivContainerStyled>
+
                <div className="buttonStyle">
                   <button className="buttons" type="button">
                      назад
@@ -155,6 +172,7 @@ const FormStyled = styled(Form)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '3rem',
+
    '.buttonStyle': {
       width: '62.5rem',
       display: 'flex',
@@ -168,20 +186,36 @@ const FormStyled = styled(Form)(() => ({
       marginLeft: '1.125rem',
    },
 }))
-const FieldStyled = styled(TextField)(() => ({
+const DivContainerStyled = styled('div')(() => ({
    display: 'flex',
-   maxWidth: '20.625rem',
-   height: '2.375rem',
-   fontFamily: 'Manrope',
-   '.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
-      fontSize: '1rem',
-      font: 'caption',
-      fontFamily: 'Manrope',
+   flexDirection: 'column',
+   '.boxOne': {
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: '0.5rem',
+      '.label': {
+         widht: '445.45rem',
+         fontFamily: 'Manrope',
+         color: '#464444',
+         fontSize: '1rem',
+      },
    },
 }))
+
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
-   marginTop: '1rem',
+   marginTop: '0.1rem',
    color: 'red',
    fontSize: '0.7rem',
    fontFamily: 'Manrope',
+}))
+
+const InputStyled = styled(Input)(() => ({
+   '.MuiOutlinedInput-root': {
+      widht: '20.625rem',
+      height: '1.875rem',
+      fontFamily: 'Manrope',
+      color: '#222222',
+      fontSize: '0.8rem',
+      paddingLeft: '1.125rem',
+   },
 }))

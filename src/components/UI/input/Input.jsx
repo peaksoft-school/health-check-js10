@@ -9,8 +9,10 @@ export const Input = React.forwardRef(
          placeholder,
          invalid,
          error,
+         type,
          height = '3rem',
          width = '26rem',
+         ...rest
       },
       ref
    ) => {
@@ -18,6 +20,7 @@ export const Input = React.forwardRef(
          '.MuiOutlinedInput-root': {
             width: { width },
             height: { height },
+            fontFamily: 'Manrope',
             borderRadius: '8px',
             '& fieldset': {
                borderColor: '#D9D9D9',
@@ -49,6 +52,8 @@ export const Input = React.forwardRef(
             placeholder={placeholder}
             error={Boolean(error)}
             invalid={invalid}
+            type={type}
+            {...rest}
          />
       )
    }

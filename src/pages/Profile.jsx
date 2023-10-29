@@ -1,16 +1,10 @@
-// import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { styled } from '@mui/material'
 import { Input } from '../components/UI/input/Input'
+import Button from '../components/UI/Button'
 
 const Profile = () => {
-   // const [back, setBack] = useState(false)
-
-   // const backHandler = () => {
-   //    setBack(!back)
-   //    console.log('back')
-   // }
    const initialValues = {
       username: '',
       userlastname: '',
@@ -22,10 +16,10 @@ const Profile = () => {
       username: Yup.string().required('Имя обязательно'),
       userlastname: Yup.string().required('Фамилия обязательно'),
       useremail: Yup.string()
-         .email('Email @ обязателен')
-         .required('Email @ обязателен'),
+         .email('Неверный формат электронной почты')
+         .required('Неверный формат электронной почты'),
       usertelefone: Yup.string()
-         .min(13, 'Телефон должен содержать максимум 13 символов')
+         .min(13, 'Телефон должен содержать максимум 14 символов')
          .required('Телефонь обязателен'),
    })
    const onSubmit = (values) => {
@@ -42,8 +36,15 @@ const Profile = () => {
       >
          {({ values, handleChange }) => (
             <FormStyled>
+               <h2 className="cap">Профиль</h2>
+               <div className="span">
+                  <span className="spanGrey">личные данные</span>
+                  <span className="spanGrey">Сменить пароль</span>
+               </div>
+               <h3 className="personalData">Ваши личные данные</h3>
+
                <div className="firstContainer">
-                  <div className="boxOne">
+                  <div className="Parent">
                      <div className="box">
                         <label className="label" htmlFor="username">
                            Имя
@@ -94,9 +95,9 @@ const Profile = () => {
                      </div>
 
                      <div className="box">
-                        <labelStyled className="label" htmlFor="usertelefone">
+                        <label className="label" htmlFor="usertelefone">
                            Телефон
-                        </labelStyled>
+                        </label>
                         <InputStyled
                            onChange={handleChange}
                            value={values.usertelefone}
@@ -114,16 +115,16 @@ const Profile = () => {
                </div>
 
                <ButtonStyled>
-                  <button
+                  <Button
                      className="buttonStyle"
                      type="button"
                      onClick={handleCancel}
                   >
                      назад
-                  </button>
-                  <button className="buttonStyle" type="submit">
+                  </Button>
+                  <Button className="buttonStyle" type="submit">
                      Редактировать
-                  </button>
+                  </Button>
                </ButtonStyled>
             </FormStyled>
          )}
@@ -137,13 +138,13 @@ const FormStyled = styled(Form)(() => ({
    display: 'flex',
    flexDirection: 'column',
    fontFamily: 'Manrope',
-   marginTop: '4rem',
+   marginTop: '1rem',
    '.firstContainer': {
       display: 'flex',
       gap: '2rem',
       marginLeft: '7.5rem',
    },
-   '.boxOne': { display: 'flex', flexDirection: 'column' },
+   '.Parent': { display: 'flex', flexDirection: 'column' },
    '.box': {
       display: 'flex',
       flexDirection: 'column',
@@ -153,7 +154,38 @@ const FormStyled = styled(Form)(() => ({
       fontFamily: 'Manrope',
       color: '#464444',
    },
+   '.personalData': {
+      color: '#222222',
+      fontFamily: 'Manrope',
+      marginTop: '1.5rem',
+      marginLeft: '7.6rem',
+      letterSpacing: '0.2px',
+      fontWeight: '600',
+   },
+   '.cap': {
+      marginTop: '1.875rem',
+      marginLeft: '7.7rem',
+      color: '#222222',
+   },
+   '.span': {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '1.875rem',
+      marginTop: '1.3rem',
+      marginLeft: '7.6rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+   },
+   '.spanGrey': {
+      fontFamily: 'Manrope',
+      color: '#959595',
+   },
+   '.spanGrey:hover': {
+      color: '#048741',
+      textDecoration: 'underline',
+   },
 }))
+
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
    marginTop: '3.3rem',
    color: 'red',
@@ -167,7 +199,7 @@ const InputStyled = styled(Input)(() => ({
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '0.8rem',
-      paddingLeft: '1.125rem',
+      paddingLeft: '0.125rem',
    },
 }))
 
@@ -177,10 +209,12 @@ const ButtonStyled = styled('div')(() => ({
    marginTop: '2.5rem',
    '& .buttonStyle': {
       height: '2.813rem',
-      width: '9rem',
+      width: '10rem',
       borderRadius: ' 0.625rem',
       fontSize: '0.875rem',
       fontFamily: 'Manrope',
-      marginLeft: '1.125rem',
+      marginLeft: '0.125rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
    },
 }))

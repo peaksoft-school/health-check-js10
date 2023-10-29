@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import { IconButton, InputAdornment, styled, TextField } from '@mui/material'
 import { HideIcon, ShowIcon } from '../assets'
 import { Input } from '../components/UI/input/Input'
+import Button from '../components/UI/Button'
 
 export const PasswordChange = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -67,7 +68,7 @@ export const PasswordChange = () => {
                         placeholder="Введите ваш пароль"
                         InputProps={{
                            endAdornment: (
-                              <InputAdornment position="start">
+                              <InputAdornment position="Eyes">
                                  <IconButton
                                     onMouseDown={showPasswordHandle}
                                     onClick={togglePasswordVisibility}
@@ -152,12 +153,12 @@ export const PasswordChange = () => {
                </DivContainerStyled>
 
                <div className="buttonStyle">
-                  <button className="buttons" type="button">
+                  <Button className="buttons" type="button">
                      назад
-                  </button>
-                  <button className="buttons" type="submit">
+                  </Button>
+                  <Button className="buttons" type="submit">
                      подтвердить
-                  </button>
+                  </Button>
                </div>
             </FormStyled>
          )}
@@ -172,18 +173,19 @@ const FormStyled = styled(Form)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '3rem',
-
    '.buttonStyle': {
       width: '62.5rem',
       display: 'flex',
    },
    '.buttons': {
       height: '2.813rem',
-      width: '9.375rem',
+      width: '12.563rem',
       borderRadius: ' 0.625rem',
       fontSize: '0.875rem',
       fontFamily: 'Manrope',
-      marginLeft: '1.125rem',
+      marginLeft: '0.125rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
    },
 }))
 const DivContainerStyled = styled('div')(() => ({
@@ -216,6 +218,6 @@ const InputStyled = styled(Input)(() => ({
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '0.8rem',
-      paddingLeft: '1.125rem',
+      paddingLeft: '0.125rem',
    },
 }))

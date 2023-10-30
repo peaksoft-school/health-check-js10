@@ -1,7 +1,7 @@
 export { ReactComponent as Pagination } from './icons/dots.svg'
 export { ReactComponent as NextImg } from './icons/nextImg.svg'
 export { ReactComponent as PreviousImg } from './icons/previousImg.svg'
-export { ReactComponent as CloseIcon } from './icons/closeIcon.svg'
+export { ReactComponent as CloseIcon } from './icons/CloseIcon.svg'
 export { ReactComponent as GoBackIcon } from './icons/goBack.svg'
 export { ReactComponent as AnestIcon } from './icons/anesteziologiya.svg'
 export { ReactComponent as GroupIcon } from './icons/group.svg'

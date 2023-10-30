@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { FormLabel, InputAdornment } from '@mui/material'
 import PhotoWoman from '../assets/images/applicationform-woman.png'
 import Button from './UI/Button'
-import ArrowIcon from '../assets/icons/arrow.svg'
-import UsersIcon from '../assets/icons/Users.svg'
-import PhoneIcon from '../assets/icons/phone.svg'
+import { UserIcon, PhoneIcon, ArrowIcon } from '../assets'
+import { Input } from './UI/input/Input'
 
 const ApplicationForm = () => {
    const [formData, setFormData] = useState({
@@ -23,27 +23,47 @@ const ApplicationForm = () => {
          ...formData,
          [name]: value,
       })
-
       if (name === 'name') {
          const nameRegex = /^[A-Za-z\s]+$/
-         setErrors({
-            ...errors,
-            name: nameRegex.test(value) ? '' : 'Неправильное имя',
-         })
+         if (!nameRegex.test(value)) {
+            setErrors({
+               ...errors,
+               name: 'Неправильное имя',
+            })
+         } else {
+            setErrors({
+               ...errors,
+               name: '',
+            })
+         }
       } else if (name === 'phoneNumber') {
          const phoneRegex = /^\+996\d{9}$/
-         setErrors({
-            ...errors,
-            phoneNumber: phoneRegex.test(value) ? '' : 'Неправильный номер',
-         })
+         if (!phoneRegex.test(value)) {
+            setErrors({
+               ...errors,
+               phoneNumber: 'Неправильный номер',
+            })
+         } else {
+            setErrors({
+               ...errors,
+               phoneNumber: '',
+            })
+         }
       }
    }
 
    const handleSubmit = (e) => {
       e.preventDefault()
-      localStorage.setItem('formData', JSON.stringify(formData))
+      if (!formData.name || !formData.phoneNumber) {
+         setErrors({
+            ...errors,
+            name: !formData.name ? 'Это поле обязательно' : '',
+            phoneNumber: !formData.phoneNumber ? 'Это поле обязательно' : '',
+         })
+         return
+      }
+      console.log('Form Data:', formData)
    }
-
    return (
       <ApplicationFormContainer>
          <ApplicationFormInnerContainer>
@@ -55,34 +75,48 @@ const ApplicationForm = () => {
 
             <form onSubmit={handleSubmit}>
                <div>
-                  <label htmlFor="name">Как к Вам обратиться?</label>
-                  <img src={UsersIcon} alt="" />
-                  <StyledInput
-                     type="text"
+                  <FormLabel>Как к Вам обратиться?</FormLabel>
+                  <Input
+                     className="input-container"
+                     InputProps={{
+                        startAdornment: (
+                           <InputAdornment position="start">
+                              <UserIcon className="inner_icon" />
+                           </InputAdornment>
+                        ),
+                     }}
                      name="name"
-                     id="name"
                      value={formData.name}
                      onChange={handleChange}
                      placeholder="Введите имя"
+                     width="16rem"
+                     height="2.6rem"
                   />
                   <span>{errors.name}</span>
                </div>
                <div>
-                  <label htmlFor="phoneNumber">Номер мобильного телефона</label>
-                  <img src={PhoneIcon} alt="" />
-                  <StyledInput
-                     type="text"
+                  <FormLabel>Номер мобильного телефона</FormLabel>
+                  <Input
+                     className="input-container"
+                     InputProps={{
+                        startAdornment: (
+                           <InputAdornment position="start">
+                              <PhoneIcon className="inner_icon" />
+                           </InputAdornment>
+                        ),
+                     }}
                      name="phoneNumber"
-                     id="phoneNumber"
                      value={formData.phoneNumber}
                      onChange={handleChange}
                      placeholder="+996 (___) __-__-__"
+                     width="16rem"
+                     height="2.6rem"
                   />
                   <span>{errors.phoneNumber}</span>
                </div>
             </form>
             <StyledButton type="submit" onClick={handleSubmit}>
-               ОТПРАВИТЬ ЗАЯВКУ <img src={ArrowIcon} alt="" />
+               ОТПРАВИТЬ ЗАЯВКУ <ArrowIcon className="arrow-icon" />
             </StyledButton>
          </ApplicationFormInnerContainer>
          <img src={PhotoWoman} alt="" />
@@ -100,11 +134,28 @@ const ApplicationFormContainer = styled('div')(() => ({
    h2: {
       fontSize: '2.2rem',
       fontWeight: '500',
+      textAlign: 'center',
    },
    p: {
       fontSize: '1.1rem',
       fontWeight: '400',
+      textAlign: 'center',
+      paddingTop: '2rem',
    },
+   img: {
+      marginLeft: '-5rem',
+   },
+}))
+
+const ApplicationFormInnerContainer = styled('div')(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   marginTop: '80px',
+   background: '#DBEBFF',
+   borderRadius: '1rem',
+   padding: '60px',
+   gap: '1rem',
    form: {
       display: 'flex',
       flexDirection: 'row',
@@ -114,58 +165,44 @@ const ApplicationFormContainer = styled('div')(() => ({
       div: {
          display: 'flex',
          flexDirection: 'column',
-         gap: '0.5rem',
-         position: 'relative',
       },
       label: {
          fontSize: '0.9rem',
          color: '#4D4E40',
+         fontFamily: 'inherit',
       },
       span: {
          color: 'red',
       },
-      img: {
-         position: 'absolute',
-         top: '3rem',
-         left: '6rem',
-         transform: 'translateY(-50%)',
+      '& input': {
+         background: '#fff',
+         width: '11rem',
+         height: '0rem',
+         position: 'relative',
+         top: '0.2rem',
+         '& :focus': {
+            background: '#fff',
+         },
+         '& :hover': {
+            background: '#fff',
+         },
+      },
+      '& .input-container': {
+         background: '#ffff',
+         border: '1px solid #009344',
+         borderRadius: '8px',
+         '& .inner_icon': {
+            position: 'absolute',
+            left: '1rem',
+            bottom: '0.8rem',
+         },
       },
    },
-   img: {
-      marginLeft: '-5rem',
-   },
-}))
-
-const StyledInput = styled('input')(() => ({
-   width: '16rem',
-   height: '2.6rem',
-   border: '1px solid #009344',
-   borderRadius: '0.5rem',
-   paddingLeft: '3rem',
-   '&:focus': {
-      border: '1px solid #009344',
-      textAlign: 'left',
-   },
-   '&:active': {
-      border: '1px solid #009344',
-   },
-   '&::placeholder': {
-      color: '#C4C4C4',
-      fontFamily: 'Manrope',
-      fontSize: '1rem',
-   },
-}))
-
-const ApplicationFormInnerContainer = styled('div')(() => ({
-   marginTop: '80px',
-   background: '#DBEBFF',
-   borderRadius: '1rem',
-   padding: '60px',
 }))
 
 const StyledButton = styled(Button)(() => ({
    borderRadius: '3rem',
-   img: {
-      paddingLeft: '6rem',
+   '& .arrow-icon': {
+      marginLeft: '0.5rem',
    },
 }))

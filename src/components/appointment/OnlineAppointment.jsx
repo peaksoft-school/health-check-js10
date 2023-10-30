@@ -3,7 +3,6 @@ import { styled } from '@mui/material'
 import Drawer from '../UI/Drawer'
 import { CloseIcon } from '../../assets'
 import ChooseServices from './ChooseServices'
-import ChooseSpecialist from './ChooseSpecialist'
 
 const OnlineAppointment = () => {
    const [open, setOpen] = useState(false)
@@ -20,7 +19,6 @@ const OnlineAppointment = () => {
                   <Title>Онлайн запись</Title>
                </Header>
                <ChooseServices />
-               <ChooseSpecialist />
             </Container>
          </Drawer>
          <button type="button" onClick={handleOpen}>

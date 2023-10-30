@@ -5,6 +5,8 @@ export { ReactComponent as GoogleIcon } from './icons/image 90.svg'
 export { ReactComponent as Pagination } from './icons/dots.svg'
 export { ReactComponent as NextImg } from './icons/nextImg.svg'
 export { ReactComponent as PreviousImg } from './icons/previousImg.svg'
+export { ReactComponent as drElena } from './icons/drElenag.svg'
+export { ReactComponent as deleteX } from './icons/deleteX.svg'
 
 export { default as ForwardVector } from './icons/Vector (4).svg'
 export { default as Building } from './images/Rectangle 387.png'

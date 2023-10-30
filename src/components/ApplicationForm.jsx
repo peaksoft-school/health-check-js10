@@ -24,7 +24,7 @@ const ApplicationForm = () => {
          [name]: value,
       })
       if (name === 'name') {
-         const nameRegex = /^[A-Za-z\s]+$/
+         const nameRegex = /^[A-Za-zА-Яа-я\s]+$/
          if (!nameRegex.test(value)) {
             setErrors({
                ...errors,
@@ -92,7 +92,7 @@ const ApplicationForm = () => {
                      width="16rem"
                      height="2.6rem"
                   />
-                  <span>{errors.name}</span>
+                  <span className="error-message">{errors.name}</span>
                </div>
                <div>
                   <FormLabel>Номер мобильного телефона</FormLabel>
@@ -112,7 +112,7 @@ const ApplicationForm = () => {
                      width="16rem"
                      height="2.6rem"
                   />
-                  <span>{errors.phoneNumber}</span>
+                  <span className="error-message">{errors.phoneNumber}</span>
                </div>
             </form>
             <StyledButton type="submit" onClick={handleSubmit}>
@@ -165,6 +165,8 @@ const ApplicationFormInnerContainer = styled('div')(() => ({
       div: {
          display: 'flex',
          flexDirection: 'column',
+         position: 'relative',
+         top: '4px',
       },
       label: {
          fontSize: '0.9rem',
@@ -173,28 +175,23 @@ const ApplicationFormInnerContainer = styled('div')(() => ({
       },
       span: {
          color: 'red',
+         position: 'absolute',
+         top: '4.5rem',
       },
       '& input': {
          background: '#fff',
          width: '11rem',
-         height: '0rem',
-         position: 'relative',
-         top: '0.2rem',
-         '& :focus': {
-            background: '#fff',
-         },
-         '& :hover': {
-            background: '#fff',
-         },
+         height: '0.1rem',
       },
       '& .input-container': {
+         width: '16rem',
+         height: '2.77rem',
          background: '#ffff',
-         border: '1px solid #009344',
          borderRadius: '8px',
          '& .inner_icon': {
             position: 'absolute',
-            left: '1rem',
-            bottom: '0.8rem',
+            right: '6.3rem',
+            top: '0.3rem',
          },
       },
    },

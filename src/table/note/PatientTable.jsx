@@ -1,75 +1,89 @@
 import React from 'react'
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
+import { Button } from '@mui/material'
 import styled from '@emotion/styled'
 
 const PatientTable = () => {
-   const columns = [
-      {
-         id: 1,
-         name: 'Айназик',
-         LastName: 'Бакытова',
-         Email: 'ainazik@gmail.com',
-         TelefonNumber: '+996 707 123 456',
-         date: '23.01.23 ',
-         oclock: '11:30',
-         expert: 'Манак Елена',
-         services: 'Дерматология',
-      },
-   ]
-
    return (
       <DivStyled>
          <h2>Мои записи</h2>
-         <div className="box">
-            <p>Статус</p>
-            <button type="submit">Подтверждён</button>
-         </div>
+         <p>Статус</p>
+         <Button type="submit">Подтверждён</Button>
 
-         <Table>
-            <TableHead>
-               {columns.map((column) => (
-                  <TableRow className="TableData" key={column.id}>
-                     <TableCell>{column.name}</TableCell>
-                     <TableCell>{column.LastName}</TableCell>
-                     <TableCell>{column.Email}</TableCell>
-                     <TableCell>{column.TelefonNumber}</TableCell>
-                     <TableCell>{column.date}</TableCell>
-                     <TableCell>{column.oclock}</TableCell>
-                     <TableCell>{column.expert}</TableCell>
-                     <TableCell>{column.services}</TableCell>
-                  </TableRow>
-               ))}
-            </TableHead>
-         </Table>
+         <div className="box">
+            <ul>
+               <ul className="child">
+                  <li>Имя</li>
+                  <li>Айназик</li>
+               </ul>
+
+               <ul className="child">
+                  <li>Фамилия</li>
+                  <li>Бакытова</li>
+               </ul>
+
+               <ul className="child">
+                  <li>Email</li>
+                  <li>ainazik@gmail.com</li>
+               </ul>
+               <ul className="child">
+                  <li>Номер телефона</li>
+                  <li>+996 707 123 456</li>
+               </ul>
+            </ul>
+
+            <ul className="boxtwo">
+               <ul className="child">
+                  <li>Дата и время</li>
+                  <li>23.01.23</li>
+                  <li>11:30</li>
+               </ul>
+
+               <ul className="child">
+                  <li>Специалист</li>
+                  <li>Манак Елена</li>
+               </ul>
+               <ul className="child">
+                  <li>Услуга</li>
+                  <li>Дерматология</li>
+               </ul>
+            </ul>
+         </div>
       </DivStyled>
    )
 }
-
 export default PatientTable
 
 const DivStyled = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   marginTop: '6.188rem',
+   marginTop: '4.688rem',
    marginLeft: '7.5rem',
+   '&h2': {
+      marginTop: '2.5rem',
+      fontSize: '1.5rem',
+   },
+   '& p': {
+      marginTop: '2.5rem',
+      fontSize: '1rem',
+      fontFamily: 'Inter',
+   },
+   '.css-y5afr5 p': {
+      marginTop: '2.5rem',
+      fontSize: '1rem',
+      fontFamily: 'Inter',
+   },
+   '& Button': {
+      height: 'normal',
+      width: '7rem',
+      borderRadius: '0.625rem',
+      fontSize: '0.675rem',
+      marginTop: '0.75rem',
+      fontFamily: 'Manrope',
+      background: '#346EFB',
+   },
    '.box': {
       display: 'flex',
-      flexDirection: 'column',
-      marginTop: '2.5rem',
-      '& button': {
-         width: '162px',
-         padding: '6px 10px',
-         flexDirection: 'column',
-         borderRadius: '6px',
-         border: 'none',
-         color: '#FFF',
-         marginTop: '0.75rem',
-         background: '#346EFB',
-      },
-   },
-   '.TableData': {
-      display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       gap: '0.5rem',
       marginTop: '0.75rem',
       width: '12.5rem',
@@ -78,4 +92,9 @@ const DivStyled = styled('div')(() => ({
       color: '#222222',
       fontFamily: 'Manrope',
    },
+
+   '.boxtwo': {
+      marginLeft: '13rem',
+   },
+   '.child': { fontFamily: 'Manrope', marginTop: '0.6rem', listStyle: 'none' },
 }))

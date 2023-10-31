@@ -1,69 +1,102 @@
-import { styled } from '@mui/material'
+import * as React from 'react'
+import { IconButton, InputAdornment, styled } from '@mui/material'
 import Button from '../../../components/UI/Button'
+import { Input } from '../../../components/UI/input/Input'
 import {
    GroupIcon,
+   HealthCheckIcon,
    InstagramIcon,
    LocationsIcon,
-   MedCheckIcon,
    PhoneIcon,
    ProfileIcon,
    ScheduleIcon,
+   SearchIcon,
    TelegramIcon,
    WhatsappIcon,
 } from '../../../assets'
+import ReusableMenu from '../../../components/UI/Menu'
 
 const Header = () => {
+   const menuItems = [
+      {
+         title: 'Войти',
+         id: 1,
+      },
+      {
+         title: 'Регистрация',
+         id: 2,
+      },
+   ]
    return (
       <HeaderStyle>
          <FirstNavStyle>
-            <div style={{ textAlign: 'left' }}>
-               <div style={{ display: 'flex' }}>
-                  <img src={LocationsIcon} alt="location" />
-                  <h4>106452, г. Бишкек, Гражданская 119</h4>
+            <div className="containerInfo">
+               <div className="address">
+                  <LocationsIcon />
+                  <h3>106452, г. Бишкек, Гражданская 119</h3>
                </div>
-               <div style={{ display: 'flex' }}>
-                  <img src={ScheduleIcon} alt="schedule" />
-                  <h4>
-                     <span style={{ color: 'green' }}>пн-сб</span> 08:00 до
-                     18:00
-                  </h4>
+               <div className="workingHours">
+                  <ScheduleIcon />
+                  <h3>
+                     <span>пн-сб</span> 08:00 до 18:00
+                  </h3>
                </div>
             </div>
-            <input type="text" placeholder="Поиск по сайту" />
+            <StyledInput
+               type="text"
+               placeholder="Поиск по сайту"
+               InputProps={{
+                  endAdornment: (
+                     <InputAdornment position="end">
+                        <IconButton>
+                           <SearchIcon />
+                        </IconButton>
+                     </InputAdornment>
+                  ),
+               }}
+            />
             <ContainerIcons>
-               <img src={InstagramIcon} alt="instagram" />
-               <img src={TelegramIcon} alt="telegram" />
-               <img src={WhatsappIcon} alt="whatsapp" />
+               <a href="https://www.instagram.com">
+                  <InstagramIcon />
+               </a>
+               <a href="https://t.me/">
+                  <TelegramIcon />
+               </a>
+               <a href="https://www.whatsapp.com">
+                  <WhatsappIcon />
+               </a>
             </ContainerIcons>
-            <div style={{ display: 'flex', gap: '40px' }}>
-               <div>
-                  <div style={{ display: 'flex' }}>
-                     <img src={PhoneIcon} alt="phone" />
-                     <h4>+996(800) 000 000</h4>
+            <div className="contacts">
+               <div className="numbers">
+                  <PhoneIcon />
+                  <div>
+                     <h3>+996(800) 000 000</h3>
+                     <h3>+996(505) 000 000</h3>
                   </div>
-
-                  <h4>+996(505) 000 000</h4>
                </div>
 
-               <img src={ProfileIcon} alt="profile" />
+               <ReusableMenu
+                  buttonIcon={<ProfileIcon />}
+                  menuItems={menuItems}
+               />
             </div>
          </FirstNavStyle>
          <SecondNavStyle>
-            <IconsMedCheckStyle>
-               <img src={GroupIcon} alt="group" />
-               <img src={MedCheckIcon} alt="medcheck" />
-            </IconsMedCheckStyle>
+            <StyleCheck>
+               <GroupIcon />
+               <HealthCheckIcon />
+            </StyleCheck>
             <NavList>
-               <h4>О клинике</h4>
-               <h4>Услуги</h4>
-               <h4>Врачи</h4>
-               <h4>Прайс</h4>
+               <h3>О клинике</h3>
+               <h3>Услуги</h3>
+               <h3>Врачи</h3>
+               <h3>Прайс</h3>
             </NavList>
             <ContainerButton>
                <StyledButton variant="outlined">
-                  получить результаты
+                  ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                </StyledButton>
-               <StyledButton variant="contained">Запись онлайн</StyledButton>
+               <StyledButton variant="contained">ЗАПИСЬ ОНЛАЙН</StyledButton>
             </ContainerButton>
          </SecondNavStyle>
       </HeaderStyle>
@@ -77,14 +110,47 @@ const HeaderStyle = styled('header')`
    flex-direction: column;
    width: 100%;
    background-color: #fff;
-   padding: 10px 7%;
+   padding: 10px 4%;
+   .containerInfo {
+      text-align: left;
+      h3 {
+         font-weight: 600;
+      }
+   }
+   .address {
+      display: flex;
+   }
+   .workingHours {
+      display: flex;
+      span {
+         color: green;
+      }
+   }
+   .custom-menu-item-text {
+      font-family: 'Manrope';
+   }
+   #basic-button {
+      cursor: pointer;
+   }
+   .contacts {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      h3 {
+         font-weight: 600;
+      }
+   }
+   .numbers {
+      display: flex;
+   }
 `
+
 const FirstNavStyle = styled('nav')`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   border-bottom: 2px solid #616165;
-   padding-bottom: 20px;
+   border-bottom: 2px solid #d9d9d9;
+   padding-bottom: 15px;
    & > input {
       width: 26rem;
       height: 40px;
@@ -98,11 +164,20 @@ const SecondNavStyle = styled('nav')`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding-top: 15px;
+   padding-top: 10px;
 `
+const StyleCheck = styled('div')`
+   display: flex;
+   gap: 10px;
+   align-items: center;
+`
+
 const NavList = styled('div')`
    display: flex;
-   gap: 70px;
+   gap: 60px;
+   h3 {
+      font-weight: 600;
+   }
 `
 const ContainerButton = styled('div')`
    display: flex;
@@ -114,11 +189,18 @@ const StyledButton = styled(Button)(() => ({
    '&:active': { borderRadius: '25px' },
 }))
 
-const IconsMedCheckStyle = styled('div')`
-   display: flex;
-   text-align: center;
-   gap: 15px;
-`
+const StyledInput = styled(Input)(() => ({
+   '.MuiOutlinedInput-root': {
+      borderRadius: '25px',
+      width: '23rem',
+      height: '2.6rem',
+      backgroundColor: '#F3F1F1',
+   },
+   fieldset: {
+      border: 'none',
+   },
+}))
+
 const ContainerIcons = styled('div')`
    display: flex;
    gap: 10px;

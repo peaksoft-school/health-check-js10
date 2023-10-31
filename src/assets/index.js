@@ -1,23 +1,31 @@
-import InstagramIcon from './icons/instagramIcon.svg'
-import TelegramIcon from './icons/telegramIcon.svg'
-import WhatsappIcon from './icons/whatsappIcon.svg'
-import GroupIcon from './icons/group.svg'
-import MedCheckIcon from './icons/medCheck.svg'
-import ProfileIcon from './icons/profile.svg'
-import LocationsIcon from './icons/locationsIcon.svg'
-import ScheduleIcon from './icons/scheduleIcon.svg'
-import SearchIcon from './icons/searchIcon.svg'
-import PhoneIcon from './icons/phoneIcon.svg'
+export { ReactComponent as InstagramIcon } from './icons/instagramIcon.svg'
+export { ReactComponent as TelegramIcon } from './icons/telegramIcon.svg'
+export { ReactComponent as WhatsappIcon } from './icons/whatsappIcon.svg'
+export { ReactComponent as GroupIcon } from './icons/group.svg'
+export { ReactComponent as HealthCheckIcon } from './icons/healthCheck.svg'
+export { ReactComponent as ProfileIcon } from './icons/profile.svg'
+export { ReactComponent as LocationsIcon } from './icons/locationsIcon.svg'
+export { ReactComponent as ScheduleIcon } from './icons/scheduleIcon.svg'
+export { ReactComponent as SearchIcon } from './icons/searchIcon.svg'
+export { ReactComponent as PhoneIcon } from './icons/phoneIcon.svg'
 
-export {
-   InstagramIcon,
-   TelegramIcon,
-   WhatsappIcon,
-   GroupIcon,
-   MedCheckIcon,
-   ProfileIcon,
-   LocationsIcon,
-   ScheduleIcon,
-   SearchIcon,
-   PhoneIcon,
-}
+export { ReactComponent as CloseIcon } from './icons/CloseIcon.svg'
+export { ReactComponent as Show } from './icons/Vector (3).svg'
+export { ReactComponent as ShowOff } from './icons/Password.svg'
+export { ReactComponent as GoogleIcon } from './icons/image 90.svg'
+export { ReactComponent as Pagination } from './icons/dots.svg'
+export { ReactComponent as NextImg } from './icons/nextImg.svg'
+export { ReactComponent as PreviousImg } from './icons/previousImg.svg'
+
+export { default as ForwardVector } from './icons/Vector (4).svg'
+export { default as Building } from './images/Rectangle 387.png'
+export { default as Conference } from './images/Rectangle 388.png'
+export { default as Doctors } from './images/Rectangle 389.png'
+export { default as Consilium } from './images/Rectangle 390.png'
+export { default as Signature } from './images/image 12.png'
+export { default as Rectange } from './images/Subtract.svg'
+export { default as DoctorImg } from './images/mainDoctor.jpg'
+export { default as doctor } from './images/doctor.jpg'
+export { default as doctor2 } from './images/doctor2.png'
+export { default as doctor3 } from './images/doctor3.png'
+export { default as doctor4 } from './images/doctor4.png'

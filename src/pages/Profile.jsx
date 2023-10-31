@@ -1,4 +1,5 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Form, ErrorMessage } from 'formik'
+import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 import { styled } from '@mui/material'
 import { Input } from '../components/UI/input/Input'
@@ -9,7 +10,7 @@ const Profile = () => {
       username: '',
       userlastname: '',
       useremail: '',
-      usertelefone: '',
+      usertelefone: '+996',
    }
 
    const validationSchema = Yup.object({
@@ -19,7 +20,9 @@ const Profile = () => {
          .email('Неверный формат электронной почты')
          .required('Неверный формат электронной почты'),
       usertelefone: Yup.string()
-         .min(13, 'Телефон должен содержать максимум 14 символов')
+         .required('Телефонь обязателен')
+         .min(13, 'Телефон должен содержать максимум 12 символов')
+         .max(13, 'Номер телефона слишком длинный')
          .required('Телефонь обязателен'),
    })
    const onSubmit = (values) => {
@@ -28,6 +31,8 @@ const Profile = () => {
    const handleCancel = (initialValues) => {
       console.log(initialValues)
    }
+   const setActive = ({ isActive }) => `Enabled  ${isActive && 'active-link'}`
+
    return (
       <Formik
          initialValues={initialValues}
@@ -37,11 +42,15 @@ const Profile = () => {
          {({ values, handleChange }) => (
             <FormStyled>
                <h2 className="cap">Профиль</h2>
-               <div className="span">
-                  <span className="spanGrey">личные данные</span>
-                  <span className="spanGrey">Сменить пароль</span>
+               <div className="LinkTwo">
+                  <NavLink to="/Profile" className={setActive}>
+                     личные данные
+                  </NavLink>
+                  <NavLink to="/PasswordChange" className={setActive}>
+                     Сменить пароль
+                  </NavLink>
                </div>
-               <h3 className="personalData">Ваши личные данные</h3>
+               <h4 className="personalData">Ваши личные данные</h4>
 
                <div className="firstContainer">
                   <div className="Parent">
@@ -102,7 +111,7 @@ const Profile = () => {
                            onChange={handleChange}
                            value={values.usertelefone}
                            width="20rem"
-                           type="number"
+                           type="text"
                            name="usertelefone"
                            placeholder="+996 (_ _ _) _ _  _ _  _ _"
                         />
@@ -119,6 +128,7 @@ const Profile = () => {
                      className="buttonStyle"
                      type="button"
                      onClick={handleCancel}
+                     variant="outlined"
                   >
                      назад
                   </Button>
@@ -144,6 +154,11 @@ const FormStyled = styled(Form)(() => ({
       gap: '2rem',
       marginLeft: '7.5rem',
    },
+   '&h2': {
+      marginTop: '1.8rem',
+      color: '#222222',
+      fontSize: '1.5rem',
+   },
    '.Parent': { display: 'flex', flexDirection: 'column' },
    '.box': {
       display: 'flex',
@@ -153,6 +168,7 @@ const FormStyled = styled(Form)(() => ({
    '.label': {
       fontFamily: 'Manrope',
       color: '#464444',
+      fontSize: '0.875rem',
    },
    '.personalData': {
       color: '#222222',
@@ -161,13 +177,15 @@ const FormStyled = styled(Form)(() => ({
       marginLeft: '7.6rem',
       letterSpacing: '0.2px',
       fontWeight: '600',
+      fontSize: '1.125rem',
    },
    '.cap': {
       marginTop: '1.875rem',
       marginLeft: '7.7rem',
       color: '#222222',
+      fontSize: '1.5rem',
    },
-   '.span': {
+   '.LinkTwo': {
       display: 'flex',
       flexDirection: 'row',
       gap: '1.875rem',
@@ -175,12 +193,17 @@ const FormStyled = styled(Form)(() => ({
       marginLeft: '7.6rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
+      fontSize: '0.75rem',
+      '.LinkTwo:onclick': {
+         cursor: 'pointer',
+      },
    },
-   '.spanGrey': {
+   '.Enabled': {
       fontFamily: 'Manrope',
       color: '#959595',
+      textDecoration: 'none',
    },
-   '.spanGrey:hover': {
+   '.Enabled.active-link': {
       color: '#048741',
       textDecoration: 'underline',
    },
@@ -198,22 +221,25 @@ const InputStyled = styled(Input)(() => ({
       height: '1.875rem',
       fontFamily: 'Manrope',
       color: '#222222',
-      fontSize: '0.8rem',
-      paddingLeft: '0.125rem',
+      fontSize: '1rem',
+      '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
+         padding: '7.5px',
+         fontSize: '1rem',
+      },
    },
 }))
 
 const ButtonStyled = styled('div')(() => ({
    display: 'flex',
-   marginLeft: '29rem',
-   marginTop: '2.5rem',
+   marginLeft: '29.3rem',
+   marginTop: '1.5rem',
    '& .buttonStyle': {
-      height: '2.813rem',
-      width: '10rem',
+      height: '1.813rem',
+      width: '9.6rem',
       borderRadius: ' 0.625rem',
-      fontSize: '0.875rem',
+      fontSize: '0.675rem',
       fontFamily: 'Manrope',
-      marginLeft: '0.125rem',
+      marginLeft: '0.425rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
    },

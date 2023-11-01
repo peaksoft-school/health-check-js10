@@ -4,6 +4,12 @@ import styled from 'styled-components'
 import DrElenaImage from '../../assets/images/drElena.png'
 import deleteX from '../../assets/images/deleteX.svg'
 
+const statusColor = {
+   Отменён: '#F91515',
+   Подтверждён: '#346EFB',
+   Завершён: '#07AB53',
+}
+
 const AppTable = () => {
    const columns = [
       {
@@ -89,13 +95,10 @@ const AppTable = () => {
                         <div>{item.oclock}</div>
                      </TableCell>
                      <TableCell>
-                        <div>{item.condition}</div>
+                        <StyledStatusContainer status={item.condition}>
+                           {item.condition}
+                        </StyledStatusContainer>
                      </TableCell>
-                     {/* <TableCell>
-                        <div style={{ color: 'red' }}>Отменёнa</div>
-                        <div style={{ color: 'blue' }}>Подтверждён</div>
-                        <div style={{ color: 'green' }}>Завершён</div>
-                     </TableCell> */}
                   </TableRow>
                ))}
             </TableBody>
@@ -107,18 +110,22 @@ const AppTable = () => {
 const StyledContainer = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   fontSize: '0.875rem',
+   fontSize: '0.780rem',
 })
+
+const StyledStatusContainer = styled('div')(({ status }) => ({
+   color: statusColor[status],
+}))
 
 const StyledTableCell = styled(TableCell)({
    display: 'flex !important',
    alignItems: 'center',
    gap: '10px',
-   fontSize: '1rem',
    fontFamily: 'Manrope',
    color: '#222222',
+   marginTop: '0.7rem',
    '.profeshion': {
-      fontSize: '1rem',
+      fontSize: '0.785rem',
       color: 'grey',
    },
 })
@@ -126,19 +133,19 @@ const StyledTableCell = styled(TableCell)({
 const DivStyled = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   marginTop: '4.688rem',
+   marginTop: '4.rem',
    marginLeft: '7.5rem',
    fontFamily: 'Manrope',
+   fontSize: '1.5rem',
 
    '& h2': { marginLeft: '0.6rem' },
    '.navlink': { marginTop: '1.688rem' },
    '.tableOne': {
-      marginLeft: '0.6rem',
       width: '160px',
       fontFamily: 'Manrope',
       height: '41px',
       flexShrink: '0',
-      fontSize: '0.875rem',
+      fontSize: '0.800rem',
       color: '#222222',
       '.css-1oypvv3-MuiTableCell-root': { color: 'red' },
    },

@@ -24,6 +24,13 @@
       "react-hooks/rules-of-hooks": "error",
       "react/function-component-definition": "off",
       "react/prop-types": "off",
+      "import/no-extraneous-dependencies": "warn",
+      "no-param-reassign": "off",
+      "import/no-cycle": "off",
+      "no-irregular-whitespace": "off",
+      "react/no-unknown-property": "off",
+      "no-unused-vars": "off",
+      "import/no-unresolved": "off",
       "max-len": [
          "error",
          {
@@ -33,7 +40,7 @@
             "ignoreRegExpLiterals": true
          }
       ],
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": "off",
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

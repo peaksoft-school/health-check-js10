@@ -1,13 +1,11 @@
 import './App.css'
-// import FAQ from './components/FAQ'
-import Prices from './components/Prices'
+import FAQ from './components/FAQ'
 
 function App() {
    return (
       <div className="App">
-         <Prices />
+         <FAQ />
       </div>
    )
 }
-
 export default App

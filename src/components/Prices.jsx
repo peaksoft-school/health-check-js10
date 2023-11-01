@@ -9,19 +9,19 @@ const Prices = () => {
          <StyledAccordions>
             {prices.map((el) => (
                <CustomizedAccordions key={el.id} title={el.title}>
-                  <StyledData>
+                  <StyledPrice>
                      <div className="prices-data">
-                        <h3>{el.data}</h3> <h2>{el.price}com</h2>
+                        <h2>{el.data}</h2> <h2>{el.price}com</h2>
                      </div>
 
-                     <p>{el.description}</p>
+                     <p className="description">{el.description}</p>
                      {el.prices.map((item) => (
                         <div className="prices">
                            <h3>{item.data}</h3>
                            <h2>{item.price}com</h2>
                         </div>
                      ))}
-                  </StyledData>
+                  </StyledPrice>
                </CustomizedAccordions>
             ))}
          </StyledAccordions>
@@ -35,26 +35,35 @@ export const StyledAccordions = styled('div')`
    display: flex;
    flex-direction: column;
    gap: 20px;
+   .MuiTypography-root {
+      font-family: 'Manrope';
+      font-size: 20px;
+   }
+   .description {
+      font-size: 18px;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+   }
+   h3 {
+      font-size: 18px;
+      font-weight: 575;
+   }
+   h2 {
+      font-weight: 500;
+      font-size: 20px;
+   }
    .prices-data {
       display: flex;
       justify-content: space-between;
-      h2 {
-         font-weight: 500;
-      }
    }
    .prices {
       display: flex;
       justify-content: space-between;
+      padding: 10px 0px;
       border-top: 1px solid #e0e2e7;
-      h2 {
-         font-weight: 500;
-      }
    }
 `
 
-const StyledData = styled('div')`
+const StyledPrice = styled('div')`
    text-align: left;
-   p {
-      margin: -20px 0px 40px 0px;
-   }
 `

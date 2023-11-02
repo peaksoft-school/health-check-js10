@@ -1,11 +1,6 @@
 import './App.css'
-import FAQ from './components/FAQ'
 
 function App() {
-   return (
-      <div className="App">
-         <FAQ />
-      </div>
-   )
+   return <div className="App">App</div>
 }
 export default App

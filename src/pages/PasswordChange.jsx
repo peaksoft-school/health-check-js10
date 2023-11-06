@@ -10,7 +10,7 @@ import Button from '../components/UI/Button'
 export const PasswordChange = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
-   const [showPasswordEnd, setShowPasswordEnd] = useState(false) // Enabled
+   const [showPasswordEnd, setShowPasswordEnd] = useState(false)
    const setActive = ({ isActive }) => `Enabled  ${isActive && 'active-link'}`
 
    const showPasswordHandle = () => {
@@ -84,7 +84,7 @@ export const PasswordChange = () => {
                         placeholder="Введите ваш пароль"
                         InputProps={{
                            endAdornment: (
-                              <InputAdornment position="Eyes">
+                              <InputAdornment className="Eyes" position="start">
                                  <IconButton
                                     onMouseDown={showPasswordHandle}
                                     onClick={togglePasswordVisibility}
@@ -112,7 +112,7 @@ export const PasswordChange = () => {
                         placeholder="Введите новый пароль"
                         InputProps={{
                            endAdornment: (
-                              <InputAdornment className="Eyes">
+                              <InputAdornment position="start" className="Eyes">
                                  <IconButton
                                     onMouseDown={showPasswordCopyHandler}
                                     onClick={togglePasswordVisibility}
@@ -143,7 +143,7 @@ export const PasswordChange = () => {
                         placeholder="Подтвердите пароль"
                         InputProps={{
                            endAdornment: (
-                              <InputAdornment className="Eyes">
+                              <InputAdornment position="start" className="Eyes">
                                  <IconButton
                                     onMouseDown={showPasswordEndHandler}
                                     onClick={togglePasswordVisibility}

@@ -218,12 +218,12 @@ const ErrorMessageStyled = styled(ErrorMessage)(() => ({
 }))
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      height: '1.875rem',
+      height: '2.1rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',
       '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-         padding: '7.5px',
+         padding: '0.300rem',
          fontSize: '1rem',
       },
    },

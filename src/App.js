@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { Profiler } from 'react'
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
 import { PasswordChange } from './pages/PasswordChange'
-import Profile from './pages/Profile'
+// import { Route, Routes } from 'react-router-dom'
+// import { PasswordChange } from './pages/PasswordChange'
+// import Profile from './pages/Profile'
 
 function App() {
    return (
       <div className="App">
-         <Routes>
+         <PasswordChange />
+         <Profiler />
+         {/* <Routes>
             <Route path="/Profile" element={<Profile />} />
             <Route path="/PasswordChange" element={<PasswordChange />} />
-         </Routes>
+         </Routes> */}
       </div>
    )
 }

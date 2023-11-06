@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { USER_KEY, defautltUsers } from '../../utils/constants/constants'
+import { login } from '../../store/auth/authSlice'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [open, setOpen] = useState(true)
-   const [value, setValue] = useState('')
    const navigate = useNavigate()
-
-   const handleClose = () => setOpen(false)
+   const dispatch = useDispatch()
 
    const {
       register,
       formState: { errors },
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -27,10 +29,25 @@ const SignIn = () => {
       },
    })
 
-   useEffect(() => {
-      setValue(localStorage.getItem('email'))
-      console.log(value, 'value')
-   })
+   const handleClose = () => setOpen(false)
+
+   const handleSignIn = (e) => {
+      e.preventDefault()
+      const values = getValues()
+      const user = defautltUsers.find(
+         (user) =>
+            user.email === values.email && user.password === values.password
+      )
+      if (user) {
+         const { email, role, password } = user
+         const userToken = user.token
+         const data = { email, role, password, userToken }
+
+         dispatch(login({ data, navigate }))
+      } else {
+         console.log('Неправлильный email или password')
+      }
+   }
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -42,7 +59,7 @@ const SignIn = () => {
 
    const navigateToSignUp = (e) => {
       e.preventDefault()
-      navigate('/register')
+      navigate('/signup')
    }
 
    const navigateToForgotPassword = (e) => {
@@ -52,7 +69,7 @@ const SignIn = () => {
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleSignIn}>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
                <CloseIcon className="closeIcon" onClick={handleClose} />
@@ -110,7 +127,9 @@ const SignIn = () => {
                   <p className="message">{errors.password?.message}</p>
                )}
             </div>
-
+            <Button className="buttonStyle" type="submit">
+               ВОЙТИ
+            </Button>
             <NavLink
                className="password"
                to="/"
@@ -206,6 +225,9 @@ const FormControlStyled = styled('form')(() => ({
       color: 'red',
       fontSize: '0.8rem',
       position: 'absolute',
+   },
+   '& .buttonStyle': {
+      width: '100%',
    },
 }))
 

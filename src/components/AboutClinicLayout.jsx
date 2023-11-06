@@ -18,7 +18,7 @@ const AboutClinicLayout = ({ place, onClick }) => {
             <StyledAboutSecondText>
                <StyledTitleText>
                   О нашей клинике
-                  <span> “MedCheck”</span>
+                  <span> “HealthCheck”</span>
                </StyledTitleText>
                <p>
                   Вся наша команда готова обеспечить вам медицинский уход

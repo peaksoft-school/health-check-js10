@@ -27,7 +27,7 @@ export const authSlice = createSlice({
          state.role = data.role
          state.token = data.token
          state.email = data.email
-         navigate(routes[data.role].index)
+         navigate(routes[data.role].path)
       },
       logout() {
          const newState = initialState

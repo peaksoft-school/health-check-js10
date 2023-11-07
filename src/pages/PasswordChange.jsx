@@ -60,11 +60,7 @@ export const PasswordChange = () => {
                <DivContainerStyled>
                   <h2>Профиль</h2>
                   <div className="LinkTwo">
-                     <NavLink
-                        className={setActive}
-                        to="/Profile"
-                        // onClick={navigateToPersonalData}
-                     >
+                     <NavLink className={setActive} to="/Profile">
                         личные данные
                      </NavLink>
 

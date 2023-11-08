@@ -1,19 +1,28 @@
+import { useEffect } from 'react'
 import './App.css'
-import CheckboxUI from './components/UI/Checkbox'
-import { Input } from './components/UI/input/Input'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes'
+import { login } from './store/auth/authSlice'
+import { USER_KEY } from './utils/constants/constants'
 import Header from './layout/admin/header/Header'
 
 function App() {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   useEffect(() => {
+      console.log('dawdaw')
+      const USER_DATA = localStorage.getItem(USER_KEY)
+      const parserData = JSON.parse(USER_DATA)
+      if (parserData?.userToken) {
+         dispatch(login({ data: parserData, navigate }))
+      }
+   }, [])
    return (
-      <>
-         <div style={{ backgroundColor: '#F5F5F5' }}>
-            <Header />
-         </div>
-         <div>
-            <Input />
-            <CheckboxUI />
-         </div>
-      </>
+      <div className="App">
+         <Header />
+      </div>
    )
 }
 export default App

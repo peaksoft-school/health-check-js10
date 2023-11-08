@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
@@ -12,10 +12,7 @@ const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
-   const [value, setValue] = useState('')
    const navigate = useNavigate()
-
-   const handleClose = () => setOpen(false)
 
    const {
       register,
@@ -35,6 +32,13 @@ const SignUp = () => {
 
    const watchPassword = watch('password', '')
 
+   const handleClose = () => setOpen(false)
+
+   const handleRegister = (e) => {
+      e.preventDefault()
+      navigate('singin')
+   }
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
@@ -50,23 +54,18 @@ const SignUp = () => {
 
    const navigateToSignIn = (e) => {
       e.preventDefault()
-      navigate('/login')
+      navigate('/signin')
    }
-
-   useEffect(() => {
-      setValue(localStorage.getItem('email'))
-      console.log(value, 'value')
-   })
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleRegister}>
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div className="inputContainer">
                <div className="inputWrapper">
                   <Input
                      placeholder="Имя"
-                     error={errors.name}
+                     error={errors.firstName}
                      {...register('firstName', {
                         setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
@@ -79,7 +78,7 @@ const SignUp = () => {
                <div className="inputWrapper">
                   <Input
                      placeholder="Фамилия"
-                     error={errors.surname}
+                     error={errors.lastName}
                      {...register('lastName', {
                         setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
@@ -92,7 +91,7 @@ const SignUp = () => {
                <div className="inputWrapper">
                   <Input
                      placeholder="+996 (_ _ _) _ _  _ _  _ _ "
-                     error={errors.number}
+                     error={errors.phoneNumber}
                      type="number"
                      {...register('phoneNumber', {
                         setValueAs: (v) => v.trim(),

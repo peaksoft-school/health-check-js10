@@ -1,27 +1,37 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { AllIcon, GroupIcon, HealthCheckIcon } from '../../../assets'
 import ReusableMenu from '../../../components/UI/Menu'
+import { logout } from '../../../store/auth/authSlice'
 
 const Header = () => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
+   const logoutHandler = () => {
+      navigate('/signin')
+      dispatch(logout())
+   }
    const menuItems = [
       {
          title: 'Администратор',
          id: 1,
       },
       {
-         title: 'Пользователь',
+         title: 'Выйти',
+         onclick: () => logoutHandler,
          id: 2,
       },
    ]
+
    return (
       <StyleHeader>
          <div className="health-check">
             <GroupIcon />
             <HealthCheckIcon />
          </div>
-
          <nav>
             <ul>
                <li>

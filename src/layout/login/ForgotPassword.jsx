@@ -61,7 +61,7 @@ const ForgotPassword = () => {
             >
                ОТПРАВИТЬ
             </Button>
-            <NavLink className="password" to="/login">
+            <NavLink className="password" to="/signin">
                ОТМЕНИТЬ
             </NavLink>
          </FormControlStyled>

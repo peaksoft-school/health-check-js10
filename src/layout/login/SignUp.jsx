@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
 import { Input } from '../../components/UI/input/Input'
+import { signUp } from '../../store/auth/authThunk'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
    const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const {
       register,
       formState: { errors },
       watch,
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
          firstName: '',
          lastName: '',
-         phoneNumber: '+996',
+         phoneNumber: '',
          email: '',
          password: '',
          copyPassword: '',
@@ -36,7 +40,36 @@ const SignUp = () => {
 
    const handleRegister = (e) => {
       e.preventDefault()
-      navigate('singin')
+      const values = getValues()
+      const isExisting =
+         values.firstName &&
+         values.lastName &&
+         values.email &&
+         values.phoneNumber &&
+         values.password
+      if (isExisting) {
+         dispatch(
+            signUp({
+               values,
+               loginAction: register,
+               navigate,
+            })
+         )
+         values.firstName = ''
+         values.lastName = ''
+         values.email = ''
+         values.phoneNumber = ''
+         values.password = ''
+      } else {
+         console.log('Неправлильный логин или пароль')
+      }
+   }
+
+   const handleKeyPress = (e) => {
+      const keys = e.key
+      if (!/^\d$/.test(keys) && keys !== '+') {
+         e.preventDefault()
+      }
    }
 
    const showPasswordHandle = () => {
@@ -92,17 +125,18 @@ const SignUp = () => {
                   <Input
                      placeholder="+996 (_ _ _) _ _  _ _  _ _ "
                      error={errors.phoneNumber}
-                     type="number"
+                     type="text"
+                     onKeyPress={handleKeyPress}
                      {...register('phoneNumber', {
                         setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
                         minLength: {
-                           value: 12,
+                           value: 13,
                            message: 'Номер телефона слишком короткий',
                         },
                         maxLength: {
-                           value: 12,
-                           message: 'Номер телефона должен слишком длинный',
+                           value: 13,
+                           message: 'Номер телефона слишком длинный',
                         },
                      })}
                   />
@@ -225,6 +259,9 @@ const FormControlStyled = styled('form')(() => ({
    gap: '1.5rem',
    background: '#FFFFFF',
    padding: '0.5rem 1.5rem',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
    '& .inputContainer': {
       display: 'flex',
       flexDirection: 'column',

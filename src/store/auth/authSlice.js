@@ -8,26 +8,25 @@ const initialState = {
    email: null,
 }
 
-const userData = localStorage.getItem(USER_KEY)
-const parsedData = userData ? JSON.parse(userData) : null
-
-const initialStateWithStoredData = {
-   ...initialState,
-   ...parsedData,
-}
-
 export const authSlice = createSlice({
    name: 'authorization',
-   initialState: initialStateWithStoredData,
+   initialState,
    reducers: {
-      login(state, { payload: { data, navigate } }) {
-         console.log(state)
-         localStorage.setItem(USER_KEY, JSON.stringify(data))
+      login(state, action) {
+         localStorage.setItem(USER_KEY, JSON.stringify(action.payload.data))
          state.isAuth = true
-         state.role = data.role
-         state.token = data.token
-         state.email = data.email
-         navigate(routes[data.role].index)
+         state.role = action.payload.data.role
+         state.token = action.payload.data.token
+         state.email = action.payload.data.email
+         action.payload.navigate(routes[action.payload.data.role].path)
+      },
+      register(state, action) {
+         localStorage.setItem(USER_KEY, JSON.stringify(action.payload.data))
+         state.isAuth = true
+         state.role = action.payload.data.role
+         state.token = action.payload.data.token
+         state.email = action.payload.data.email
+         action.payload.navigate(routes[action.payload.data.role].path)
       },
       logout() {
          const newState = initialState
@@ -37,4 +36,4 @@ export const authSlice = createSlice({
    },
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, register, logout } = authSlice.actions

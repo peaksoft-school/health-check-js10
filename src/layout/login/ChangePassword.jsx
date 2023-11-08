@@ -133,6 +133,9 @@ const FormControlStyled = styled('form')(() => ({
    padding: '1.5rem 1.5rem',
    borderRadius: '2px',
    background: '#FFFFFF',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
    '& .topic': {
       fontFamily: 'Manrope',
       fontSize: '1.25rem',

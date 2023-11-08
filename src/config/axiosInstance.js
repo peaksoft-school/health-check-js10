@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { store } from '../store'
 import { login } from '../store/auth/authSlice'
+import { notify } from '../utils/constants/snackbar'
 
-export const BASE_URL = ''
+export const BASE_URL =
+   'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
 
 const headers = {
    'Content-type': 'application/json',
@@ -15,10 +17,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const token = store.getState().login.accessToken
-   //   const token = "ссылка с свагера";
-   if (token) {
-      updatedConfig.headers.Authorization = `Bearer ${token}`
+   const userToken = store.getState().authorization.token
+   //   const userToken = "ссылка с свагера";
+   if (userToken) {
+      updatedConfig.headers.Authorization = `Bearer ${userToken}`
    }
    return updatedConfig
 })
@@ -30,6 +32,11 @@ axiosInstance.interceptors.response.use(
    (error) => {
       if (error.response.status === 401) {
          store.dispatch(login())
+      } else if (error.response.status === 409) {
+         notify(
+            'Пользователь с таким номером или почтой уже существует',
+            'error'
+         )
       }
    }
 )

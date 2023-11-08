@@ -13,28 +13,29 @@ import ChangePassword from '../layout/login/ChangePassword'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
+   console.log(isAuth)
    return (
       <Routes>
-         <Route path="/" element={<h1>HomePage</h1>} />
+         <Route path="/" element={<SignIn />} />
          <Route path="/homepage" element={<h1>HomePage</h1>} />
          <Route path="/signin" element={<SignIn />} />
          <Route path="/signup" element={<SignUp />} />
          <Route path="/forgotPassword" element={<ForgotPassword />} />
          <Route path="/changePassword" element={<ChangePassword />} />
          <Route
-            path={routes.ADMIN.index}
+            path={routes.ADMIN.path}
             element={
                <PrivateRoutes component={<AdminRoutes />} isAuth={isAuth} />
             }
          />
          <Route
-            path={routes.USER.index}
+            path={routes.USER.path}
             element={
                <PrivateRoutes component={<UserRoutes />} isAuth={isAuth} />
             }
          />
          <Route
-            path={routes.DOCTOR.index}
+            path={routes.DOCTOR.path}
             element={
                <PrivateRoutes component={<DoctorRoutes />} isAuth={isAuth} />
             }

@@ -11,10 +11,9 @@ function App() {
    const navigate = useNavigate()
 
    useEffect(() => {
-      console.log('dawdaw')
       const USER_DATA = localStorage.getItem(USER_KEY)
       const parserData = JSON.parse(USER_DATA)
-      if (parserData?.userToken) {
+      if (parserData?.token) {
          dispatch(login({ data: parserData, navigate }))
       }
    }, [])

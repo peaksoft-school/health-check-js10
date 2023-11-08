@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
-import { USER_KEY, defautltUsers } from '../../utils/constants/constants'
-import { login } from '../../store/auth/authSlice'
+import { signIn } from '../../store/auth/authThunk'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -34,18 +33,18 @@ const SignIn = () => {
    const handleSignIn = (e) => {
       e.preventDefault()
       const values = getValues()
-      const user = defautltUsers.find(
-         (user) =>
-            user.email === values.email && user.password === values.password
-      )
-      if (user) {
-         const { email, role, password } = user
-         const userToken = user.token
-         const data = { email, role, password, userToken }
-
-         dispatch(login({ data, navigate }))
+      const isExisting = values.email && values.password
+      if (isExisting) {
+         dispatch(
+            signIn({
+               values,
+               navigate,
+            })
+         )
+         values.email = ''
+         values.password = ''
       } else {
-         console.log('Неправлильный email или password')
+         console.log('Неправильный логин или пароль')
       }
    }
 
@@ -168,6 +167,9 @@ const FormControlStyled = styled('form')(() => ({
    gap: '1.6rem',
    padding: '2rem 1.5rem',
    background: '#FFFFFF',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
    '& .topic': {
       fontSize: '1.125rem',
       fontWeight: 500,

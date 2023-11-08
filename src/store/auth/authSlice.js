@@ -20,14 +20,6 @@ export const authSlice = createSlice({
          state.email = action.payload.data.email
          action.payload.navigate(routes[action.payload.data.role].path)
       },
-      register(state, action) {
-         localStorage.setItem(USER_KEY, JSON.stringify(action.payload.data))
-         state.isAuth = true
-         state.role = action.payload.data.role
-         state.token = action.payload.data.token
-         state.email = action.payload.data.email
-         action.payload.navigate(routes[action.payload.data.role].path)
-      },
       logout() {
          const newState = initialState
          localStorage.removeItem(USER_KEY)

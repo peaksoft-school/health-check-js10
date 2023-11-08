@@ -13,7 +13,7 @@ import ChangePassword from '../layout/login/ChangePassword'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
-   console.log(isAuth)
+
    return (
       <Routes>
          <Route path="/" element={<SignIn />} />

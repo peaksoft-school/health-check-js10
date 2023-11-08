@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
-import { signIn } from '../../store/auth/authThunk'
+import { authWithGoogle, signIn } from '../../store/auth/authThunk'
+import { auth, provider } from '../../store/auth/firebase'
+import { notify } from '../../utils/constants/snackbar'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -44,10 +47,27 @@ const SignIn = () => {
          values.email = ''
          values.password = ''
       } else {
-         console.log('Неправильный логин или пароль')
+         notify('Заполните все поля', 'error')
       }
    }
 
+   const handleAuthWithGoogle = () => {
+      signInWithPopup(auth, provider)
+         .then((data) => {
+            const userToken = data.user.accessToken
+            return userToken
+         })
+         .then((token) => {
+            dispatch(authWithGoogle({ token, navigate }))
+         })
+         .catch((error) => {
+            if (error.code === 'auth/cancelled-popup-request') {
+               notify('Вы отменили запрос на всплывающее окно', 'error')
+            } else {
+               notify('Произошла ошибка при аутентификации с Google:', 'error')
+            }
+         })
+   }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
@@ -141,7 +161,11 @@ const SignIn = () => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
+            <Button
+               className="buttonGoogle"
+               startIcon={<GoogleIcon />}
+               onClick={handleAuthWithGoogle}
+            >
                <NavLink to="/" className="google">
                   Продолжить с Google
                </NavLink>

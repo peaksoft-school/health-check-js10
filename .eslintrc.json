@@ -41,7 +41,7 @@
             "ignoreRegExpLiterals": true
          }
       ],
-      "no-console": "off",
+      "no-console": "warn",
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

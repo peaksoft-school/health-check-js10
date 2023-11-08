@@ -4,11 +4,14 @@ import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
 import { Input } from '../../components/UI/input/Input'
-import { signUp } from '../../store/auth/authThunk'
+import { authWithGoogle, signUp } from '../../store/auth/authThunk'
+import { notify } from '../../utils/constants/snackbar'
+import { auth, provider } from '../../store/auth/firebase'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -51,7 +54,6 @@ const SignUp = () => {
          dispatch(
             signUp({
                values,
-               loginAction: register,
                navigate,
             })
          )
@@ -61,8 +63,19 @@ const SignUp = () => {
          values.phoneNumber = ''
          values.password = ''
       } else {
-         console.log('Неправлильный логин или пароль')
+         notify('Заполните все поля', 'error')
       }
+   }
+
+   const handleAuthWithGoogle = () => {
+      signInWithPopup(auth, provider)
+         .then((data) => {
+            const userToken = data.user.accessToken
+            return userToken
+         })
+         .then((token) => {
+            dispatch(authWithGoogle({ token, navigate }))
+         })
    }
 
    const handleKeyPress = (e) => {
@@ -233,7 +246,11 @@ const SignUp = () => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
+            <Button
+               className="buttonGoogle"
+               startIcon={<GoogleIcon />}
+               onClick={handleAuthWithGoogle}
+            >
                <NavLink to="/" className="google">
                   Зарегистрироваться с Google
                </NavLink>

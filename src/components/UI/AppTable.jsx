@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react'
 import { Table, TableHead, TableRow, TableCell } from '@mui/material'
 import styled from 'styled-components'
@@ -49,10 +48,8 @@ const AppTable = ({ columns, data }) => {
                                             )}...`
                                           : item[column.id]}
                                     </StyledCondition>
-                                 ) : item[column.id]?.length > 13 ? (
-                                    `${item[column.id].substring(0, 13)}...`
                                  ) : (
-                                    item[column.id]
+                                    item[column.id]?.length > 13
                                  )}
                               </Link>
                            </TableCell>

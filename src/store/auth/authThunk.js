@@ -1,22 +1,46 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
-import { USER_KEY } from '../../utils/constants/constants'
+import { USER_KEY, routes } from '../../utils/constants/constants'
 import { login } from './authSlice'
 import { notify } from '../../utils/constants/snackbar'
 
-export const signIn = createAsyncThunk(
-   'authorization/login',
-   async ({ values, navigate }, { rejectWithValue, dispatch }) => {
+export const forgotPassword = createAsyncThunk(
+   'authorization/forgotPassword',
+   async ({ email, link, navigate }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await axiosInstance.post('/api/auth/signIn', {
-            email: values.email,
-            password: values.password,
-         })
+         const { data } = await axiosInstance.put(
+            '/api/auth/forgot-password',
+            null,
+            {
+               params: { email, link },
+            }
+         )
          localStorage.setItem(USER_KEY, JSON.stringify(data))
-         notify('Вход успешно выполнен')
+         notify('Вам была отправлена ссылка для сброса вашего пароля')
          return dispatch(login({ data, navigate }))
       } catch (error) {
-         notify('Неправильный логин или пароль', 'error')
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export const changePassword = createAsyncThunk(
+   'authorization/changePassword',
+   async ({ email, newPassword, navigate }, { rejectWithValue, dispatch }) => {
+      try {
+         const { data } = await axiosInstance.put(
+            '/api/auth/replace-password',
+            null,
+            {
+               params: { email, newPassword },
+            }
+         )
+         localStorage.setItem(USER_KEY, JSON.stringify(data))
+         localStorage.removeItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
+         notify('Пароль успешно изменён')
+         navigate(routes.LOGIN.signIn)
+         return dispatch(login({ data, navigate }))
+      } catch (error) {
          return rejectWithValue(error)
       }
    }
@@ -37,6 +61,24 @@ export const signUp = createAsyncThunk(
          notify('Вы успешно зарегистрированы')
          return dispatch(login({ data, navigate }))
       } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export const signIn = createAsyncThunk(
+   'authorization/login',
+   async ({ values, navigate }, { rejectWithValue, dispatch }) => {
+      try {
+         const { data } = await axiosInstance.post('/api/auth/signIn', {
+            email: values.email,
+            password: values.password,
+         })
+         localStorage.setItem(USER_KEY, JSON.stringify(data))
+         notify('Вход успешно выполнен')
+         return dispatch(login({ data, navigate }))
+      } catch (error) {
+         notify('Неправильный логин или пароль', 'error')
          return rejectWithValue(error)
       }
    }

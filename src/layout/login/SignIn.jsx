@@ -12,6 +12,7 @@ import Button from '../../components/UI/Button'
 import { authWithGoogle, signIn } from '../../store/auth/authThunk'
 import { auth, provider } from '../../store/auth/firebase'
 import { notify } from '../../utils/constants/snackbar'
+import { routes } from '../../utils/constants/constants'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -78,12 +79,12 @@ const SignIn = () => {
 
    const navigateToSignUp = (e) => {
       e.preventDefault()
-      navigate('/signup')
+      navigate(routes.LOGIN.signUp)
    }
 
    const navigateToForgotPassword = (e) => {
       e.preventDefault()
-      navigate('/forgotPassword')
+      navigate(routes.LOGIN.forgotPassword)
    }
 
    return (

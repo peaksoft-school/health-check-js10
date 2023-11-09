@@ -3,21 +3,26 @@ import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { forgotPassword } from '../../store/auth/authThunk'
+import { notify } from '../../utils/constants/snackbar'
 
 const ForgotPassword = () => {
    const [open, setOpen] = useState(true)
 
    const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const handleClose = () => setOpen(false)
 
    const {
       register,
       formState: { errors },
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -25,14 +30,30 @@ const ForgotPassword = () => {
       },
    })
 
-   const navigateToChangePassword = (e) => {
+   const ipAddress = window.location.hostname
+
+   const handleEmailSubmit = (e) => {
       e.preventDefault()
-      navigate('/changePassword')
+      const values = getValues().email
+      localStorage.setItem('EMAIL_KEY_FROM_FORGOT_PASSWORD', values)
+      const link = `http://${ipAddress}:3000/change-password`
+      const email = values
+      if (email) {
+         dispatch(
+            forgotPassword({
+               email,
+               link,
+               navigate,
+            })
+         )
+      } else {
+         notify('Заполните поле', 'error')
+      }
    }
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleEmailSubmit}>
             <FormLabel className="topic">забыли пароль?</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
@@ -54,11 +75,7 @@ const ForgotPassword = () => {
                )}
             </div>
 
-            <Button
-               className="buttonStyle"
-               type="submit"
-               onClick={navigateToChangePassword}
-            >
+            <Button className="buttonStyle" type="submit">
                ОТПРАВИТЬ
             </Button>
             <NavLink className="password" to="/signin">

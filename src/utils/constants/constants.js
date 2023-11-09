@@ -1,6 +1,11 @@
 export const USER_KEY = 'HEALTH_CHECK_USER_KEY'
 export const routes = {
-   LOGIN: '/signin',
+   LOGIN: {
+      signIn: '/signin',
+      signUp: '/signup',
+      forgotPassword: '/forgot-password',
+      changePassword: '/change-password',
+   },
    ADMIN: {
       path: '/admin',
    },

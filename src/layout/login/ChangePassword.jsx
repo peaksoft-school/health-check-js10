@@ -2,15 +2,22 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { CloseIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { changePassword } from '../../store/auth/authThunk'
+import { notify } from '../../utils/constants/snackbar'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
+
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const handleClose = () => setOpen(false)
 
@@ -18,6 +25,7 @@ const ChangePassword = () => {
       register,
       formState: { errors },
       watch,
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -27,6 +35,24 @@ const ChangePassword = () => {
    })
 
    const watchPassword = watch('password', '')
+
+   const handleNewPasswordSubmit = (e) => {
+      e.preventDefault()
+      const email = localStorage.getItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
+      const values = getValues().password && getValues().copyPassword
+      const newPassword = getValues().password
+      if (values) {
+         dispatch(
+            changePassword({
+               email,
+               newPassword,
+               navigate,
+            })
+         )
+      } else {
+         notify('Заполните поле', 'error')
+      }
+   }
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -40,7 +66,7 @@ const ChangePassword = () => {
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleNewPasswordSubmit}>
             <FormLabel className="topic">Смена пароля</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>

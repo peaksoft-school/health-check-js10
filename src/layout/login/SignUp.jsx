@@ -12,6 +12,7 @@ import { Input } from '../../components/UI/input/Input'
 import { authWithGoogle, signUp } from '../../store/auth/authThunk'
 import { notify } from '../../utils/constants/snackbar'
 import { auth, provider } from '../../store/auth/firebase'
+import { routes } from '../../utils/constants/constants'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -50,18 +51,30 @@ const SignUp = () => {
          values.email &&
          values.phoneNumber &&
          values.password
+
       if (isExisting) {
-         dispatch(
-            signUp({
-               values,
-               navigate,
-            })
-         )
-         values.firstName = ''
-         values.lastName = ''
-         values.email = ''
-         values.phoneNumber = ''
-         values.password = ''
+         try {
+            dispatch(
+               signUp({
+                  values,
+                  navigate,
+               })
+            )
+            values.firstName = ''
+            values.lastName = ''
+            values.email = ''
+            values.phoneNumber = ''
+            values.password = ''
+         } catch (error) {
+            if (error.status === 409) {
+               notify(
+                  'Пользователь с таким номером или почтой уже существует',
+                  'error'
+               )
+            } else {
+               notify('Ошибка при регистрации', 'error')
+            }
+         }
       } else {
          notify('Заполните все поля', 'error')
       }
@@ -100,7 +113,7 @@ const SignUp = () => {
 
    const navigateToSignIn = (e) => {
       e.preventDefault()
-      navigate('/signin')
+      navigate(routes.LOGIN.signIn)
    }
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">

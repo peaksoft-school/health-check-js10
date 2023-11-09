@@ -18,10 +18,16 @@ const AppRoutes = () => {
       <Routes>
          <Route path="/" element={<SignIn />} />
          <Route path="/homepage" element={<h1>HomePage</h1>} />
-         <Route path="/signin" element={<SignIn />} />
-         <Route path="/signup" element={<SignUp />} />
-         <Route path="/forgotPassword" element={<ForgotPassword />} />
-         <Route path="/changePassword" element={<ChangePassword />} />
+         <Route path={routes.LOGIN.signIn} element={<SignIn />} />
+         <Route path={routes.LOGIN.signUp} element={<SignUp />} />
+         <Route
+            path={routes.LOGIN.forgotPassword}
+            element={<ForgotPassword />}
+         />
+         <Route
+            path={`${routes.LOGIN.changePassword}/:id`}
+            element={<ChangePassword />}
+         />
          <Route
             path={routes.ADMIN.path}
             element={

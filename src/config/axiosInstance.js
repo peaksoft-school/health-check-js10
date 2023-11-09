@@ -32,11 +32,8 @@ axiosInstance.interceptors.response.use(
    (error) => {
       if (error.response.status === 401) {
          store.dispatch(login())
-      } else if (error.response.status === 409) {
-         notify(
-            'Пользователь с таким номером или почтой уже существует',
-            'error'
-         )
+      } else if (error.response.status === 404) {
+         notify('Пользователь с данной почтой не найден', 'error')
       }
    }
 )

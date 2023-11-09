@@ -21,7 +21,7 @@ const Header = () => {
       },
       {
          title: 'Выйти',
-         onclick: () => logoutHandler,
+         onClick: () => logoutHandler,
          id: 2,
       },
    ]

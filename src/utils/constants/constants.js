@@ -3,10 +3,10 @@ export const routes = {
    LOGIN: '/signin',
    ADMIN: {
       path: '/admin',
-      onlineRegistration: '/online-registration',
-      applications: '/applications',
-      specialists: '/specialists',
-      patients: '/patients',
+      onlineRegistration: 'online-registration',
+      applications: 'applications',
+      specialists: 'specialists',
+      patients: 'patients',
    },
    USER: {
       path: '/user',

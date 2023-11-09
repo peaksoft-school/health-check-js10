@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
-import Header from './layout/admin/header/Header'
 
 function App() {
    const dispatch = useDispatch()
@@ -19,6 +18,10 @@ function App() {
          dispatch(login({ data: parserData, navigate }))
       }
    }, [])
-   return <div className="App">App </div>
+   return (
+      <div className="App">
+         <AppRoutes />
+      </div>
+   )
 }
 export default App

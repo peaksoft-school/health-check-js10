@@ -8,6 +8,10 @@ export const routes = {
    },
    ADMIN: {
       path: '/admin',
+      onlineRegistration: 'online-registration',
+      applications: 'applications',
+      specialists: 'specialists',
+      patients: 'patients',
    },
    USER: {
       path: '/user',

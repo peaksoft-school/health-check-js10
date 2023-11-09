@@ -37,7 +37,13 @@ export default function ReusableMenu({ buttonIcon, menuItems }) {
             }}
          >
             {menuItems.map((item) => (
-               <StyleMenuItem key={item.id} onClick={handleClose}>
+               <StyleMenuItem
+                  key={item.id}
+                  onClick={() => {
+                     item.onClick()
+                     handleClose()
+                  }}
+               >
                   {item.title}
                </StyleMenuItem>
             ))}

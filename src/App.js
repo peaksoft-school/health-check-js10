@@ -19,10 +19,6 @@ function App() {
          dispatch(login({ data: parserData, navigate }))
       }
    }, [])
-   return (
-      <div className="App">
-         <Header />
-      </div>
-   )
+   return <div className="App">App </div>
 }
 export default App

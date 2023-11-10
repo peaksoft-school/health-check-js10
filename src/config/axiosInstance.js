@@ -2,7 +2,8 @@ import axios from 'axios'
 import { store } from '../store'
 import { login } from '../store/auth/authSlice'
 
-export const BASE_URL = ''
+export const BASE_URL =
+   'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
 
 const headers = {
    'Content-type': 'application/json',
@@ -33,3 +34,10 @@ axiosInstance.interceptors.response.use(
       }
    }
 )
+
+let storeForInject
+
+export const injectStore = (_store) => {
+   storeForInject = _store
+   return storeForInject
+}

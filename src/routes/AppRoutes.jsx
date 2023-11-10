@@ -1,18 +1,19 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
+import ChangePassword from '../layout/login/ChangePassword'
+import ForgotPassword from '../layout/login/ForgotPassword'
 import SignIn from '../layout/login/SignIn'
 import SignUp from '../layout/login/SignUp'
 import { routes } from '../utils/constants/constants'
-import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import AdminRoutes from './adminRoutes/AdminRoutes'
-import UserRoutes from './userRoutes/UserRoutes'
 import DoctorRoutes from './doctorRoutes/DoctorRoutes'
-import ForgotPassword from '../layout/login/ForgotPassword'
-import ChangePassword from '../layout/login/ChangePassword'
+import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
+import UserRoutes from './userRoutes/UserRoutes'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
+
    return (
       <Routes>
          <Route path="/" element={<h1>HomePage</h1>} />

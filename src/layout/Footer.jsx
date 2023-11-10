@@ -155,7 +155,7 @@ const SocialLinks = styled('div')`
 
 const Navigations = styled('div')`
    display: flex;
-   juflex-direction: row;
+   flex-direction: row;
    flex-wrap: wrap;
    gap: 1.5rem;
    padding: 3rem;

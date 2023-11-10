@@ -48,6 +48,7 @@ export { ReactComponent as UserIcon } from './icons/Users.svg'
 export { ReactComponent as ArrowIcon } from './icons/arrow.svg'
 export { ReactComponent as ShowIcon } from './icons/ShowIcon.svg'
 export { ReactComponent as HideIcon } from './icons/HideIcon.svg'
+export { ReactComponent as AllIcon } from './icons/all-icon.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as ForwardVector } from './icons/Vector (4).svg'

@@ -35,7 +35,6 @@ const ForgotPassword = () => {
    const handleEmailSubmit = (e) => {
       e.preventDefault()
       const values = getValues().email
-      localStorage.setItem('EMAIL_KEY_FROM_FORGOT_PASSWORD', values)
       const link = `http://${ipAddress}:3000/change-password`
       const email = values
       if (email) {

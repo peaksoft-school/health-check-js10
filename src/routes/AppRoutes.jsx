@@ -25,7 +25,7 @@ const AppRoutes = () => {
             element={<ForgotPassword />}
          />
          <Route
-            path={`${routes.LOGIN.changePassword}/:id`}
+            path={`${routes.LOGIN.changePassword}/:uniqueId`}
             element={<ChangePassword />}
          />
          <Route

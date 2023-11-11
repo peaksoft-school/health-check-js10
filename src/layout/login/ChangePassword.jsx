@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { CloseIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
@@ -18,6 +18,8 @@ const ChangePassword = () => {
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
+
+   const { uniqueId } = useParams()
 
    const handleClose = () => setOpen(false)
 
@@ -41,16 +43,26 @@ const ChangePassword = () => {
       const email = localStorage.getItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
       const values = getValues().password && getValues().copyPassword
       const newPassword = getValues().password
+      const confirmPassword = getValues().copyPassword
+
       if (values) {
-         dispatch(
-            changePassword({
-               email,
-               newPassword,
-               navigate,
-            })
-         )
+         if (newPassword.length >= 8) {
+            if (newPassword === confirmPassword) {
+               dispatch(
+                  changePassword({
+                     uniqueId,
+                     newPassword,
+                     navigate,
+                  })
+               )
+            } else {
+               notify('Пароли не совпадают', 'error')
+            }
+         } else {
+            notify('Длина пароля должна быть не менее 8 символов', 'error')
+         }
       } else {
-         notify('Заполните поле', 'error')
+         notify('Заполните все поля', 'error')
       }
    }
 

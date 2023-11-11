@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
@@ -37,19 +37,14 @@ const SignIn = () => {
    const handleSignIn = (e) => {
       e.preventDefault()
       const values = getValues()
-      const isExisting = values.email && values.password
-      if (isExisting) {
-         dispatch(
-            signIn({
-               values,
-               navigate,
-            })
-         )
-         values.email = ''
-         values.password = ''
-      } else {
-         notify('Заполните все поля', 'error')
-      }
+      dispatch(
+         signIn({
+            values,
+            navigate,
+         })
+      )
+      values.email = ''
+      values.password = ''
    }
 
    const handleAuthWithGoogle = () => {
@@ -65,7 +60,7 @@ const SignIn = () => {
             if (error.code === 'auth/cancelled-popup-request') {
                notify('Вы отменили запрос на всплывающее окно', 'error')
             } else {
-               notify('Произошла ошибка при аутентификации с Google:', 'error')
+               notify('Произошла ошибка при аутентификации с Google', 'error')
             }
          })
    }

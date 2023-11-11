@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { USER_KEY, routes } from '../../utils/constants/constants'
+import { signIn } from './authThunk'
 
 const initialState = {
    token: null,
    isAuth: false,
    role: null,
    email: null,
+   error: '',
 }
 
 export const authSlice = createSlice({
@@ -25,6 +27,11 @@ export const authSlice = createSlice({
          localStorage.removeItem(USER_KEY)
          return newState
       },
+   },
+   extraReducers: (builder) => {
+      builder.addCase(signIn.rejected, (state, action) => {
+         state.error = action.payload
+      })
    },
 })
 

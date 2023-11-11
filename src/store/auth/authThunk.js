@@ -16,9 +16,15 @@ export const forgotPassword = createAsyncThunk(
             }
          )
          localStorage.setItem(USER_KEY, JSON.stringify(data))
+         localStorage.setItem('EMAIL_KEY_FROM_FORGOT_PASSWORD', email)
          notify('Вам была отправлена ссылка для сброса вашего пароля')
          return dispatch(login({ data, navigate }))
       } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }
@@ -26,21 +32,31 @@ export const forgotPassword = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
    'authorization/changePassword',
-   async ({ email, newPassword, navigate }, { rejectWithValue, dispatch }) => {
+   async (
+      { uniqueId, newPassword, navigate },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
          const { data } = await axiosInstance.put(
             '/api/auth/replace-password',
-            null,
             {
-               params: { email, newPassword },
+               newPassword,
+               token: uniqueId,
             }
          )
+
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          localStorage.removeItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
          notify('Пароль успешно изменён')
          navigate(routes.LOGIN.signIn)
+
          return dispatch(login({ data, navigate }))
       } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }
@@ -61,6 +77,11 @@ export const signUp = createAsyncThunk(
          notify('Вы успешно зарегистрированы')
          return dispatch(login({ data, navigate }))
       } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }
@@ -78,7 +99,11 @@ export const signIn = createAsyncThunk(
          notify('Вход успешно выполнен')
          return dispatch(login({ data, navigate }))
       } catch (error) {
-         notify('Неправильный логин или пароль', 'error')
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }
@@ -95,6 +120,11 @@ export const authWithGoogle = createAsyncThunk(
          notify('Вход через Google успешно выполнен')
          return dispatch(login({ data, navigate }))
       } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }

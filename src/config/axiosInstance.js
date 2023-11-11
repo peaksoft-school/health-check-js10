@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { store } from '../store'
-import { login } from '../store/auth/authSlice'
+import { logout } from '../store/auth/authSlice'
 import { notify } from '../utils/constants/snackbar'
 
 export const BASE_URL =
@@ -17,10 +17,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const userToken = store.getState().authorization.token
+   const { token } = store.getState().authorization
    //   const userToken = "ссылка с свагера";
-   if (userToken) {
-      updatedConfig.headers.Authorization = `Bearer ${userToken}`
+   if (token) {
+      updatedConfig.headers.Authorization = `Bearer ${token}`
    }
    return updatedConfig
 })
@@ -30,10 +30,17 @@ axiosInstance.interceptors.response.use(
       return Promise.resolve(response)
    },
    (error) => {
-      if (error.response.status === 401) {
-         store.dispatch(login())
-      } else if (error.response.status === 404) {
-         notify('Пользователь с данной почтой не найден', 'error')
+      if (error?.code === 403) {
+         store.dispatch(logout())
+         throw new Error('Unauthotized')
       }
+      return Promise.reject(error)
    }
 )
+
+let storeForInject
+
+export const injectStore = (_store) => {
+   storeForInject = _store
+   return storeForInject
+}

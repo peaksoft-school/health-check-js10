@@ -51,9 +51,8 @@ const SignUp = () => {
          values.email &&
          values.phoneNumber &&
          values.password
-
       if (isExisting) {
-         try {
+         if (values.password === values.copyPassword) {
             dispatch(
                signUp({
                   values,
@@ -65,15 +64,8 @@ const SignUp = () => {
             values.email = ''
             values.phoneNumber = ''
             values.password = ''
-         } catch (error) {
-            if (error.status === 409) {
-               notify(
-                  'Пользователь с таким номером или почтой уже существует',
-                  'error'
-               )
-            } else {
-               notify('Ошибка при регистрации', 'error')
-            }
+         } else {
+            notify('Пароли не совпадают', 'error')
          }
       } else {
          notify('Заполните все поля', 'error')

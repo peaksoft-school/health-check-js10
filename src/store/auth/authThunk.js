@@ -48,7 +48,7 @@ export const changePassword = createAsyncThunk(
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          localStorage.removeItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
          notify('Пароль успешно изменён')
-         navigate(routes.LOGIN.signIn)
+         navigate('/homepage')
 
          return dispatch(login({ data, navigate }))
       } catch (error) {

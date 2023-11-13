@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
@@ -12,12 +12,12 @@ import { Input } from '../../components/UI/input/Input'
 import { authWithGoogle, signUp } from '../../store/auth/authThunk'
 import { notify } from '../../utils/constants/snackbar'
 import { auth, provider } from '../../store/auth/firebase'
-import { routes } from '../../utils/constants/constants'
+import { localStorageKeys } from '../../utils/constants/constants'
 
-const SignUp = () => {
+const SignUp = ({ open, setOpen, navigateToSignIn }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
-   const [open, setOpen] = useState(true)
+
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -26,6 +26,7 @@ const SignUp = () => {
       formState: { errors },
       watch,
       getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -40,10 +41,12 @@ const SignUp = () => {
 
    const watchPassword = watch('password', '')
 
-   const handleClose = () => setOpen(false)
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.SIGN_UP_MODAL_KEY)
+   }
 
-   const handleRegister = (e) => {
-      e.preventDefault()
+   const handleRegister = () => {
       const values = getValues()
       const isExisting =
          values.firstName &&
@@ -90,6 +93,13 @@ const SignUp = () => {
       }
    }
 
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.SIGN_UP_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
@@ -103,13 +113,9 @@ const SignUp = () => {
       e.preventDefault()
    }
 
-   const navigateToSignIn = (e) => {
-      e.preventDefault()
-      navigate(routes.LOGIN.signIn)
-   }
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled onSubmit={handleRegister}>
+         <FormControlStyled onSubmit={handleSubmit(handleRegister)}>
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div className="inputContainer">
@@ -282,6 +288,9 @@ const FormControlStyled = styled('form')(() => ({
    background: '#FFFFFF',
    padding: '0.5rem 1.5rem',
    '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
       height: '1rem',
    },
    '& .inputContainer': {

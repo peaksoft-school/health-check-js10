@@ -1,29 +1,21 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import SignIn from '../layout/login/SignIn'
-import SignUp from '../layout/login/SignUp'
 import { routes } from '../utils/constants/constants'
 import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import AdminRoutes from './adminRoutes/AdminRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
 import DoctorRoutes from './doctorRoutes/DoctorRoutes'
-import ForgotPassword from '../layout/login/ForgotPassword'
 import ChangePassword from '../layout/login/ChangePassword'
+import LandingPage from '../pages/user/LandingPage'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
 
    return (
       <Routes>
-         <Route path="/" element={<SignIn />} />
-         <Route path="/homepage" element={<h1>HomePage</h1>} />
-         <Route path={routes.LOGIN.signIn} element={<SignIn />} />
-         <Route path={routes.LOGIN.signUp} element={<SignUp />} />
-         <Route
-            path={routes.LOGIN.forgotPassword}
-            element={<ForgotPassword />}
-         />
+         <Route path="/" element={<LandingPage />} />
+         <Route path="/homepage" element={<LandingPage />} />
          <Route
             path={`${routes.LOGIN.changePassword}/:uniqueId`}
             element={<ChangePassword />}

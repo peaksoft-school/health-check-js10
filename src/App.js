@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import './App.css'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'

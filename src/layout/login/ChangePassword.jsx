@@ -21,13 +21,16 @@ const ChangePassword = () => {
 
    const { uniqueId } = useParams()
 
-   const handleClose = () => setOpen(false)
-
+   const handleClose = () => {
+      setOpen(false)
+      navigate('/homepage')
+   }
    const {
       register,
       formState: { errors },
       watch,
       getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -38,9 +41,7 @@ const ChangePassword = () => {
 
    const watchPassword = watch('password', '')
 
-   const handleNewPasswordSubmit = (e) => {
-      e.preventDefault()
-      const email = localStorage.getItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
+   const handleNewPasswordSubmit = () => {
       const values = getValues().password && getValues().copyPassword
       const newPassword = getValues().password
       const confirmPassword = getValues().copyPassword
@@ -78,7 +79,7 @@ const ChangePassword = () => {
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled onSubmit={handleNewPasswordSubmit}>
+         <FormControlStyled onSubmit={handleSubmit(handleNewPasswordSubmit)}>
             <FormLabel className="topic">Смена пароля</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
@@ -172,6 +173,9 @@ const FormControlStyled = styled('form')(() => ({
    borderRadius: '2px',
    background: '#FFFFFF',
    '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
       height: '1rem',
    },
    '& .topic': {

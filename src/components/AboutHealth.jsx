@@ -54,7 +54,7 @@ const AboutHealth = () => {
                   </StyledAboutText>
                   <div>
                      <StyledImageContainer>
-                        <img src={Rectange} alt="rectange" />
+                        <Rectange />
                         <StyledDoctorImG src={DoctorImg} alt="" />
                         <h3>Руководитель клиники Medical Clinic</h3>
                         <h2> Аниса Михаилова </h2>

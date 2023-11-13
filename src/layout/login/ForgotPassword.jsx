@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
@@ -10,19 +10,22 @@ import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
 import { forgotPassword } from '../../store/auth/authThunk'
 import { notify } from '../../utils/constants/snackbar'
+import { localStorageKeys } from '../../utils/constants/constants'
 
-const ForgotPassword = () => {
-   const [open, setOpen] = useState(true)
-
+const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
-   const handleClose = () => setOpen(false)
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+   }
 
    const {
       register,
       formState: { errors },
       getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -32,8 +35,7 @@ const ForgotPassword = () => {
 
    const ipAddress = window.location.hostname
 
-   const handleEmailSubmit = (e) => {
-      e.preventDefault()
+   const handleEmailSubmit = () => {
       const values = getValues().email
       const link = `http://${ipAddress}:3000/change-password`
       const email = values
@@ -50,9 +52,16 @@ const ForgotPassword = () => {
       }
    }
 
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
+
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled onSubmit={handleEmailSubmit}>
+         <FormControlStyled onSubmit={handleSubmit(handleEmailSubmit)}>
             <FormLabel className="topic">забыли пароль?</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
@@ -77,9 +86,9 @@ const ForgotPassword = () => {
             <Button className="buttonStyle" type="submit">
                ОТПРАВИТЬ
             </Button>
-            <NavLink className="password" to="/signin">
+            <Button className="password" onClick={navigateToSignIn}>
                ОТМЕНИТЬ
-            </NavLink>
+            </Button>
          </FormControlStyled>
       </Modal>
    )
@@ -97,6 +106,9 @@ const FormControlStyled = styled('form')(() => ({
    borderRadius: '2px',
    background: '#FFFFFF',
    '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
       height: '1rem',
    },
    '& .topic': {
@@ -126,13 +138,18 @@ const FormControlStyled = styled('form')(() => ({
       fontSize: '0.875rem',
    },
    '& .password': {
-      height: '2rem',
+      height: '2.5rem',
+      width: '26rem',
       fontFamily: 'Manrope',
       fontSize: '0.875rem',
       fontWeight: 400,
       lineHeight: '1rem',
       color: '#959595',
       textDecoration: 'none',
+      background: 'none',
+      '&:hover': {
+         background: 'none',
+      },
    },
    '& .message': {
       color: 'red',

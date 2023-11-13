@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
@@ -12,11 +12,16 @@ import Button from '../../components/UI/Button'
 import { authWithGoogle, signIn } from '../../store/auth/authThunk'
 import { auth, provider } from '../../store/auth/firebase'
 import { notify } from '../../utils/constants/snackbar'
-import { routes } from '../../utils/constants/constants'
+import { localStorageKeys } from '../../utils/constants/constants'
 
-const SignIn = () => {
+const SignIn = ({
+   open,
+   setOpen,
+   navigateToForgotPassword,
+   navigateToSignUp,
+}) => {
    const [showPassword, setShowPassword] = useState(false)
-   const [open, setOpen] = useState(true)
+
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -24,6 +29,7 @@ const SignIn = () => {
       register,
       formState: { errors },
       getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -32,10 +38,12 @@ const SignIn = () => {
       },
    })
 
-   const handleClose = () => setOpen(false)
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.SIGN_IN_MODAL_KEY)
+   }
 
-   const handleSignIn = (e) => {
-      e.preventDefault()
+   const handleSignIn = () => {
       const values = getValues()
       dispatch(
          signIn({
@@ -64,6 +72,14 @@ const SignIn = () => {
             }
          })
    }
+
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.SIGN_IN_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
@@ -72,19 +88,9 @@ const SignIn = () => {
       e.preventDefault()
    }
 
-   const navigateToSignUp = (e) => {
-      e.preventDefault()
-      navigate(routes.LOGIN.signUp)
-   }
-
-   const navigateToForgotPassword = (e) => {
-      e.preventDefault()
-      navigate(routes.LOGIN.forgotPassword)
-   }
-
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled onSubmit={handleSignIn}>
+         <FormControlStyled onSubmit={handleSubmit(handleSignIn)}>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
                <CloseIcon className="closeIcon" onClick={handleClose} />
@@ -188,6 +194,9 @@ const FormControlStyled = styled('form')(() => ({
    padding: '2rem 1.5rem',
    background: '#FFFFFF',
    '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
       height: '1rem',
    },
    '& .topic': {

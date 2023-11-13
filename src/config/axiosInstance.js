@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { store } from '../store'
 import { logout } from '../store/auth/authSlice'
-import { notify } from '../utils/constants/snackbar'
 
 export const BASE_URL =
    'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'

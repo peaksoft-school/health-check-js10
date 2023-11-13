@@ -1,9 +1,7 @@
 export const USER_KEY = 'HEALTH_CHECK_USER_KEY'
+
 export const routes = {
    LOGIN: {
-      signIn: '/signin',
-      signUp: '/signup',
-      forgotPassword: '/forgot-password',
       changePassword: '/change-password',
    },
    ADMIN: {
@@ -19,4 +17,10 @@ export const routes = {
    DOCTOR: {
       path: '/doctor',
    },
+}
+
+export const localStorageKeys = {
+   SIGN_IN_MODAL_KEY: 'IS_SIGN_IN_MODAL_OPEN',
+   SIGN_UP_MODAL_KEY: 'IS_SIGN_UP_MODAL_OPEN',
+   FORGOT_PASSWORD_MODAL_KEY: 'IS_FORGOT_PASSWORD_MODAL_OPEN',
 }

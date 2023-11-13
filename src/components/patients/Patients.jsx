@@ -158,6 +158,12 @@ const StyledTextField = styled(TextField)(() => ({
       '&:hover fieldset': {
          borderColor: 'gray',
       },
+      '&.Mui-focused fieldset': {
+         borderColor: 'gray',
+      },
+      '& input': {
+         boxSizing: 'border-box',
+      },
    },
 }))
 

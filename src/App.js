@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
+import PatientComponent from './components/patients/Patients'
 
 function App() {
    const dispatch = useDispatch()
@@ -21,6 +22,7 @@ function App() {
    return (
       <div className="App">
          <AppRoutes />
+         <PatientComponent />
       </div>
    )
 }

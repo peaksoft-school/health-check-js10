@@ -65,6 +65,10 @@ const Header = () => {
    }
 
    const isDrawerOpenHandler = () => {
+      localStorage.setItem(
+         localStorageKeys.DRAWER_MODAL_KEY,
+         JSON.stringify(true)
+      )
       setIsDrawerOpen(true)
    }
 

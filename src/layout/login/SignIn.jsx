@@ -3,8 +3,9 @@ import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
+import { PulseLoader } from 'react-spinners'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
@@ -21,6 +22,8 @@ const SignIn = ({
    navigateToSignUp,
 }) => {
    const [showPassword, setShowPassword] = useState(false)
+
+   const { isLoading } = useSelector((state) => state.authorization)
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
@@ -48,7 +51,7 @@ const SignIn = ({
       dispatch(
          signIn({
             values,
-            navigate,
+            handleClose,
          })
       )
       values.email = ''
@@ -148,8 +151,8 @@ const SignIn = ({
                   <p className="message">{errors.password?.message}</p>
                )}
             </div>
-            <Button className="buttonStyle" type="submit">
-               ВОЙТИ
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'ВОЙТИ'}
             </Button>
             <NavLink
                className="password"

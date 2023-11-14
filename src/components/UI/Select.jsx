@@ -67,7 +67,7 @@ const StyledFormControl = styled(FormControl)(({ isOpen }) => ({
       {
          border: 'none',
       },
-   '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root': {
+   '.MuiOutlinedInput-root': {
       borderRadius: isOpen ? '16px 16px 0px 0px' : '16px',
    },
 }))

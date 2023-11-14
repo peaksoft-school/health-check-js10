@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { USER_KEY, routes } from '../../utils/constants/constants'
-import { signIn } from './authThunk'
+import { changePassword, forgotPassword, signIn, signUp } from './authThunk'
 
 const initialState = {
    token: null,
@@ -8,7 +8,10 @@ const initialState = {
    role: null,
    email: null,
    error: '',
+   isLoading: false,
 }
+
+const authActions = [signIn, signUp, forgotPassword, changePassword]
 
 export const authSlice = createSlice({
    name: 'authorization',
@@ -29,8 +32,18 @@ export const authSlice = createSlice({
       },
    },
    extraReducers: (builder) => {
-      builder.addCase(signIn.rejected, (state, action) => {
-         state.error = action.payload
+      authActions.forEach((action) => {
+         builder
+            .addCase(action.pending, (state) => {
+               state.isLoading = true
+            })
+            .addCase(action.fulfilled, (state) => {
+               state.isLoading = false
+            })
+            .addCase(action.rejected, (state, action) => {
+               state.error = action.payload
+               state.isLoading = false
+            })
       })
    },
 })

@@ -3,8 +3,9 @@ import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
+import { PulseLoader } from 'react-spinners'
 import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
@@ -17,6 +18,8 @@ import { localStorageKeys } from '../../utils/constants/constants'
 const SignUp = ({ open, setOpen, navigateToSignIn }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
+
+   const { isLoading } = useSelector((state) => state.authorization)
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
@@ -48,30 +51,20 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
 
    const handleRegister = () => {
       const values = getValues()
-      const isExisting =
-         values.firstName &&
-         values.lastName &&
-         values.email &&
-         values.phoneNumber &&
-         values.password
-      if (isExisting) {
-         if (values.password === values.copyPassword) {
-            dispatch(
-               signUp({
-                  values,
-                  navigate,
-               })
-            )
-            values.firstName = ''
-            values.lastName = ''
-            values.email = ''
-            values.phoneNumber = ''
-            values.password = ''
-         } else {
-            notify('Пароли не совпадают', 'error')
-         }
+      if (values.password === values.copyPassword) {
+         dispatch(
+            signUp({
+               values,
+               handleClose,
+            })
+         )
+         values.firstName = ''
+         values.lastName = ''
+         values.email = ''
+         values.phoneNumber = ''
+         values.password = ''
       } else {
-         notify('Заполните все поля', 'error')
+         notify('Пароли не совпадают', 'error')
       }
    }
 
@@ -249,8 +242,8 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
                   )}
                </div>
             </div>
-            <Button className="buttonStyle" type="submit">
-               СОЗДАТЬ АККАУНТ
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'СОЗДАТЬ АККАУНТ'}
             </Button>
             <Line className="Line">
                <hr className="lineFirst" />
@@ -318,11 +311,8 @@ const FormControlStyled = styled('form')(() => ({
       right: '1.5rem',
    },
    '& .buttonStyle': {
-      padding: '0.7rem 9rem',
-      borderRadius: '0.625rem',
-      fontSize: '0.875rem',
-      fontFamily: 'Manrope',
-      cursor: 'pointer',
+      width: '100%',
+      padding: '0.7rem 0',
    },
    '& .buttonGoogle': {
       height: '2.438rem',

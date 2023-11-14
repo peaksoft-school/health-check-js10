@@ -2,18 +2,18 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { PulseLoader } from 'react-spinners'
 import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
 import { forgotPassword } from '../../store/auth/authThunk'
-import { notify } from '../../utils/constants/snackbar'
 import { localStorageKeys } from '../../utils/constants/constants'
 
 const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
-   const navigate = useNavigate()
+   const { isLoading } = useSelector((state) => state.authorization)
+
    const dispatch = useDispatch()
 
    const handleClose = () => {
@@ -39,17 +39,13 @@ const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
       const values = getValues().email
       const link = `http://${ipAddress}:3000/change-password`
       const email = values
-      if (email) {
-         dispatch(
-            forgotPassword({
-               email,
-               link,
-               navigate,
-            })
-         )
-      } else {
-         notify('Заполните поле', 'error')
-      }
+      dispatch(
+         forgotPassword({
+            email,
+            link,
+            handleClose,
+         })
+      )
    }
 
    useEffect(() => {
@@ -83,8 +79,8 @@ const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
                )}
             </div>
 
-            <Button className="buttonStyle" type="submit">
-               ОТПРАВИТЬ
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'ОТПРАВИТЬ'}
             </Button>
             <Button className="password" onClick={navigateToSignIn}>
                ОТМЕНИТЬ

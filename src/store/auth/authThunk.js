@@ -6,7 +6,7 @@ import { notify } from '../../utils/constants/snackbar'
 
 export const forgotPassword = createAsyncThunk(
    'authorization/forgotPassword',
-   async ({ email, link, navigate }, { rejectWithValue, dispatch }) => {
+   async ({ email, link, handleClose }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.put(
             '/api/auth/forgot-password',
@@ -18,7 +18,8 @@ export const forgotPassword = createAsyncThunk(
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          localStorage.setItem('EMAIL_KEY_FROM_FORGOT_PASSWORD', email)
          notify('Вам была отправлена ссылка для сброса вашего пароля')
-         return dispatch(login({ data, navigate }))
+         handleClose()
+         return dispatch(login({ data }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -49,8 +50,7 @@ export const changePassword = createAsyncThunk(
          localStorage.removeItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
          notify('Пароль успешно изменён')
          navigate('/homepage')
-
-         return dispatch(login({ data, navigate }))
+         return dispatch(login({ data }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -64,7 +64,7 @@ export const changePassword = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
    'authorization/signUp',
-   async ({ values, navigate }, { rejectWithValue, dispatch }) => {
+   async ({ values, handleClose }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post('/api/auth/signUp', {
             firstName: values.firstName,
@@ -75,7 +75,8 @@ export const signUp = createAsyncThunk(
          })
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          notify('Вы успешно зарегистрированы')
-         return dispatch(login({ data, navigate }))
+         handleClose()
+         return dispatch(login({ data }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -89,7 +90,7 @@ export const signUp = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
    'authorization/login',
-   async ({ values, navigate }, { rejectWithValue, dispatch }) => {
+   async ({ values, handleClose }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post('/api/auth/signIn', {
             email: values.email,
@@ -97,7 +98,8 @@ export const signIn = createAsyncThunk(
          })
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          notify('Вход успешно выполнен')
-         return dispatch(login({ data, navigate }))
+         handleClose()
+         return dispatch(login({ data }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -111,14 +113,14 @@ export const signIn = createAsyncThunk(
 
 export const authWithGoogle = createAsyncThunk(
    'authorization/google',
-   async ({ token, navigate }, { rejectWithValue, dispatch }) => {
+   async ({ token }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post('/api/auth/google', null, {
             params: { token },
          })
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          notify('Вход через Google успешно выполнен')
-         return dispatch(login({ data, navigate }))
+         return dispatch(login({ data }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,

@@ -1,30 +1,21 @@
-import { useState } from 'react'
 import { styled } from '@mui/material'
 import Drawer from '../UI/Drawer'
 import { CloseIcon } from '../../assets'
 import ChooseServices from './ChooseServices'
 
-const OnlineAppointment = () => {
-   const [open, setOpen] = useState(false)
-
+const OnlineAppointment = ({ open, setOpen }) => {
    const handleClose = () => setOpen(false)
-   const handleOpen = () => setOpen(true)
 
    return (
-      <>
-         <Drawer open={open} onClose={handleClose}>
-            <Container>
-               <Close onClick={handleClose} />
-               <Header>
-                  <Title>Онлайн запись</Title>
-               </Header>
-               <ChooseServices />
-            </Container>
-         </Drawer>
-         <button type="button" onClick={handleOpen}>
-            Open
-         </button>
-      </>
+      <Drawer open={open} onClose={handleClose}>
+         <Container>
+            <Close onClick={handleClose} />
+            <Header>
+               <Title>Онлайн запись</Title>
+            </Header>
+            <ChooseServices />
+         </Container>
+      </Drawer>
    )
 }
 

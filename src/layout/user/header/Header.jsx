@@ -20,12 +20,14 @@ import SignIn from '../../login/SignIn'
 import SignUp from '../../login/SignUp'
 import ForgotPassword from '../../login/ForgotPassword'
 import { localStorageKeys } from '../../../utils/constants/constants'
+import OnlineAppointment from '../../../components/appointment/OnlineAppointment'
 
 const Header = () => {
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
    const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
       useState(false)
+   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
    const navigateToForgotPassword = (e) => {
       e.preventDefault()
@@ -60,6 +62,10 @@ const Header = () => {
       )
       localStorage.removeItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
       localStorage.removeItem(localStorageKeys.SIGN_IN_MODAL_KEY)
+   }
+
+   const isDrawerOpenHandler = () => {
+      setIsDrawerOpen(true)
    }
 
    const menuItems = [
@@ -102,6 +108,7 @@ const Header = () => {
             setOpen={setIsForgotPasswordModalOpen}
             navigateToSignIn={navigateToSignIn}
          />
+         <OnlineAppointment open={isDrawerOpen} setOpen={setIsDrawerOpen} />
          <HeaderStyle>
             <FirstNavStyle>
                <div className="containerInfo">
@@ -171,7 +178,9 @@ const Header = () => {
                   <StyledButton variant="outlined">
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
-                  <StyledButton variant="contained">ЗАПИСЬ ОНЛАЙН</StyledButton>
+                  <StyledButton onClick={isDrawerOpenHandler}>
+                     ЗАПИСЬ ОНЛАЙН
+                  </StyledButton>
                </ContainerButton>
             </SecondNavStyle>
          </HeaderStyle>

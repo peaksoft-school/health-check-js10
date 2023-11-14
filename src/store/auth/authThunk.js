@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
-import { USER_KEY, routes } from '../../utils/constants/constants'
+import { USER_KEY } from '../../utils/constants/constants'
 import { login } from './authSlice'
 import { notify } from '../../utils/constants/snackbar'
 

@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { store } from '../store'
-import { login } from '../store/auth/authSlice'
+import { logout } from '../store/auth/authSlice'
 
-export const BASE_URL = ''
+export const BASE_URL =
+   'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
 
 const headers = {
    'Content-type': 'application/json',
@@ -15,8 +16,8 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const token = store.getState().login.accessToken
-   //   const token = "ссылка с свагера";
+   const { token } = store.getState().authorization
+   //   const userToken = "ссылка с свагера";
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }
@@ -28,8 +29,17 @@ axiosInstance.interceptors.response.use(
       return Promise.resolve(response)
    },
    (error) => {
-      if (error.response.status === 401) {
-         store.dispatch(login())
+      if (error?.code === 403) {
+         store.dispatch(logout())
+         throw new Error('Unauthotized')
       }
+      return Promise.reject(error)
    }
 )
+
+let storeForInject
+
+export const injectStore = (_store) => {
+   storeForInject = _store
+   return storeForInject
+}

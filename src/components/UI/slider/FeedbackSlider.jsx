@@ -51,8 +51,8 @@ export const FeedbackSlider = () => {
       slidesToScroll: 1,
       appendDots: (dots) => customDots(dots),
       customPaging: () => customPaging(),
-      nextArrow: <StyledNextImg />,
-      prevArrow: <StyledPrevImg />,
+      nextArrow: <NextImg />,
+      prevArrow: <PreviousImg />,
    }
    return (
       <>
@@ -87,12 +87,7 @@ const MainContainer = styled('div')({
    overflow: 'hidden',
    fontFamily: 'Manrope',
 })
-const StyledNextImg = styled(NextImg)(() => ({
-   marginTop: '1.7rem',
-}))
-const StyledPrevImg = styled(PreviousImg)(() => ({
-   marginTop: '1.7rem',
-}))
+
 const StyledInfo = styled('h2')({
    fontFamily: 'Manrope',
    fontWeight: 600,
@@ -100,7 +95,7 @@ const StyledInfo = styled('h2')({
    lineHeight: '49px',
    color: '#222222',
    zIndex: 6,
-   paddingLeft: '8rem',
+   paddingLeft: '7rem',
    textAlign: 'start',
    span: {
       color: '#048741',

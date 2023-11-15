@@ -2,22 +2,40 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { PulseLoader } from 'react-spinners'
 import { CloseIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { changePassword } from '../../store/auth/authThunk'
+import { notify } from '../../utils/constants/snackbar'
+import { localStorageKeys } from '../../utils/constants/constants'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [open, setOpen] = useState(true)
 
-   const handleClose = () => setOpen(false)
+   const { isLoading } = useSelector((state) => state.authorization)
 
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
+   const { uniqueId } = useParams()
+
+   const handleClose = () => {
+      setOpen(false)
+      navigate('/homepage')
+      localStorage.removeItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+   }
    const {
       register,
       formState: { errors },
       watch,
+      getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -27,6 +45,28 @@ const ChangePassword = () => {
    })
 
    const watchPassword = watch('password', '')
+
+   const handleNewPasswordSubmit = () => {
+      localStorage.removeItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+      const newPassword = getValues().password
+      const confirmPassword = getValues().copyPassword
+
+      if (newPassword.length >= 8) {
+         if (newPassword === confirmPassword) {
+            dispatch(
+               changePassword({
+                  uniqueId,
+                  newPassword,
+                  navigate,
+               })
+            )
+         } else {
+            notify('Пароли не совпадают', 'error')
+         }
+      } else {
+         notify('Длина пароля должна быть не менее 8 символов', 'error')
+      }
+   }
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -40,11 +80,10 @@ const ChangePassword = () => {
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleSubmit(handleNewPasswordSubmit)}>
             <FormLabel className="topic">Смена пароля</FormLabel>
             <CloseIcon className="closeIcon" onClick={handleClose} />
             <div>
-               <p>Вам будет отправлена ссылка для сброса пароля</p>
                <Input
                   placeholder="Введите новый пароль"
                   error={errors.password}
@@ -114,8 +153,8 @@ const ChangePassword = () => {
                )}
             </div>
 
-            <Button className="buttonStyle" type="submit">
-               Подтвердить
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'ПОДТВЕРДИТЬ'}
             </Button>
          </FormControlStyled>
       </Modal>
@@ -133,6 +172,12 @@ const FormControlStyled = styled('form')(() => ({
    padding: '1.5rem 1.5rem',
    borderRadius: '2px',
    background: '#FFFFFF',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
+      height: '1rem',
+   },
    '& .topic': {
       fontFamily: 'Manrope',
       fontSize: '1.25rem',

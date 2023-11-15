@@ -69,8 +69,8 @@ const ApplicationForm = () => {
          <ApplicationFormInnerContainer>
             <h2>Оставьте заявку</h2>
             <p>
-               Оставьте свой номер и наши специалисты свяжутся с Вами <br />
-               в ближайшее время
+               Оставьте свой номер и наши специалисты свяжутся с Вами <br />в
+               ближайшее время
             </p>
 
             <form onSubmit={handleSubmit}>

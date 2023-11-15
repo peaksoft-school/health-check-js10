@@ -11,7 +11,7 @@ import {
    ForwardVector,
 } from '../assets'
 
-const AboutClinicLayout = ({ place, onClick }) => {
+const AboutClinicLayout = ({ variant, onClick }) => {
    return (
       <Block>
          <StyledMainBlock>
@@ -50,14 +50,14 @@ const AboutClinicLayout = ({ place, onClick }) => {
                   здоровья наших пациентов.
                </p>
 
-               {place === 'main' ? (
-                  <StyledNavlink to="about">
-                     Читать подробнее o клинике <ForwardVector />
-                  </StyledNavlink>
-               ) : (
+               {variant === 'button' ? (
                   <StyledButton variant="outlined" onClick={onClick}>
                      Записаться на консультацию
                   </StyledButton>
+               ) : (
+                  <StyledNavlink to="about">
+                     Читать подробнее o клинике <ForwardVector />
+                  </StyledNavlink>
                )}
             </StyledAboutSecondText>
             <StyledImageBlock>
@@ -87,7 +87,7 @@ const StyledAboutSecondText = styled.div`
    font-weight: 400;
    line-height: 160%;
    color: #4d4e51;
-
+   gap: 2rem;
    & p {
       font-size: 1.1rem;
       line-height: 1.625rem;
@@ -103,7 +103,7 @@ const StyledMainBlock = styled.div`
    gap: 10rem;
 `
 const StyledImageBlock = styled.div`
-   margin-top: 10rem;
+   margin-top: 8rem;
    h3 {
       font-size: 1.13rem;
       font-weight: 400;
@@ -157,14 +157,13 @@ const StyledSlidingImG = styled('div')(() => ({
 }))
 
 const StyledNavlink = styled(NavLink)(() => ({
+   width: '15.5rem',
    color: '#009344',
    fontSize: '1rem',
    fontWeight: 500,
-   lineHeight: '1.375rem',
    textDecoration: 'none',
-   display: 'flex',
-   alignItems: 'center',
-   paddingTop: '2.5rem',
+   cursor: 'pointer',
+   paddingTop: '1rem',
 }))
 
 const StyledButton = styled(Button)(() => ({

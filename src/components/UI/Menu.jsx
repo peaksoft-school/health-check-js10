@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material'
 
-export default function ReusableMenu({ buttonIcon, menuItems }) {
+export default function ReusableMenu({ buttonIcon, menuItems, ...rest }) {
    const [anchorEl, setAnchorEl] = React.useState(null)
    const open = Boolean(anchorEl)
 
@@ -35,6 +35,7 @@ export default function ReusableMenu({ buttonIcon, menuItems }) {
             MenuListProps={{
                'aria-labelledby': 'basic-button',
             }}
+            {...rest}
          >
             {menuItems.map((item) => (
                <StyleMenuItem

@@ -8,7 +8,7 @@ const DoctorRoutes = () => {
    const navigate = useNavigate()
 
    const logoutHandler = () => {
-      navigate('/signin')
+      navigate('/homepage')
       dispatch(logout())
    }
    return (

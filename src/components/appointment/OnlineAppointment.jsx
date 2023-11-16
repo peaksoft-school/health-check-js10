@@ -1,30 +1,33 @@
-import { useState } from 'react'
 import { styled } from '@mui/material'
+import { useEffect } from 'react'
 import Drawer from '../UI/Drawer'
 import { CloseIcon } from '../../assets'
 import ChooseServices from './ChooseServices'
+import { localStorageKeys } from '../../utils/constants/constants'
 
-const OnlineAppointment = () => {
-   const [open, setOpen] = useState(false)
+const OnlineAppointment = ({ open, setOpen }) => {
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.DRAWER_MODAL_KEY)
+   }
 
-   const handleClose = () => setOpen(false)
-   const handleOpen = () => setOpen(true)
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.DRAWER_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
 
    return (
-      <>
-         <Drawer open={open} onClose={handleClose}>
-            <Container>
-               <Close onClick={handleClose} />
-               <Header>
-                  <Title>Онлайн запись</Title>
-               </Header>
-               <ChooseServices />
-            </Container>
-         </Drawer>
-         <button type="button" onClick={handleOpen}>
-            Open
-         </button>
-      </>
+      <Drawer open={open} onClose={handleClose}>
+         <Container>
+            <Close onClick={handleClose} />
+            <Header>
+               <Title>Онлайн запись</Title>
+            </Header>
+            <ChooseServices />
+         </Container>
+      </Drawer>
    )
 }
 

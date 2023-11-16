@@ -1,33 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { USER_KEY, routes } from '../../utils/constants/constants'
+import { changePassword, forgotPassword, signIn, signUp } from './authThunk'
 
 const initialState = {
    token: null,
    isAuth: false,
    role: null,
    email: null,
+   error: '',
+   isLoading: false,
 }
 
-const userData = localStorage.getItem(USER_KEY)
-const parsedData = userData ? JSON.parse(userData) : null
-
-const initialStateWithStoredData = {
-   ...initialState,
-   ...parsedData,
-}
+const authActions = [signIn, signUp, forgotPassword, changePassword]
 
 export const authSlice = createSlice({
    name: 'authorization',
-   initialState: initialStateWithStoredData,
+   initialState,
    reducers: {
-      login(state, { payload: { data, navigate } }) {
-         console.log(state)
-         localStorage.setItem(USER_KEY, JSON.stringify(data))
+      login(state, action) {
+         localStorage.setItem(USER_KEY, JSON.stringify(action.payload.data))
          state.isAuth = true
-         state.role = data.role
-         state.token = data.token
-         state.email = data.email
-         navigate(routes[data.role].index)
+         state.role = action.payload.data.role
+         state.token = action.payload.data.token
+         state.email = action.payload.data.email
+         action.payload.navigate(routes[action.payload.data.role].path)
       },
       logout() {
          const newState = initialState
@@ -35,6 +31,21 @@ export const authSlice = createSlice({
          return newState
       },
    },
+   extraReducers: (builder) => {
+      authActions.forEach((action) => {
+         builder
+            .addCase(action.pending, (state) => {
+               state.isLoading = true
+            })
+            .addCase(action.fulfilled, (state) => {
+               state.isLoading = false
+            })
+            .addCase(action.rejected, (state, action) => {
+               state.error = action.payload
+               state.isLoading = false
+            })
+      })
+   },
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, register, logout } = authSlice.actions

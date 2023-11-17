@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import './App.css'
 import { applicationsThunk } from './store/applications/applicationsThunk'
 import AppRoutes from './routes/AppRoutes'
 import { login } from './store/auth/authSlice'
@@ -14,7 +13,7 @@ function App() {
    useEffect(() => {
       const USER_DATA = localStorage.getItem(USER_KEY)
       const parserData = JSON.parse(USER_DATA)
-      if (parserData?.userToken) {
+      if (parserData?.token) {
          dispatch(login({ data: parserData, navigate }))
       }
    }, [])

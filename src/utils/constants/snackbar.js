@@ -1,10 +1,10 @@
 import { enqueueSnackbar } from 'notistack'
 
-export const notify = (message, variant = 'success') => {
+export const notify = (content, type = 'success') => {
    enqueueSnackbar({
-      variant: { variant },
-      autoHideDuration: 5000,
-      message: { message },
+      variant: type,
+      autoHideDuration: 3000,
+      message: content,
       anchorOrigin: {
          vertical: 'top',
          horizontal: 'right',

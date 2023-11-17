@@ -4,16 +4,27 @@ import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { GoogleIcon, Show, ShowOff } from '../../assets'
+import { signInWithPopup } from 'firebase/auth'
+import { PulseLoader } from 'react-spinners'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
-import { USER_KEY, defautltUsers } from '../../utils/constants/constants'
-import { login } from '../../store/auth/authSlice'
+import { authWithGoogle, signIn } from '../../store/auth/authThunk'
+import { auth, provider } from '../../store/auth/firebase'
+import { notify } from '../../utils/constants/snackbar'
+import { localStorageKeys } from '../../utils/constants/constants'
+import { GoogleIcon, Show, ShowOff } from '../../assets'
 
-const SignIn = () => {
+const SignIn = ({
+   open,
+   setOpen,
+   navigateToForgotPassword,
+   navigateToSignUp,
+}) => {
    const [showPassword, setShowPassword] = useState(false)
-   const [open, setOpen] = useState(true)
+
+   const { isLoading } = useSelector((state) => state.authorization)
+
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -21,6 +32,7 @@ const SignIn = () => {
       register,
       formState: { errors },
       getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -29,25 +41,47 @@ const SignIn = () => {
       },
    })
 
-   const handleClose = () => setOpen(false)
-
-   const handleSignIn = (e) => {
-      e.preventDefault()
-      const values = getValues()
-      const user = defautltUsers.find(
-         (user) =>
-            user.email === values.email && user.password === values.password
-      )
-      if (user) {
-         const { email, role, password } = user
-         const userToken = user.token
-         const data = { email, role, password, userToken }
-
-         dispatch(login({ data, navigate }))
-      } else {
-         console.log('Неправлильный email или password')
-      }
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.SIGN_IN_MODAL_KEY)
    }
+
+   const handleSignIn = () => {
+      const values = getValues()
+      dispatch(
+         signIn({
+            values,
+            handleClose,
+         })
+      )
+      values.email = ''
+      values.password = ''
+   }
+
+   const handleAuthWithGoogle = () => {
+      signInWithPopup(auth, provider)
+         .then((data) => {
+            const userToken = data.user.accessToken
+            return userToken
+         })
+         .then((token) => {
+            dispatch(authWithGoogle({ token, navigate }))
+         })
+         .catch((error) => {
+            if (error.code === 'auth/cancelled-popup-request') {
+               notify('Вы отменили запрос на всплывающее окно', 'error')
+            } else {
+               notify('Произошла ошибка при аутентификации с Google', 'error')
+            }
+         })
+   }
+
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.SIGN_IN_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -57,19 +91,9 @@ const SignIn = () => {
       e.preventDefault()
    }
 
-   const navigateToSignUp = (e) => {
-      e.preventDefault()
-      navigate('/signup')
-   }
-
-   const navigateToForgotPassword = (e) => {
-      e.preventDefault()
-      navigate('/forgotPassword')
-   }
-
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled onSubmit={handleSignIn}>
+         <FormControlStyled onSubmit={handleSubmit(handleSignIn)}>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
                {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
@@ -127,8 +151,8 @@ const SignIn = () => {
                   <p className="message">{errors.password?.message}</p>
                )}
             </div>
-            <Button className="buttonStyle" type="submit">
-               ВОЙТИ
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'ВОЙТИ'}
             </Button>
             <NavLink
                className="password"
@@ -142,7 +166,11 @@ const SignIn = () => {
                <span>или</span>
                <hr className="lineSecond" />
             </Line>
-            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
+            <Button
+               className="buttonGoogle"
+               startIcon={<GoogleIcon />}
+               onClick={handleAuthWithGoogle}
+            >
                <NavLink to="/" className="google">
                   Продолжить с Google
                </NavLink>
@@ -168,6 +196,12 @@ const FormControlStyled = styled('form')(() => ({
    gap: '1.6rem',
    padding: '2rem 1.5rem',
    background: '#FFFFFF',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
+      height: '1rem',
+   },
    '& .topic': {
       fontSize: '1.125rem',
       fontWeight: 500,

@@ -1,23 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
-import { NavLink, useNavigate } from 'react-router-dom'
-// import { CloseIcon } from '../../assets'
+import { useDispatch, useSelector } from 'react-redux'
+import { PulseLoader } from 'react-spinners'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { forgotPassword } from '../../store/auth/authThunk'
+import { localStorageKeys } from '../../utils/constants/constants'
 
-const ForgotPassword = () => {
-   const [open, setOpen] = useState(true)
+const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
+   const { isLoading } = useSelector((state) => state.authorization)
 
-   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
-   const handleClose = () => setOpen(false)
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+   }
 
    const {
       register,
       formState: { errors },
+      getValues,
+      handleSubmit,
    } = useForm({
       mode: 'all',
       defaultValues: {
@@ -25,14 +32,31 @@ const ForgotPassword = () => {
       },
    })
 
-   const navigateToChangePassword = (e) => {
-      e.preventDefault()
-      navigate('/changePassword')
+   const ipAddress = window.location.hostname
+
+   const handleEmailSubmit = () => {
+      const values = getValues().email
+      const link = `http://${ipAddress}:3000/change-password`
+      const email = values
+      dispatch(
+         forgotPassword({
+            email,
+            link,
+            handleClose,
+         })
+      )
    }
+
+   useEffect(() => {
+      const parsedData = JSON.parse(
+         localStorage.getItem(localStorageKeys.FORGOT_PASSWORD_MODAL_KEY)
+      )
+      setOpen(parsedData)
+   }, [])
 
    return (
       <Modal open={open} onClose={handleClose} borderRadius="5px">
-         <FormControlStyled>
+         <FormControlStyled onSubmit={handleSubmit(handleEmailSubmit)}>
             <FormLabel className="topic">забыли пароль?</FormLabel>
             {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div>
@@ -54,16 +78,12 @@ const ForgotPassword = () => {
                )}
             </div>
 
-            <Button
-               className="buttonStyle"
-               type="submit"
-               onClick={navigateToChangePassword}
-            >
-               ОТПРАВИТЬ
+            <Button className="buttonStyle" type="submit" disabled={isLoading}>
+               {isLoading ? <PulseLoader /> : 'ОТПРАВИТЬ'}
             </Button>
-            <NavLink className="password" to="/signin">
+            <Button className="password" onClick={navigateToSignIn}>
                ОТМЕНИТЬ
-            </NavLink>
+            </Button>
          </FormControlStyled>
       </Modal>
    )
@@ -80,6 +100,12 @@ const FormControlStyled = styled('form')(() => ({
    padding: '2rem 1.5rem',
    borderRadius: '2px',
    background: '#FFFFFF',
+   '& input:-internal-autofill-selected': {
+      height: '1rem',
+   },
+   '& .MuiOutlinedInput-input': {
+      height: '1rem',
+   },
    '& .topic': {
       fontFamily: 'Manrope',
       fontSize: '1.25rem',
@@ -107,13 +133,18 @@ const FormControlStyled = styled('form')(() => ({
       fontSize: '0.875rem',
    },
    '& .password': {
-      height: '2rem',
+      height: '2.5rem',
+      width: '26rem',
       fontFamily: 'Manrope',
       fontSize: '0.875rem',
       fontWeight: 400,
       lineHeight: '1rem',
       color: '#959595',
       textDecoration: 'none',
+      background: 'none',
+      '&:hover': {
+         background: 'none',
+      },
    },
    '& .message': {
       color: 'red',

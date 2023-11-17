@@ -1,6 +1,9 @@
 export const USER_KEY = 'HEALTH_CHECK_USER_KEY'
+
 export const routes = {
-   LOGIN: '/signin',
+   LOGIN: {
+      changePassword: '/change-password',
+   },
    ADMIN: {
       path: '/admin',
       onlineRegistration: 'online-registration',
@@ -16,23 +19,9 @@ export const routes = {
    },
 }
 
-export const defautltUsers = [
-   {
-      email: 'admin@gmail.com',
-      password: 'admin123',
-      role: 'ADMIN',
-      token: 'admin_token',
-   },
-   {
-      email: 'user@gmail.com',
-      password: 'user123',
-      role: 'USER',
-      token: 'user_token',
-   },
-   {
-      email: 'doctor@gmail.com',
-      password: 'doctor123',
-      role: 'DOCTOR',
-      token: 'doctor_token',
-   },
-]
+export const localStorageKeys = {
+   SIGN_IN_MODAL_KEY: 'IS_SIGN_IN_MODAL_OPEN',
+   SIGN_UP_MODAL_KEY: 'IS_SIGN_UP_MODAL_OPEN',
+   FORGOT_PASSWORD_MODAL_KEY: 'IS_FORGOT_PASSWORD_MODAL_OPEN',
+   DRAWER_MODAL_KEY: 'IS_DRAWER_MODAL_OPEN',
+}

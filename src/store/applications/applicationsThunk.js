@@ -46,7 +46,6 @@ export const deleteAsyncThunk = createAsyncThunk(
    'deleteAsyncThunk/applications',
    async (ids, { dispatch }) => {
       try {
-         console.log(ids)
          const response = await axiosInstance.delete(`/api/applications`, {
             data: ids,
          })

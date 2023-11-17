@@ -12,6 +12,8 @@ export { ReactComponent as Pagination } from './icons/dots.svg'
 export { ReactComponent as NextImg } from './icons/nextImg.svg'
 export { ReactComponent as PreviousImg } from './icons/previousImg.svg'
 export { ReactComponent as GoBackIcon } from './icons/goBack.svg'
+export { ReactComponent as CloseIcon } from './icons/closeIcon.svg'
+
 export { ReactComponent as AnestIcon } from './icons/anesteziologiya.svg'
 export { ReactComponent as DermIcon } from './icons/dermatologiya.svg'
 export { ReactComponent as EndocIcon } from './icons/endokrinologiya.svg'
@@ -48,12 +50,9 @@ export { ReactComponent as ArrowIcon } from './icons/arrow.svg'
 export { ReactComponent as ShowIcon } from './icons/ShowIcon.svg'
 export { ReactComponent as HideIcon } from './icons/HideIcon.svg'
 export { ReactComponent as AllIcon } from './icons/all-icon.svg'
-<<<<<<< HEAD
 export { ReactComponent as AppDeleteIcon } from './icons/trash.svg'
-=======
 export { ReactComponent as Rectange } from './icons/Subtract.svg'
 export { ReactComponent as ForwardVector } from './icons/Vector (4).svg'
->>>>>>> e90b2061e57b2ac8dffb6a255814b10cf773d0ba
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

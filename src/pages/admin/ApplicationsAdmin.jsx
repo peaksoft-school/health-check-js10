@@ -38,7 +38,6 @@ export const ApplicationsAdmin = () => {
             selectedIds.push(element.id)
          }
       })
-      console.log(selectedIds)
       dispatch(deleteAsyncThunk(selectedIds))
    }
 
@@ -63,13 +62,12 @@ export const ApplicationsAdmin = () => {
 
    const handleStatusChange = (e, id) => {
       let status
-      const updatedApplications = applications.map((el) => {
+      applications.map((el) => {
          if (el.id === id) {
             status = e.target.checked
          }
          return el
       })
-      console.log(updatedApplications)
       dispatch(fetchStatus({ status, id }))
    }
 

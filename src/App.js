@@ -12,14 +12,17 @@ function App() {
    const navigate = useNavigate()
 
    useEffect(() => {
-      dispatch(applicationsThunk()).then((result) => console.log(result))
-      console.log('dawdaw')
       const USER_DATA = localStorage.getItem(USER_KEY)
       const parserData = JSON.parse(USER_DATA)
       if (parserData?.userToken) {
          dispatch(login({ data: parserData, navigate }))
       }
    }, [])
+
+   useEffect(() => {
+      dispatch(applicationsThunk())
+   }, [dispatch])
+
    return (
       <div className="App">
          <AppRoutes />

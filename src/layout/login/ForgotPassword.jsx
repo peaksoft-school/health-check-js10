@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { CloseIcon } from '../../assets'
+// import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
       <Modal open={open} onClose={handleClose} borderRadius="5px">
          <FormControlStyled>
             <FormLabel className="topic">забыли пароль?</FormLabel>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
+            {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div>
                <p>Вам будет отправлена ссылка для сброса пароля</p>
                <Input

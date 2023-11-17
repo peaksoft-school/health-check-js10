@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
+import { GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -72,7 +72,7 @@ const SignIn = () => {
          <FormControlStyled onSubmit={handleSignIn}>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
-               <CloseIcon className="closeIcon" onClick={handleClose} />
+               {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             </div>
             <div>
                <Input

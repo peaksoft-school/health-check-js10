@@ -3,7 +3,7 @@ import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
+import { GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
 import { Input } from '../../components/UI/input/Input'
@@ -60,7 +60,7 @@ const SignUp = () => {
       <Modal open={open} onClose={handleClose} borderRadius="5px">
          <FormControlStyled onSubmit={handleRegister}>
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
+            {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div className="inputContainer">
                <div className="inputWrapper">
                   <Input

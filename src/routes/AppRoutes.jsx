@@ -10,6 +10,7 @@ import AdminRoutes from './adminRoutes/AdminRoutes'
 import DoctorRoutes from './doctorRoutes/DoctorRoutes'
 import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
+import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -22,6 +23,15 @@ const AppRoutes = () => {
          <Route path="/signup" element={<SignUp />} />
          <Route path="/forgotPassword" element={<ForgotPassword />} />
          <Route path="/changePassword" element={<ChangePassword />} />
+         <Route
+            path={routes.ADMIN.applications}
+            element={
+               <PrivateRoutes
+                  component={<ApplicationsAdmin />}
+                  isAuth={isAuth}
+               />
+            }
+         />
          <Route
             path={routes.ADMIN.index}
             element={

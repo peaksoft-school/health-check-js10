@@ -15,6 +15,7 @@ import { AppDeleteIcon, SearchIcon } from '../../assets'
 export const ApplicationsAdmin = () => {
    const { applications } = useSelector((state) => state.applications)
    const [selectAll, setSelectAll] = useState(false)
+   const [searchTerm, setSearchTerm] = useState('')
    const [items, setItems] = useState(applications)
 
    const dispatch = useDispatch()
@@ -29,6 +30,11 @@ export const ApplicationsAdmin = () => {
 
    const handleSearchById = (value) => {
       dispatch(searchApplicationByIdAsyncThunk(value))
+   }
+
+   const handleChange = (event) => {
+      const { value } = event.target
+      setSearchTerm(value)
    }
 
    const handleDeleteSelected = () => {
@@ -142,13 +148,14 @@ export const ApplicationsAdmin = () => {
             <StyledInput
                type="text"
                placeholder="Поиск"
-               onChange={(e) => handleSearchById(e.target.value)}
+               value={searchTerm}
+               onChange={handleChange}
                InputProps={{
                   endAdornment: (
                      <InputAdornment position="end">
                         <IconButton>
                            <SearchIcon
-                              onClick={(e) => handleSearchById(e.target.value)}
+                              onClick={() => handleSearchById(searchTerm)}
                            />
                         </IconButton>
                      </InputAdornment>

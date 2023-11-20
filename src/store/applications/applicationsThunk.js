@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
+import { notify } from '../../utils/constants/snackbar'
 
 export const applicationsThunk = createAsyncThunk(
    'applications/users',
@@ -8,6 +9,11 @@ export const applicationsThunk = createAsyncThunk(
          const response = await axiosInstance.get('/api/applications/getAll')
          return response.data
       } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
          return rejectWithValue(error)
       }
    }
@@ -22,14 +28,19 @@ export const searchApplicationByIdAsyncThunk = createAsyncThunk(
          )
          return response.data
       } catch (error) {
-         return rejectWithValue(error.message || 'Failed to fetch data')
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
 
 export const fetchStatus = createAsyncThunk(
    'mySlice/fetchStatus',
-   async ({ id, status }, { dispatch }) => {
+   async ({ id, status }, { rejectWithValue, dispatch }) => {
       try {
          const response = await axiosInstance.post(
             `/api/applications?applicationId=${id}&isProceeded=${status}`
@@ -37,14 +48,19 @@ export const fetchStatus = createAsyncThunk(
          dispatch(applicationsThunk())
          return response.data
       } catch (error) {
-         return error
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
 
 export const deleteAsyncThunk = createAsyncThunk(
    'deleteAsyncThunk/applications',
-   async (ids, { dispatch }) => {
+   async (ids, { rejectWithValue, dispatch }) => {
       try {
          const response = await axiosInstance.delete(`/api/applications`, {
             data: ids,
@@ -52,7 +68,12 @@ export const deleteAsyncThunk = createAsyncThunk(
          dispatch(applicationsThunk())
          return response.data
       } catch (error) {
-         return error
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )

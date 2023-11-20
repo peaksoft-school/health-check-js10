@@ -18,7 +18,7 @@ root.render(
             <SnackbarProvider>
                <ThemeProvider theme={theme}>
                   <App />
-               </ThemeProvider>npm 
+               </ThemeProvider>
             </SnackbarProvider>
          </BrowserRouter>
       </Provider>

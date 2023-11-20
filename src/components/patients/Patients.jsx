@@ -1,81 +1,83 @@
 import React, { useState, useEffect } from 'react'
-import TextField from '@mui/material/TextField'
-import SearchIcon from '@mui/icons-material/Search'
+import { useDispatch, useSelector } from 'react-redux'
 import { DeleteOutline } from '@mui/icons-material'
+import { TextField } from '@mui/material'
 import styled from '@emotion/styled'
-import axios from 'axios'
-// import { axiosInstance } from '../../config/axiosInstance'
+import AppTable from '../UI/AppTable'
+import { SearchIcon } from '../../assets'
+import {
+   fetchPatients,
+   deletePatient,
+   searchPatients,
+} from '../../store/patient/patientsThunk'
+import {
+   selectPatients,
+   selectPatientsLoading,
+   selectPatientsError,
+} from '../../store/patient/patientsSlice'
+import { notify } from '../../utils/constants/snackbar'
 
-const Patients = () => {
-   const initialPatients = [
-      {
-         id: 1,
-         fullName: 'Айназик Бакытова',
-         phoneNumber: '+996 707 123 456',
-         email: 'ainazik@gmail.com',
-         submissionDate: '12.01.2023',
-      },
-      {
-         id: 2,
-         fullName: 'Айназик Бакытова',
-         phoneNumber: '+996 707 123 456',
-         email: 'ainazik@gmail.com',
-         submissionDate: '12.01.2023',
-      },
-      {
-         id: 3,
-         fullName: 'Айназик Бакытова',
-         phoneNumber: '+996 707 123 456',
-         email: 'ainazik@gmail.com',
-         submissionDate: '12.01.2023',
-      },
-   ]
-
-   const [patients, setPatients] = useState([initialPatients])
-   const [filteredPatients, setFilteredPatients] = useState([])
+const PatientComponent = () => {
+   const dispatch = useDispatch()
+   const patients = useSelector(selectPatients)
+   const loading = useSelector(selectPatientsLoading)
+   const error = useSelector(selectPatientsError)
    const [searchTerm, setSearchTerm] = useState('')
-   const [isAdmin, setIsAdmin] = useState(true)
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await axios.get(
-               'http://healthcheck.peaksoftprojects.com/swagger-ui/index.html#/Patient%20Api/getAll'
-            )
+      dispatch(fetchPatients())
+   }, [dispatch])
 
-            setPatients([...initialPatients, ...response.data])
-            setFilteredPatients([...initialPatients, ...response.data])
-         } catch (error) {
-            console.error('Ошибка при получении данных', error)
-         }
-      }
-
-      fetchData()
-   }, [])
-
-   useEffect(() => {
-      const searchTermLowerCase = searchTerm.toLowerCase()
-
-      const filteredPatients = patients.filter((patient) => {
-         const fullName = patient.fullName || ''
-         return fullName.toLowerCase().includes(searchTermLowerCase)
-      })
-
-      setFilteredPatients(filteredPatients)
-   }, [searchTerm, patients])
-
-   const handleDelete = async (id) => {
-      try {
-         await axios.delete(
-            `http://healthcheck.peaksoftprojects.com/swagger-ui/index.html#/Patient%20Api/deletePatientById`
-         )
-         const updatedPatients = patients.filter((patient) => patient.id !== id)
-         setPatients(updatedPatients)
-         setFilteredPatients(updatedPatients)
-      } catch (error) {
-         console.error('Ошибка при удалении пациента', error)
+   function debounce(func, delay) {
+      let timer
+      // eslint-disable-next-line func-names
+      return function (...args) {
+         clearTimeout(timer)
+         timer = setTimeout(() => {
+            func.apply(this, args)
+         }, delay)
       }
    }
+
+   const debouncedSearch = debounce((input) => {
+      dispatch(searchPatients(input))
+   }, 2000)
+
+   const handleInputChange = (e) => {
+      const input = e.target.value
+      setSearchTerm(input)
+      debouncedSearch(input)
+   }
+
+   const handleDelete = async (patientId) => {
+      try {
+         await dispatch(deletePatient(patientId))
+         dispatch(fetchPatients())
+      } catch (error) {
+         notify('Ошибка при удалении пациента', 'error')
+      }
+   }
+
+   const columns = [
+      { id: 'id', label: '№' },
+      { id: 'fullname', label: 'Имя Фамилия' },
+      { id: 'phoneNumber', label: 'Номер телефона' },
+      { id: 'email', label: 'Почта' },
+      { id: 'date', label: 'Дата сдачи' },
+      {
+         id: 'delete',
+         label: 'Действия',
+         render: (patient) => (
+            <StyledDeleteButton
+               variant="outlined"
+               color="error"
+               onClick={() => handleDelete(patient.id)}
+            >
+               <DeleteOutline />
+            </StyledDeleteButton>
+         ),
+      },
+   ]
 
    return (
       <TableContainer>
@@ -84,61 +86,32 @@ const Patients = () => {
             placeholder="Поиск..."
             variant="outlined"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleInputChange}
             InputProps={{
                endAdornment: <StyledSearchIcon />,
             }}
          />
-         <StyledTable>
-            <thead>
-               <tr>
-                  <th>№</th>
-                  <th>Имя Фамилия</th>
-                  <th>Помер телефона</th>
-                  <th>Почта</th>
-                  <th>Дата сдачи </th>
-                  {isAdmin && <th>Действия</th>}
-               </tr>
-            </thead>
-            <StyledTableBody>
-               {filteredPatients.map((patient) => (
-                  <tr key={patient.id}>
-                     <td>{patient.id}</td>
-                     <td>{patient.fullName}</td>
-                     <td>{patient.phoneNumber}</td>
-                     <td>{patient.email}</td>
-                     <td>{patient.submissionDate}</td>
-                     {isAdmin && (
-                        <td>
-                           <StyledDeleteButton
-                              onClick={() => handleDelete(patient.id)}
-                              disabled={!isAdmin}
-                           >
-                              <DeleteOutline />
-                           </StyledDeleteButton>
-                        </td>
-                     )}
-                  </tr>
-               ))}
-            </StyledTableBody>
-         </StyledTable>
+         {loading === 'failed' && <p>Error: {error}</p>}
+         {loading === 'succeeded' && (
+            <AppTable data={patients} columns={columns} />
+         )}
       </TableContainer>
    )
 }
 
-export default Patients
+export default PatientComponent
 
 const TableContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'flex-start',
-   padding: '3rem',
+   padding: '4rem',
    background: '#ECECEC',
    fontFamily: 'Manrope',
    '& h3': {
       fontSize: '22px',
       fontWeight: '400',
-      paddingBottom: '2rem',
+      paddingBottom: '3rem',
    },
 }))
 
@@ -146,7 +119,7 @@ const StyledTextField = styled(TextField)(() => ({
    '& .MuiInputBase-root': {
       fontFamily: 'Manrope',
       height: '2.5rem',
-      paddingLeft: '0.8rem',
+      paddingLeft: '1rem',
       width: '35rem',
       background: '#ffff',
       borderRadius: '50px',
@@ -169,37 +142,6 @@ const StyledTextField = styled(TextField)(() => ({
 
 const StyledSearchIcon = styled(SearchIcon)(() => ({
    color: 'gray',
-}))
-
-const StyledTable = styled('table')(() => ({
-   width: '100%',
-   borderCollapse: 'collapse',
-   borderRadius: '10px',
-   marginTop: '2rem',
-   background: '#ffff',
-   '& th': {
-      padding: '1rem',
-      fontWeight: '500',
-      fontSize: '14px',
-      textAlign: 'left',
-   },
-}))
-
-const StyledTableBody = styled('tbody')(() => ({
-   borderTop: '2px solid #F5F5F5',
-   textAlign: 'left',
-   background: '#ffff',
-   '& td': {
-      padding: '1rem',
-      fontWeight: '400',
-      fontSize: '16px',
-   },
-   '& tr:nth-of-type(even) td': {
-      background: '#F5F5F5',
-   },
-   '& tr:nth-of-type(odd) td': {
-      background: '#FFFFFF',
-   },
 }))
 
 const StyledDeleteButton = styled('button')(() => ({

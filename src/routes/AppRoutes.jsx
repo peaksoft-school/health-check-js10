@@ -8,6 +8,7 @@ import UserRoutes from './userRoutes/UserRoutes'
 import DoctorRoutes from './doctorRoutes/DoctorRoutes'
 import ChangePassword from '../layout/login/ChangePassword'
 import LandingPage from '../pages/user/LandingPage'
+import PatientComponent from '../components/patients/Patients'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -36,6 +37,15 @@ const AppRoutes = () => {
             path={routes.DOCTOR.path}
             element={
                <PrivateRoutes component={<DoctorRoutes />} isAuth={isAuth} />
+            }
+         />
+         <Route
+            path={routes.ADMIN.patients}
+            element={
+               <PrivateRoutes
+                  component={<PatientComponent />}
+                  isAuth={isAuth}
+               />
             }
          />
       </Routes>

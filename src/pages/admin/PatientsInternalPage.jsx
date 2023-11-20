@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Button from '../../components/UI/Button'
 import { PlusIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
+import { patintsAsyncThunk } from '../../store/patients/patientsThunk'
 
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
+
+   const dispatch = useDispatch()
+
+   useEffect(() => {
+      dispatch(patintsAsyncThunk())
+      console.log(patintsAsyncThunk())
+   }, [])
 
    const handleOpenModal = () => {
       setIsModalOpen(true)
@@ -15,11 +24,24 @@ export const PatientsInternalPage = () => {
       setIsModalOpen(false)
    }
 
-   //    const patients = [
-   //     {
-   //         id:"id", label:
-   //     }
-   //    ]
+   const patients = [
+      {
+         id: 'firstName',
+         label: 'Имя',
+      },
+      {
+         id: 'lastName',
+         label: 'Фамилия',
+      },
+      {
+         id: 'email',
+         label: 'Email',
+      },
+      {
+         id: 'phoneNumber',
+         label: 'Номер телефона',
+      },
+   ]
    return (
       <StyleBgPatients>
          <PatintsTitleStyle>

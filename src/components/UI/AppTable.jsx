@@ -36,20 +36,14 @@ const AppTable = ({ columns, data }) => {
                               condition={item.condition}
                            >
                               <Link to={`${item.id}`}>
-                                 {column.id === 'condition' ? (
-                                    <StyledCondition
-                                       condition={item[column.id]}
-                                    >
-                                       {item[column.id]?.length > 13
-                                          ? `${item[column.id].substring(
-                                               0,
-                                               13
-                                            )}...`
-                                          : item[column.id]}
-                                    </StyledCondition>
-                                 ) : (
-                                    item[column.id]?.length > 13
-                                 )}
+                                 <StyledCondition condition={item[column.id]}>
+                                    {item[column.id]?.length > 13
+                                       ? `${item[column.id].substring(
+                                            0,
+                                            13
+                                         )}...`
+                                       : item[column.id]}
+                                 </StyledCondition>
                               </Link>
                            </TableCell>
                         )
@@ -65,7 +59,7 @@ const Container = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    marginTop: '3rem',
-   marginLeft: '6rem',
+   // marginLeft: '6rem',
    fontFamily: 'Manrope',
    fontSize: '1.3rem',
    borderTopLeftRadius: '10px',

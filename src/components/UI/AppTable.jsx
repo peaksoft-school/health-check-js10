@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 const AppTable = ({ columns, data }) => {
    return (
       <Container>
-         <h2>Мои записи</h2>
          <Table className="navlink">
             <TableHeadStyle>
                <TableRow className="tableOne">
@@ -37,20 +36,14 @@ const AppTable = ({ columns, data }) => {
                               condition={item.condition}
                            >
                               <Link to={`${item.id}`}>
-                                 {column.id === 'condition' ? (
-                                    <StyledCondition
-                                       condition={item[column.id]}
-                                    >
-                                       {item[column.id]?.length > 13
-                                          ? `${item[column.id].substring(
-                                               0,
-                                               13
-                                            )}...`
-                                          : item[column.id]}
-                                    </StyledCondition>
-                                 ) : (
-                                    item[column.id]?.length > 13
-                                 )}
+                                 <StyledCondition condition={item[column.id]}>
+                                    {item[column.id]?.length > 13
+                                       ? `${item[column.id].substring(
+                                            0,
+                                            13
+                                         )}...`
+                                       : item[column.id]}
+                                 </StyledCondition>
                               </Link>
                            </TableCell>
                         )
@@ -66,7 +59,7 @@ const Container = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    marginTop: '3rem',
-   marginLeft: '6rem',
+   // marginLeft: '6rem',
    fontFamily: 'Manrope',
    fontSize: '1.3rem',
    '& h2': {
@@ -80,7 +73,7 @@ const TableHeadStyle = styled(TableHead)(() => ({
       width: '160px',
       fontFamily: 'Manrope',
       height: '41px',
-      paddingTop: '3rem',
+      // paddingTop: '3rem',
       flexShrink: '0',
       fontDize: '0.8rem',
       color: '#222222',

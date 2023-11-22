@@ -4,7 +4,6 @@ import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { PulseLoader } from 'react-spinners'
-import { CloseIcon } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -59,7 +58,7 @@ const ForgotPassword = ({ open, setOpen, navigateToSignIn }) => {
       <Modal open={open} onClose={handleClose} borderRadius="5px">
          <FormControlStyled onSubmit={handleSubmit(handleEmailSubmit)}>
             <FormLabel className="topic">забыли пароль?</FormLabel>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
+            {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div>
                <p>Вам будет отправлена ссылка для сброса пароля</p>
                <Input

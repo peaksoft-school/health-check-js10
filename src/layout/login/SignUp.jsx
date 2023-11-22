@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import { PulseLoader } from 'react-spinners'
-import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
+import { GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
 import { Input } from '../../components/UI/input/Input'
@@ -110,7 +110,7 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
       <Modal open={open} onClose={handleClose} borderRadius="5px">
          <FormControlStyled onSubmit={handleSubmit(handleRegister)}>
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
+            {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div className="inputContainer">
                <div className="inputWrapper">
                   <Input

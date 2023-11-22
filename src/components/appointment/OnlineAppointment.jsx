@@ -1,9 +1,9 @@
 import { styled } from '@mui/material'
 import { useEffect } from 'react'
 import Drawer from '../UI/Drawer'
-import { CloseIcon } from '../../assets'
 import ChooseServices from './ChooseServices'
 import { localStorageKeys } from '../../utils/constants/constants'
+import { CloseIcon } from '../../assets'
 
 const OnlineAppointment = ({ open, setOpen }) => {
    const handleClose = () => {

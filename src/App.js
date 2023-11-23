@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { applicationsThunk } from './store/applications/applicationsThunk'
 import AppRoutes from './routes/AppRoutes'
+import { USER_KEY } from './utils/constants/constants'
+import { login } from './store/auth/authSlice'
 
 function App() {
    const dispatch = useDispatch()

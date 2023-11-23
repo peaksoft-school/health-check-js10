@@ -11,7 +11,6 @@ import LandingPage from '../pages/user/LandingPage'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
-
    return (
       <Routes>
          <Route path="/" element={<LandingPage />} />
@@ -27,7 +26,7 @@ const AppRoutes = () => {
             }
          />
          <Route
-            path={routes.USER.path}
+            path={`${routes.USER.path}/*`}
             element={
                <PrivateRoutes component={<UserRoutes />} isAuth={isAuth} />
             }

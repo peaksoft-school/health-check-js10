@@ -76,6 +76,9 @@ const Header = () => {
 export default Header
 
 const StyleHeader = styled('header')`
+   position: fixed;
+   z-index: 1;
+   background-color: #fff;
    width: 100%;
    height: 11vh;
    display: flex;

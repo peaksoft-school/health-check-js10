@@ -49,7 +49,7 @@ const MyInfo = () => {
       )
    }
 
-   const handleCancel = (initialValues) => {}
+   const handleCancel = () => {}
 
    return (
       <Formik

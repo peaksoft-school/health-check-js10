@@ -22,7 +22,6 @@ export const updateProfile = createAsyncThunk(
             '/api/patients/updateProfile',
             userData
          )
-         console.log(response.data)
          return response.data
       } catch (error) {
          notify(error, 'error')

@@ -25,7 +25,6 @@ export const updateProfile = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder.addCase(updateProfile.fulfilled, (state, action) => {
-         console.log(action)
          return { ...state, ...action.payload }
       })
    },

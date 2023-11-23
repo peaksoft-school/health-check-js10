@@ -53,7 +53,7 @@ export const PasswordChange = () => {
                .required('Пароль не совпадают'),
          })}
          onSubmit={(values) => {
-             dispatch(
+            dispatch(
                updatePassword({
                   oldPassword: values.lastpassword,
                   newPassword: values.newpassword,

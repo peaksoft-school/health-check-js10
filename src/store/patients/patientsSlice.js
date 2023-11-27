@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { patintsAsyncThunk } from './patientsThunk'
+import {
+   getPatientsAsyncThunk,
+   getPatientsResultThunk,
+   postPatientsResultThunk,
+} from './patientsThunk'
 
 const initialState = {
    data: null,
+   result: [],
    loading: false,
    error: null,
 }
@@ -13,16 +18,34 @@ export const patientSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder
-         .addCase(patintsAsyncThunk.pending, (state) => {
+         .addCase(getPatientsAsyncThunk.pending, (state) => {
             state.loading = true
          })
-         .addCase(patintsAsyncThunk.fulfilled, (state, action) => {
+         .addCase(getPatientsAsyncThunk.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
          })
-         .addCase(patintsAsyncThunk.rejected, (state, action) => {
+         .addCase(getPatientsAsyncThunk.rejected, (state, action) => {
             state.loading = false
             state.error = action.error.message
+         })
+         .addCase(postPatientsResultThunk.pending, (state) => {
+            state.loading = true
+         })
+         .addCase(postPatientsResultThunk.fulfilled, (state, action) => {
+            console.log(action.payload)
+            state.loading = false
+            state.result = action.payload
+         })
+         .addCase(postPatientsResultThunk.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
+            console.error(action.error)
+         })
+         .addCase(getPatientsResultThunk.fulfilled, (state, action) => {
+            console.log(action.payload)
+            state.loading = false
+            state.result = action.payload
          })
    },
 })

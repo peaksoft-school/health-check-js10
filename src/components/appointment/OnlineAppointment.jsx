@@ -1,15 +1,36 @@
+import { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
-import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Drawer from '../UI/Drawer'
-import { CloseIcon } from '../../assets'
-import ChooseServices from './ChooseServices'
+import ChooseDate from './ChooseDate'
+import AppointmentForm from './AppointmentForm'
+import Registered from './Registered'
+import MainOnlineAppointment from './MainOnlineAppointment'
+import { CloseIcon, GoBackIcon } from '../../assets'
+import ChooseSpecialists from './СhooseSpecialists'
 import { localStorageKeys } from '../../utils/constants/constants'
+import ChooseSpecialistTime from './ChooseSpecialistTime'
+import {
+   getAllDoctors,
+   getDoctorsTimesheets,
+} from '../../store/appointment/appointmentThunk'
+import { MED_SERVICE } from '../../utils/services/med_service'
+import { notify } from '../../utils/constants/snackbar'
 
 const OnlineAppointment = ({ open, setOpen }) => {
-   const handleClose = () => {
-      setOpen(false)
-      localStorage.removeItem(localStorageKeys.DRAWER_MODAL_KEY)
-   }
+   const [mainPage, setMainPage] = useState(true)
+   const [specialistTimePage, setSpecialistTimePage] = useState(false)
+   const [specialistPage, setSpecialistPage] = useState(false)
+   const [datePage, setDatePage] = useState(false)
+   const [formPage, setFormPage] = useState(false)
+   const [registeredPage, setRegisteredPage] = useState(false)
+   const [selectedDoctorId, setSelectedDoctorId] = useState(null)
+
+   const [service, setService] = useState('')
+   const [specialist, setSpecialist] = useState('')
+   const [date, setDate] = useState('')
+
+   const dispatch = useDispatch()
 
    useEffect(() => {
       const parsedData = JSON.parse(
@@ -18,14 +39,148 @@ const OnlineAppointment = ({ open, setOpen }) => {
       setOpen(parsedData)
    }, [])
 
+   const serviceChangeHandler = (e) => {
+      const updatedDate = date || ''
+      const selectedService = e.target.value
+      setService(selectedService)
+      setDate(updatedDate)
+      const selectedServiceObject = MED_SERVICE.find(
+         (service) => service.title === selectedService
+      )
+      if (selectedServiceObject) {
+         const departmentId = selectedServiceObject.id
+         dispatch(getAllDoctors({ departmentId }))
+      } else {
+         notify('Выберите услугу', 'error')
+      }
+   }
+
+   const openChooseSpecialist = () => {
+      if (service) {
+         setMainPage(false)
+         setSpecialistPage(true)
+      } else {
+         notify('Сперва выберите услугу', 'error')
+      }
+   }
+   const openChooseSpecialistTime = ({ id }) => {
+      setSpecialistPage(false)
+      dispatch(getDoctorsTimesheets({ doctorId: id }))
+      setSpecialistTimePage(true)
+      setSelectedDoctorId(id)
+   }
+
+   const openDate = () => {
+      setMainPage(false)
+      setDatePage(true)
+   }
+
+   const openForm = () => {
+      setMainPage(false)
+      setFormPage(true)
+   }
+
+   const openRegistered = () => {
+      setFormPage(false)
+      setRegisteredPage(true)
+   }
+
+   const goBack = () => {
+      setSpecialistPage(false)
+      setSpecialistTimePage(false)
+      setDatePage(false)
+      setFormPage(false)
+      setRegisteredPage(false)
+      setMainPage(true)
+   }
+
+   const goBackAndClear = () => {
+      setSpecialistPage(false)
+      setSpecialistTimePage(false)
+      setDatePage(false)
+      setFormPage(false)
+      setRegisteredPage(false)
+      setMainPage(true)
+      setService('')
+      setSpecialist('')
+      setDate('')
+   }
+
+   const goBackInSpecialists = () => {
+      setSpecialistTimePage(false)
+      setSpecialistPage(true)
+   }
+
+   const dateChangeHandler = (date) => {
+      setDate(date)
+      goBack()
+   }
+
+   const chooseSpecialist = (specialist) => {
+      setSpecialist(specialist)
+      goBack()
+   }
+
+   const handleClose = () => {
+      setOpen(false)
+      localStorage.removeItem(localStorageKeys.DRAWER_MODAL_KEY)
+   }
+
    return (
       <Drawer open={open} onClose={handleClose}>
          <Container>
-            <Close onClick={handleClose} />
+            {mainPage ? (
+               <Close onClick={handleClose} />
+            ) : (
+               <GoBack
+                  onClick={specialistTimePage ? goBackInSpecialists : goBack}
+               />
+            )}
             <Header>
-               <Title>Онлайн запись</Title>
+               <Title>
+                  {mainPage && 'Онлайн Запись'}
+                  {specialistPage && 'Выбрать специалиста'}
+                  {specialistTimePage && 'Выбрать специалиста'}
+                  {datePage && 'Выбрать дату и время'}
+                  {formPage && 'Запись'}
+                  {registeredPage && 'Онлайн Запись'}
+               </Title>
             </Header>
-            <ChooseServices />
+            {mainPage && (
+               <MainOnlineAppointment
+                  onClose={handleClose}
+                  openChooseSpecialist={openChooseSpecialist}
+                  openDate={openDate}
+                  openForm={openForm}
+                  service={service}
+                  specialist={specialist}
+                  date={date}
+                  serviceChangeHandler={serviceChangeHandler}
+               />
+            )}
+            {specialistPage && (
+               <ChooseSpecialists
+                  chooseSpecialist={chooseSpecialist}
+                  openChooseSpecialistTime={openChooseSpecialistTime}
+               />
+            )}
+            {specialistTimePage && (
+               <ChooseSpecialistTime
+                  chooseSpecialist={chooseSpecialist}
+                  dateChangeHandler={dateChangeHandler}
+               />
+            )}
+            {datePage && <ChooseDate dateChangeHandler={dateChangeHandler} />}
+            {formPage && (
+               <AppointmentForm
+                  service={service}
+                  specialist={specialist}
+                  date={date}
+                  openRegistered={openRegistered}
+                  selectedDoctorId={selectedDoctorId}
+               />
+            )}
+            {registeredPage && <Registered goBack={goBackAndClear} />}
          </Container>
       </Drawer>
    )
@@ -34,12 +189,10 @@ const OnlineAppointment = ({ open, setOpen }) => {
 export default OnlineAppointment
 
 const Container = styled('div')(() => ({
-   backgroundColor: ' #F3F1F1',
-   height: '100vh',
-   '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root:hover':
-      {
-         height: 'fit-content',
-      },
+   '&': {
+      background: ' #F3F1F1',
+      height: '100vh',
+   },
 }))
 
 const Header = styled('div')(() => ({
@@ -50,6 +203,12 @@ const Header = styled('div')(() => ({
 }))
 
 const Close = styled(CloseIcon)(() => ({
+   cursor: 'pointer',
+   position: 'absolute',
+   top: '16px',
+   left: '16px',
+}))
+const GoBack = styled(GoBackIcon)(() => ({
    cursor: 'pointer',
    position: 'absolute',
    top: '16px',

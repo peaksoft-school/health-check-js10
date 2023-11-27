@@ -1,6 +1,7 @@
 import { IconButton, InputAdornment, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'use-debounce'
 import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import {
@@ -14,8 +15,11 @@ import { AppDeleteIcon, SearchIcon } from '../../assets'
 
 export const ApplicationsAdmin = () => {
    const { applications } = useSelector((state) => state.applications)
+   const [searchValue, setSearchValue] = useState('')
    const [selectAll, setSelectAll] = useState(false)
    const [items, setItems] = useState(applications)
+
+   const [debouncedSearchValue] = useDebounce(searchValue, 1000)
 
    const dispatch = useDispatch()
 
@@ -31,6 +35,17 @@ export const ApplicationsAdmin = () => {
       dispatch(searchApplicationByIdAsyncThunk(value))
    }
 
+   useDebounce(() => {
+      handleSearchById(debouncedSearchValue)
+   }, 1000)
+
+   useEffect(() => {
+      handleSearchById(debouncedSearchValue)
+   }, [debouncedSearchValue])
+
+   const handleChange = (event) => {
+      setSearchValue(event.target.value)
+   }
    const handleDeleteSelected = () => {
       const selectedIds = []
       items.forEach((element) => {
@@ -142,14 +157,13 @@ export const ApplicationsAdmin = () => {
             <StyledInput
                type="text"
                placeholder="Поиск"
-               onChange={(e) => handleSearchById(e.target.value)}
+               value={searchValue}
+               onChange={handleChange}
                InputProps={{
                   endAdornment: (
                      <InputAdornment position="end">
                         <IconButton>
-                           <SearchIcon
-                              onClick={(e) => handleSearchById(e.target.value)}
-                           />
+                           <SearchIcon />
                         </IconButton>
                      </InputAdornment>
                   ),

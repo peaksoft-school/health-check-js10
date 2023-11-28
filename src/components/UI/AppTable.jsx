@@ -62,6 +62,9 @@ const Container = styled('div')({
    // marginLeft: '6rem',
    fontFamily: 'Manrope',
    fontSize: '1.3rem',
+   borderTopLeftRadius: '10px',
+   borderTopRightRadius: '10px',
+   background: '#ffff',
    '& h2': {
       display: 'flex',
       marginLeft: '0.6rem',
@@ -89,6 +92,7 @@ const TableBodyStyle = styled(TableHead)(() => ({
       fontFamily: 'Manrope',
       height: '41px',
       fontDize: '0.8rem',
+      background: '#ffff',
    },
 }))
 

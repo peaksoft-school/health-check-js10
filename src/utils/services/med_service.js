@@ -106,6 +106,52 @@ export const MED_SERVICE = [
    },
 ]
 
+export const TRANSLATED_MED_SERVICES = {
+   ALLERGOLOGY: 'Аллергология',
+
+   VACCINATION: 'Вакцинация',
+
+   GYNECOLOGY: 'Гинекология',
+
+   CARDIOLOGY: 'Кардиология',
+
+   NEUROSURGERY: 'Нейрохирургия',
+
+   ORTHOPEDICS: 'Ортопедия',
+
+   OPHTHALMOLOGY: 'Офтальмология',
+
+   PSYCHOTHERAPY: 'Психотерапия',
+
+   RHEUMATOLOGY: 'Ревматология',
+
+   UROLOGY: 'Урология',
+
+   ENDOCRINOLOGY: 'Эндокринология',
+
+   ANESTHESIOLOGY: 'Анестезиология',
+
+   GASTROENTEROLOGY: 'Гастроэнтерология',
+
+   DERMATOLOGY: 'Дерматология',
+
+   NEUROLOGY: 'Неврология',
+
+   ONCOLOGY: 'Онкология',
+
+   OTOLARYNGOLOGY: 'Отоларингология',
+
+   PROCTOLOGY: 'Проктология',
+
+   PULMONOLOGY: 'Пульмонология',
+
+   THERAPY: 'Терапия',
+
+   facilityName: 'Флебология',
+
+   PHYSIOTHERAPY: 'Физиотерапия',
+}
+
 export const MAIN_MED_SERVICES = [
    {
       id: 1,

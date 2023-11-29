@@ -8,11 +8,6 @@ export const fileAxiosInstanse = axios.create({
    },
 })
 
-let store
-export const injectStoreFile = (_store) => {
-   store = _store
-}
-
 fileAxiosInstanse.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }

@@ -9,9 +9,6 @@ import { theme } from './utils/constants/theme'
 import { store } from './store'
 import App from './App'
 import { injectStore } from './config/axiosInstance'
-import { injectStoreFile } from './config/fileAxiosInstanse'
-
-injectStoreFile(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

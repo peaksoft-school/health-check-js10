@@ -59,7 +59,15 @@ const AppRoutes = () => {
                />
             }
          />
-         <Route path="patients/:id" element={<PatientsInternalPage />} />
+         <Route
+            path={routes.ADMIN.patientsId}
+            element={
+               <PrivateRoutes
+                  component={<PatientsInternalPage />}
+                  isAuth={isAuth}
+               />
+            }
+         />
       </Routes>
    )
 }

@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { IconButton, InputAdornment, styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Button from '../../../components/UI/Button'
 import { Input } from '../../../components/UI/input/Input'
 import {
@@ -22,12 +24,16 @@ import ForgotPassword from '../../login/ForgotPassword'
 import { localStorageKeys } from '../../../utils/constants/constants'
 import OnlineAppointment from '../../../components/appointment/OnlineAppointment'
 
-const Header = () => {
+const Header = ({ logoutHandler }) => {
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
    const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
       useState(false)
    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+   const navigate = useNavigate()
+
+   const { isAuth } = useSelector((state) => state.authorization)
 
    const navigateToForgotPassword = (e) => {
       e.preventDefault()
@@ -65,25 +71,50 @@ const Header = () => {
    }
 
    const isDrawerOpenHandler = () => {
-      localStorage.setItem(
-         localStorageKeys.DRAWER_MODAL_KEY,
-         JSON.stringify(true)
-      )
-      setIsDrawerOpen(true)
+      if (isAuth) {
+         localStorage.setItem(
+            localStorageKeys.DRAWER_MODAL_KEY,
+            JSON.stringify(true)
+         )
+         setIsDrawerOpen(true)
+      } else {
+         setIsLoginModalOpen(true)
+         localStorage.setItem(
+            localStorageKeys.SIGN_IN_MODAL_KEY,
+            JSON.stringify(true)
+         )
+      }
    }
 
-   const menuItems = [
-      {
-         title: 'Войти',
-         id: 1,
-         onClick: navigateToSignIn,
-      },
-      {
-         title: 'Регистрация',
-         id: 2,
-         onClick: navigateToSignUp,
-      },
-   ]
+   const navigateToProfile = () => {
+      navigate('profile')
+   }
+
+   const menuItems = isAuth
+      ? [
+           {
+              title: 'Профиль',
+              id: 2,
+              onClick: navigateToProfile,
+           },
+           {
+              title: 'Выйти',
+              id: 1,
+              onClick: logoutHandler,
+           },
+        ]
+      : [
+           {
+              title: 'Войти',
+              id: 1,
+              onClick: navigateToSignIn,
+           },
+           {
+              title: 'Регистрация',
+              id: 2,
+              onClick: navigateToSignUp,
+           },
+        ]
 
    const menuStyles = {
       '.MuiMenu-list': {

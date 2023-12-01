@@ -39,6 +39,8 @@ const OnlineAppointment = ({ open, setOpen }) => {
       setOpen(parsedData)
    }, [])
 
+   const validate = !service || !specialist || !date
+
    const serviceChangeHandler = (e) => {
       const updatedDate = date || ''
       const selectedService = e.target.value
@@ -60,7 +62,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
          setMainPage(false)
          setSpecialistPage(true)
       } else {
-         notify('Сперва выберите услугу', 'error')
+         notify('Для начала выберите услугу', 'error')
       }
    }
    const openChooseSpecialistTime = ({ id }) => {
@@ -71,8 +73,12 @@ const OnlineAppointment = ({ open, setOpen }) => {
    }
 
    const openDate = () => {
-      setMainPage(false)
-      setDatePage(true)
+      if (service && specialist) {
+         setMainPage(false)
+         setDatePage(true)
+      } else {
+         notify('Для начала выберите специалиста', 'error')
+      }
    }
 
    const openForm = () => {
@@ -140,7 +146,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
                <Title>
                   {mainPage && 'Онлайн Запись'}
                   {specialistPage && 'Выбрать специалиста'}
-                  {specialistTimePage && 'Выбрать специалиста'}
+                  {specialistTimePage && 'Выбрать дату и время'}
                   {datePage && 'Выбрать дату и время'}
                   {formPage && 'Запись'}
                   {registeredPage && 'Онлайн Запись'}
@@ -156,6 +162,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
                   specialist={specialist}
                   date={date}
                   serviceChangeHandler={serviceChangeHandler}
+                  validate={validate}
                />
             )}
             {specialistPage && (

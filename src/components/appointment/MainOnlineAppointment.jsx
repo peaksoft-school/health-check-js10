@@ -18,6 +18,7 @@ const MainOnlineAppointment = ({
    specialist,
    date,
    serviceChangeHandler,
+   validate,
 }) => {
    return (
       <Wrapper>
@@ -73,7 +74,9 @@ const MainOnlineAppointment = ({
                <Time>{date ? `${date.time}` : 'Выбрать дату и время'}</Time>
             </div>
          </ChooseCard>
-         <StyledButton onClick={openForm}>Продолжить</StyledButton>
+         <StyledButton onClick={openForm} disabled={validate}>
+            Продолжить
+         </StyledButton>
       </Wrapper>
    )
 }

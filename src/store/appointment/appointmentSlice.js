@@ -34,6 +34,7 @@ export const appointmentSlice = createSlice({
          })
          .addCase(createAppointments.fulfilled, (state, action) => {
             state.appointmentData = action.payload
+            state.codeEmail = ''
          })
    },
 })

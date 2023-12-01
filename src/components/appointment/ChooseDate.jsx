@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
 import { fr } from 'date-fns/locale'
+import { useSelector } from 'react-redux'
 import { DAYS_OF_A_WEEK, months } from '../../utils/constants/commons'
 
 const currentDate = new Date()
@@ -13,17 +14,10 @@ const month = currentDate.getMonth() + 1
 const day = currentDate.getDate()
 const formattedDate = `${year}-${month}-${day}`
 
-const ChooseDate = () => {
+const ChooseDate = ({ dateChangeHandler }) => {
    const [value, setValue] = useState(dayjs(formattedDate))
 
-   const changeDate = (obj) => {
-      return {
-         day: obj.day,
-         month: obj.month,
-         dayOfAWeek: obj.dayOfAWeek,
-         time: obj.time,
-      }
-   }
+   const { doctorTimesheets } = useSelector((state) => state.appointment)
 
    const chooseDateHandler = (time) => {
       const data = value.$d
@@ -33,27 +27,33 @@ const ChooseDate = () => {
       const dayOfAWeek = DAYS_OF_A_WEEK[data.getDay()]
 
       const obj = { day, month, dayOfAWeek, time }
-      changeDate(obj)
+      dateChangeHandler(obj)
    }
 
-   const doctors = [
-      {
-         id: 1,
-         name: 'Манак Елена',
-         freeTimesheets: [
-            { id: 1, timeFrom: '9:00' },
-            { id: 2, timeFrom: '10:00' },
-         ],
-      },
-      {
-         id: 2,
-         name: 'Манак Елена',
-         freeTimesheets: [
-            { id: 3, timeFrom: '2:00' },
-            { id: 4, timeFrom: '3:00' },
-         ],
-      },
-   ]
+   // const doctors = [
+   //    {
+   //       id: 1,
+   //       name: 'Манак Елена',
+   //       freeTimesheets: [
+   //          { id: 1, timeFrom: '9:00' },
+   //          { id: 2, timeFrom: '10:00' },
+   //       ],
+   //    },
+   //    {
+   //       id: 2,
+   //       name: 'Манак Елена',
+   //       freeTimesheets: [
+   //          { id: 3, timeFrom: '2:00' },
+   //          { id: 4, timeFrom: '3:00' },
+   //       ],
+   //    },
+   // ]
+
+   const mappedFreeTimesheets = doctorTimesheets[0].freeTimesheets.map(
+      (time, index) => {
+         return { timeFrom: time, index }
+      }
+   )
 
    return (
       <>
@@ -76,7 +76,7 @@ const ChooseDate = () => {
             </LocalizationProvider>
          </Container>
          <TimeContainer>
-            {doctors[0]?.freeTimesheets?.map((time) => (
+            {mappedFreeTimesheets.map((time) => (
                <Time
                   key={time.id}
                   onClick={() => chooseDateHandler(time.timeFrom)}
@@ -107,6 +107,11 @@ const Time = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
    cursor: 'pointer',
+   '&:hover': {
+      backgroundColor: '#048741',
+      color: '#ffffff',
+      border: '1px solid #048741',
+   },
 }))
 
 const Container = styled('div')(() => ({
@@ -116,10 +121,10 @@ const Container = styled('div')(() => ({
 
 const TimeContainer = styled('div')(() => ({
    padding: '20px',
-   width: '378px',
+   width: '367px',
    display: 'flex',
-   justifyContent: 'center',
    flexWrap: 'wrap',
    backgroundColor: '#fff',
    borderRadius: '16px',
+   marginLeft: '6px',
 }))

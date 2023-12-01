@@ -80,6 +80,7 @@ const Registered = ({ goBack }) => {
             <ConfirmModal
                handleClose={handleClose}
                appointmentData={appointmentData}
+               goBack={goBack}
             />
          ) : null}
       </Container>

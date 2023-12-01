@@ -13,7 +13,7 @@ import Header from '../../layout/user/header/Header'
 import Footer from '../../layout/Footer'
 import AboutClinicLayout from '../../components/AboutClinicLayout'
 
-const LandingPage = () => {
+const LandingPage = ({ logoutHandler }) => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
@@ -28,7 +28,7 @@ const LandingPage = () => {
 
    return (
       <>
-         <Header />
+         <Header logoutHandler={logoutHandler} />
          <GlobalContainer>
             <div>
                <Box>

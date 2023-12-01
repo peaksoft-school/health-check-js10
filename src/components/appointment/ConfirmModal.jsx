@@ -5,7 +5,7 @@ import Button from '../UI/Button'
 import { cancelAppointment } from '../../store/appointment/appointmentThunk'
 import { Close } from '../../assets'
 
-const ConfirmModal = ({ handleClose, appointmentData }) => {
+const ConfirmModal = ({ handleClose, appointmentData, goBack }) => {
    const [cancelSuccess, setCancelSuccess] = useState(false)
 
    const dispatch = useDispatch()
@@ -23,10 +23,10 @@ const ConfirmModal = ({ handleClose, appointmentData }) => {
          {cancelSuccess ? (
             <ModalContent>
                <div className="closeContainer">
-                  <Close />
+                  <Close onClick={goBack} />
                </div>
                <p>Запись отменена</p>
-               <Button onClick={handleClose}>Закрыть</Button>
+               <Button onClick={goBack}>Записаться еще</Button>
             </ModalContent>
          ) : (
             <ModalContent>
@@ -81,6 +81,9 @@ const ModalContent = styled('div')(() => ({
       height: '3rem',
       borderRadius: '50%',
       border: '3px solid #959595',
+      svg: {
+         cursor: 'pointer',
+      },
    },
    button: {
       width: '100%',

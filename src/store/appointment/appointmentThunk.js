@@ -48,7 +48,7 @@ export const getCode = createAsyncThunk(
          const { data } = await axiosInstance.get('api/appointments/received', {
             params: { email },
          })
-         console.log(data, 'code data')
+         console.log(data, 'code')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
@@ -78,7 +78,6 @@ export const createAppointments = createAsyncThunk(
                smsCode: obj.codeEmail,
             }
          )
-         console.log(data, 'datasss')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(

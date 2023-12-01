@@ -6,7 +6,7 @@ import { applicationsThunk } from './store/applications/applicationsThunk'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
 import AppRoutes from './routes/AppRoutes'
-import { OnlineAppointmetsPage } from './pages/admin/OnlineAppointmentsPage'
+import { OnlineAppointmetsPage } from './pages/admin/AppointmentsAdmin'
 
 function App() {
    const dispatch = useDispatch()

@@ -13,7 +13,7 @@ import {
 import CheckboxUI from '../../components/UI/Checkbox'
 import { AppDeleteIcon, SearchIcon } from '../../assets'
 
-export const OnlineAppointmetsPage = () => {
+export const adminAppointmetsPage = () => {
    const { applications } = useSelector((state) => state.applications)
    const [searchValue, setSearchValue] = useState('')
    const [selectAll, setSelectAll] = useState(false)

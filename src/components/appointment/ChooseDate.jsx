@@ -4,8 +4,8 @@ import { styled } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
-import { fr } from 'date-fns/locale'
 import { useSelector } from 'react-redux'
+import { fr } from 'date-fns/locale'
 import { DAYS_OF_A_WEEK, months } from '../../utils/constants/commons'
 
 const currentDate = new Date()

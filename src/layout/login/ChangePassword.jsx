@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { PulseLoader } from 'react-spinners'
-import { CloseIcon, Show, ShowOff } from '../../assets'
+import { Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -82,7 +82,7 @@ const ChangePassword = () => {
       <Modal open={open} onClose={handleClose} borderRadius="5px">
          <FormControlStyled onSubmit={handleSubmit(handleNewPasswordSubmit)}>
             <FormLabel className="topic">Смена пароля</FormLabel>
-            <CloseIcon className="closeIcon" onClick={handleClose} />
+            {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             <div>
                <Input
                   placeholder="Введите новый пароль"

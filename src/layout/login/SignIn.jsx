@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import { PulseLoader } from 'react-spinners'
-import { CloseIcon, GoogleIcon, Show, ShowOff } from '../../assets'
 import Modal from '../../components/UI/Modal'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -14,6 +13,7 @@ import { authWithGoogle, signIn } from '../../store/auth/authThunk'
 import { auth, provider } from '../../store/auth/firebase'
 import { notify } from '../../utils/constants/snackbar'
 import { localStorageKeys } from '../../utils/constants/constants'
+import { GoogleIcon, Show, ShowOff } from '../../assets'
 
 const SignIn = ({
    open,
@@ -96,7 +96,7 @@ const SignIn = ({
          <FormControlStyled onSubmit={handleSubmit(handleSignIn)}>
             <div>
                <FormLabel className="topic">ВОЙТИ</FormLabel>
-               <CloseIcon className="closeIcon" onClick={handleClose} />
+               {/* <CloseIcon className="closeIcon" onClick={handleClose} /> */}
             </div>
             <div>
                <Input

@@ -33,7 +33,8 @@ export const SelectUI = ({
    }
 
    return (
-      <StyledFormControl fullWidth isOpen={selectOpen}>
+      <StyledFormControl fullWidth isopen={selectOpen.toString()}>
+         <label htmlFor="label">{label}</label>
          <Icon>{icon}</Icon>
          <SelectMui
             open={selectOpen}
@@ -70,13 +71,13 @@ export const SelectUI = ({
    )
 }
 
-const StyledFormControl = styled(FormControl)(({ isOpen }) => ({
+const StyledFormControl = styled(FormControl)(({ isopen }) => ({
    '.css-1i1pci7-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline':
       {
          border: 'none',
       },
    '.MuiOutlinedInput-root': {
-      borderRadius: isOpen ? '16px 16px 0px 0px' : '16px',
+      borderRadius: isopen ? '16px 16px 0px 0px' : '16px',
    },
 }))
 

@@ -3,6 +3,7 @@ import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { AllIcon, GroupIcon, HealthCheckIcon } from '../../../assets'
 import ReusableMenu from '../../../components/UI/Menu'
+import { routes } from '../../../utils/constants/constants'
 
 const Header = ({ logoutHandler }) => {
    const menuItems = [
@@ -27,24 +28,33 @@ const Header = ({ logoutHandler }) => {
             <ul>
                <li>
                   <StyledNavLink
-                     to="/online-registration"
+                     to={routes.ADMIN.onlineRegistration}
                      activeClassName="active"
                   >
                      Онлайн-запись
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/applications" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.applications}
+                     activeClassName="active"
+                  >
                      Заявки
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/specialists" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.specialists}
+                     activeClassName="active"
+                  >
                      Специалисты
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/patients" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.patients}
+                     activeClassName="active"
+                  >
                      Пациенты
                   </StyledNavLink>
                </li>
@@ -67,6 +77,9 @@ const Header = ({ logoutHandler }) => {
 export default Header
 
 const StyleHeader = styled('header')`
+   position: fixed;
+   z-index: 1;
+   background-color: #fff;
    width: 100%;
    height: 11vh;
    display: flex;

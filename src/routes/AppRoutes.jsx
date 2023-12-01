@@ -1,13 +1,16 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { routes } from '../utils/constants/constants'
-import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
-import AdminRoutes from './adminRoutes/AdminRoutes'
-import UserRoutes from './userRoutes/UserRoutes'
-import DoctorRoutes from './doctorRoutes/DoctorRoutes'
+import { Route, Routes } from 'react-router-dom'
 import ChangePassword from '../layout/login/ChangePassword'
+import { routes } from '../utils/constants/constants'
+import AdminRoutes from './adminRoutes/AdminRoutes'
+import DoctorRoutes from './doctorRoutes/DoctorRoutes'
+import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
+import UserRoutes from './userRoutes/UserRoutes'
+import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
+import PatientComponent from '../pages/admin/Patients'
+import { PatientsInternalPage } from '../pages/admin/PatientsInternalPage'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -16,6 +19,15 @@ const AppRoutes = () => {
       <Routes>
          <Route path="/" element={<LandingPage />} />
          <Route path="/homepage" element={<LandingPage />} />
+         <Route
+            path={routes.ADMIN.applications}
+            element={
+               <PrivateRoutes
+                  component={<ApplicationsAdmin />}
+                  isAuth={isAuth}
+               />
+            }
+         />
          <Route
             path={`${routes.LOGIN.changePassword}/:uniqueId`}
             element={<ChangePassword />}
@@ -36,6 +48,24 @@ const AppRoutes = () => {
             path={routes.DOCTOR.path}
             element={
                <PrivateRoutes component={<DoctorRoutes />} isAuth={isAuth} />
+            }
+         />
+         <Route
+            path={routes.ADMIN.patients}
+            element={
+               <PrivateRoutes
+                  component={<PatientComponent />}
+                  isAuth={isAuth}
+               />
+            }
+         />
+         <Route
+            path={routes.ADMIN.patientsId}
+            element={
+               <PrivateRoutes
+                  component={<PatientsInternalPage />}
+                  isAuth={isAuth}
+               />
             }
          />
       </Routes>

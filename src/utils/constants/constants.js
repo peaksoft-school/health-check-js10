@@ -10,7 +10,7 @@ export const routes = {
       applications: 'applications',
       specialists: 'specialists',
       patients: 'patients',
-      patientsId: 'patients:id',
+      patientsId: 'patients/:id',
    },
    USER: {
       path: '/user',

@@ -1,10 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchPatients, searchPatients } from './patientsThunk'
+import {
+   fetchPatients,
+   searchPatients,
+   getPatientsAsyncThunk,
+   getPatientsResultThunk,
+   postPatientsResultThunk,
+} from './patientsThunk'
 
-const patientSlice = createSlice({
+export const patientSlice = createSlice({
    name: 'patients',
    initialState: {
       patients: [],
+      data: null,
+      results: [],
       loading: 'idle',
       error: null,
    },
@@ -29,11 +37,34 @@ const patientSlice = createSlice({
             state.loading = 'succeeded'
             state.patients = action.payload
          })
+         .addCase(getPatientsAsyncThunk.pending, (state) => {
+            state.loading = 'loading'
+         })
+         .addCase(getPatientsAsyncThunk.fulfilled, (state, action) => {
+            state.loading = 'succeeded'
+            state.data = action.payload
+         })
+         .addCase(getPatientsAsyncThunk.rejected, (state, action) => {
+            state.loading = 'failed'
+            state.error = action.error.message
+         })
+         .addCase(postPatientsResultThunk.pending, (state) => {
+            state.loading = 'loading'
+         })
+         .addCase(postPatientsResultThunk.fulfilled, (state) => {
+            state.loading = 'succeeded'
+         })
+         .addCase(postPatientsResultThunk.rejected, (state, action) => {
+            state.loading = 'failed'
+            state.error = action.error.message
+         })
+         .addCase(getPatientsResultThunk.fulfilled, (state, action) => {
+            state.loading = 'succeeded'
+            state.results = action.payload
+         })
    },
 })
 
 export const selectPatients = (state) => state.patients.patients
 export const selectPatientsLoading = (state) => state.patients.loading
 export const selectPatientsError = (state) => state.patients.error
-
-export default patientSlice.reducer

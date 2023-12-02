@@ -115,10 +115,6 @@ const AppointmentForm = ({
                type="text"
                {...register('name', {
                   required: 'Поле не заполнено',
-                  pattern: {
-                     value: /^[a-zA-Z]+\s[a-zA-Z]+$/,
-                     message: 'Введите два слова',
-                  },
                })}
                onChange={(e) => setValue('name', e.target.value)}
                error={errors.name}

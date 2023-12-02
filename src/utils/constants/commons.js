@@ -23,6 +23,16 @@ export const DAYS_OF_A_WEEK = [
    'суббота',
 ]
 
+export const daysOfWeekMap = {
+   Su: 'ПН',
+   Mo: 'ВТ',
+   Tu: 'СР',
+   We: 'ЧТ',
+   Th: 'ПТ',
+   Fr: 'СБ',
+   Sa: 'ВС',
+}
+
 export const DAYS_OF_A_WEEK_TRANSLATION = {
    MONDAY: 'Понедельник',
    TUESDAY: 'Вторник',

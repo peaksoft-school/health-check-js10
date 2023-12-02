@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import dayjs from 'dayjs'
+import 'dayjs/locale/ru'
 import { styled } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
+import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers'
 import { useSelector } from 'react-redux'
-import { fr } from 'date-fns/locale'
-import { DAYS_OF_A_WEEK, months } from '../../utils/constants/commons'
+import {
+   DAYS_OF_A_WEEK,
+   daysOfWeekMap,
+   months,
+} from '../../utils/constants/commons'
+
+dayjs.locale('ru')
 
 const currentDate = new Date()
 const year = currentDate.getFullYear()
@@ -19,7 +24,7 @@ const ChooseDate = ({ dateChangeHandler }) => {
 
    const { doctorTimesheets } = useSelector((state) => state.appointment)
 
-   const chooseDateHandler = (time) => {
+   const ChooseDateHandler = (time) => {
       const data = value.$d
 
       const day = data.getDate()
@@ -30,56 +35,44 @@ const ChooseDate = ({ dateChangeHandler }) => {
       dateChangeHandler(obj)
    }
 
-   // const doctors = [
-   //    {
-   //       id: 1,
-   //       name: 'Манак Елена',
-   //       freeTimesheets: [
-   //          { id: 1, timeFrom: '9:00' },
-   //          { id: 2, timeFrom: '10:00' },
-   //       ],
-   //    },
-   //    {
-   //       id: 2,
-   //       name: 'Манак Елена',
-   //       freeTimesheets: [
-   //          { id: 3, timeFrom: '2:00' },
-   //          { id: 4, timeFrom: '3:00' },
-   //       ],
-   //    },
-   // ]
-
    const mappedFreeTimesheets = doctorTimesheets[0].freeTimesheets.map(
       (time, index) => {
          return { timeFrom: time, index }
       }
    )
 
+   const availableDates = doctorTimesheets.map((doctor) => doctor.description)
+
+   const shouldDisableDate = (date) =>
+      !availableDates.includes(date.format('YYYY-MM-DD'))
+
    return (
       <>
          <Container>
-            <LocalizationProvider dateAdapter={AdapterDayjs} localeText={fr}>
-               <DateCalendar
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <StyledDateCalendar
                   value={value}
                   onChange={(newValue) => setValue(newValue)}
-                  // slotProps={{
-                  //    // desktopPaper: {
-                  //    sx: {
-                  //       '& .MuiButtonBase-root-MuiPickersDay-root.Mui-selected':
-                  //          {
-                  //             background: '#048741',
-                  //          },
-                  //    },
-                  //    // },
-                  // }}
+                  shouldDisableDate={shouldDisableDate}
+                  dayOfWeekFormatter={(_day, weekday) =>
+                     daysOfWeekMap[weekday.format('dd')]
+                  }
+                  renderDay={(day, _value, DayComponentProps) => (
+                     <DayComponentProps
+                        onFocus={DayComponentProps.onDayFocus}
+                        onBlur={DayComponentProps.onDayBlur}
+                     >
+                        {day.format('MMMM')}
+                     </DayComponentProps>
+                  )}
                />
             </LocalizationProvider>
          </Container>
          <TimeContainer>
             {mappedFreeTimesheets.map((time) => (
                <Time
-                  key={time.id}
-                  onClick={() => chooseDateHandler(time.timeFrom)}
+                  key={time.index}
+                  onClick={() => ChooseDateHandler(time.timeFrom)}
                >
                   {time.timeFrom}
                </Time>
@@ -90,6 +83,52 @@ const ChooseDate = ({ dateChangeHandler }) => {
 }
 
 export default ChooseDate
+
+const StyledDateCalendar = styled(DateCalendar)(() => ({
+   '.css-xb7uwb-MuiPickersArrowSwitcher-spacer': {
+      width: '140px',
+   },
+   '.css-kg9q0s-MuiButtonBase-root-MuiIconButton-root-MuiPickersArrowSwitcher-button':
+      {
+         marginLeft: '38px',
+      },
+   '.MuiDayCalendar-weekDayLabel': {
+      color: 'var(--primary-black, #222)',
+      textAlign: 'center',
+      fontFamily: 'Manrope',
+      fontSize: '14px',
+      fontWeight: '500',
+      textTransform: 'uppercase',
+   },
+   '.MuiPickersCalendarHeader-label': {
+      textTransform: 'capitalize',
+      marginRight: '37px',
+   },
+   '.MuiIconButton-root-MuiPickersArrowSwitcher-button': {
+      position: 'absolute',
+   },
+   '.MuiPickersCalendarHeader-switchViewButton': {
+      display: 'none',
+   },
+   '.MuiPickersCalendarHeader-labelContainer': {
+      marginLeft: '20%',
+      order: '1',
+      margin: '0',
+      position: 'absolute',
+      right: '100px',
+   },
+   '.MuiPickersDay-root': {
+      borderRadius: '3px',
+      height: '28px',
+      marginTop: '0.5rem',
+      fontWeight: '500',
+      color: 'var(--primary-black-gray, #4D4E51)',
+   },
+   '.MuiPickersDay-root:focus.Mui-selected': {
+      background: 'var(--primary-green, #048741) !important',
+      color: 'white',
+   },
+}))
 
 const Time = styled('div')(() => ({
    width: '98px',

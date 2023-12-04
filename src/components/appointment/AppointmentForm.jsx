@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
@@ -17,9 +17,13 @@ const AppointmentForm = ({
    selectedDoctorId,
    openRegistered,
 }) => {
+   const [formSubmitted, setFormSubmitted] = useState(false)
+
    const dispatch = useDispatch()
 
    const { codeEmail } = useSelector((state) => state.appointment)
+
+   const phoneNumberRegex = /^(\+996|0)\d{9}$/
 
    const {
       register,
@@ -64,8 +68,18 @@ const AppointmentForm = ({
 
    const submitEmail = async (data, e) => {
       e.preventDefault()
-      if (getValues('name') !== /^[a-zA-Z]+s[a-zA-Z]+$/) {
-         dispatch(getCode({ email: data.email }))
+      if (!errors.name) {
+         if (!errors.phone && !errors.email && getValues().email.length !== 0) {
+            setFormSubmitted(true)
+            dispatch(getCode({ email: data.email }))
+         } else {
+            notify(
+               errors.phone
+                  ? 'Номер телефона не соответствует правилам'
+                  : 'Поле email не заполнено',
+               'error'
+            )
+         }
       } else {
          notify('Напишите полное имя', 'error')
       }
@@ -85,8 +99,8 @@ const AppointmentForm = ({
          date: formatDate,
          time: formatTime,
          code: data.code,
-         ...data,
          codeEmail,
+         ...data,
       }
 
       if (obj.code === codeEmail) {
@@ -115,28 +129,40 @@ const AppointmentForm = ({
                type="text"
                {...register('name', {
                   required: 'Поле не заполнено',
+                  pattern: {
+                     value: /^[a-zA-Z]+\s[a-zA-Z]+$/,
+                     message: 'Введите два слова',
+                  },
                })}
                onChange={(e) => setValue('name', e.target.value)}
                error={errors.name}
+               InputProps={{
+                  readOnly: formSubmitted,
+               }}
             />
             <InputForm
                label="Номер телефона"
                type="text"
                onKeyPress={handleKeyPress}
-               {...register('phoneNumber', {
+               {...register('phone', {
                   setValueAs: (v) => v.trim(),
                   required: 'Поле не заполнено',
-                  minLength: {
-                     value: 13,
-                     message: 'Номер телефона слишком короткий',
+                  pattern: {
+                     value: phoneNumberRegex,
+                     message: 'Неправильный формат номера',
                   },
-                  maxLength: {
-                     value: 13,
-                     message: 'Номер телефона слишком длинный',
+                  validate: {
+                     minLength: (value) =>
+                        value.length >= 10 || 'Номер телефона слишком короткий',
+                     maxLength: (value) =>
+                        value.length <= 13 || 'Номер телефона слишком длинный',
                   },
                })}
                onChange={(e) => setValue('phone', e.target.value)}
                error={errors.phone}
+               InputProps={{
+                  readOnly: formSubmitted,
+               }}
             />
             <InputForm
                label="Ваш e-mail"
@@ -144,13 +170,12 @@ const AppointmentForm = ({
                {...register('email', {
                   required: 'Поле не заполнено',
                   setValueAs: (v) => v.trim(),
-                  pattern: {
-                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                     message: 'Неверный формат электронной почты',
-                  },
                })}
                onChange={(e) => setValue('email', e.target.value)}
                error={errors.email}
+               InputProps={{
+                  readOnly: formSubmitted,
+               }}
             />
             {codeEmail && (
                <InputForm

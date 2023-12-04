@@ -2,16 +2,13 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ru'
 import { styled } from '@mui/material'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers'
+import { DateCalendar } from '@mui/x-date-pickers'
 import { useSelector } from 'react-redux'
 import {
    DAYS_OF_A_WEEK,
    daysOfWeekMap,
    months,
 } from '../../utils/constants/commons'
-
-dayjs.locale('ru')
 
 const currentDate = new Date()
 const year = currentDate.getFullYear()
@@ -49,24 +46,22 @@ const ChooseDate = ({ dateChangeHandler }) => {
    return (
       <>
          <Container>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-               <StyledDateCalendar
-                  value={value}
-                  onChange={(newValue) => setValue(newValue)}
-                  shouldDisableDate={shouldDisableDate}
-                  dayOfWeekFormatter={(_day, weekday) =>
-                     daysOfWeekMap[weekday.format('dd')]
-                  }
-                  renderDay={(day, _value, DayComponentProps) => (
-                     <DayComponentProps
-                        onFocus={DayComponentProps.onDayFocus}
-                        onBlur={DayComponentProps.onDayBlur}
-                     >
-                        {day.format('MMMM')}
-                     </DayComponentProps>
-                  )}
-               />
-            </LocalizationProvider>
+            <StyledDateCalendar
+               value={value}
+               onChange={(newValue) => setValue(newValue)}
+               shouldDisableDate={shouldDisableDate}
+               dayOfWeekFormatter={(_day, weekday) =>
+                  daysOfWeekMap[weekday.format('dd')]
+               }
+               renderDay={(day, _value, DayComponentProps) => (
+                  <DayComponentProps
+                     onFocus={DayComponentProps.onDayFocus}
+                     onBlur={DayComponentProps.onDayBlur}
+                  >
+                     {day.format('MMMM')}
+                  </DayComponentProps>
+               )}
+            />
          </Container>
          <TimeContainer>
             {mappedFreeTimesheets.map((time) => (
@@ -85,13 +80,12 @@ const ChooseDate = ({ dateChangeHandler }) => {
 export default ChooseDate
 
 const StyledDateCalendar = styled(DateCalendar)(() => ({
-   '.css-xb7uwb-MuiPickersArrowSwitcher-spacer': {
-      width: '140px',
+   '.MuiPickersArrowSwitcher-spacer': {
+      width: '120px',
    },
-   '.css-kg9q0s-MuiButtonBase-root-MuiIconButton-root-MuiPickersArrowSwitcher-button':
-      {
-         marginLeft: '38px',
-      },
+   '.MuiPickersArrowSwitcher-button': {
+      marginLeft: '38px',
+   },
    '.MuiDayCalendar-weekDayLabel': {
       color: 'var(--primary-black, #222)',
       textAlign: 'center',

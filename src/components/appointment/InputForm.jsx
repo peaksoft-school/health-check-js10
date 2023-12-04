@@ -32,7 +32,7 @@ const StyledInput = styled(TextField)(() => ({
          borderColor: '#959595',
       },
       '&:active fieldset': {
-         borderColor: '#rgba(4, 135, 65, 0.80)',
+         borderColor: 'rgba(4, 135, 65, 0.80)',
       },
       '&:invalid fieldset': {
          border: '1px solid #F91515',

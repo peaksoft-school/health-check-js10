@@ -59,8 +59,15 @@ const MyInfo = () => {
       >
          {({ handleChange, values }) => {
             let newValues
-            if (!values.useremail) {
+            if (Object.entries(values).length === 0) {
                newValues = initialValues
+            } else {
+               newValues = {
+                  username: values.username,
+                  useremail: values.useremail,
+                  userlastname: values.userlastname,
+                  usertelefone: values.usertelefone,
+               }
             }
             return (
                <FormStyled>

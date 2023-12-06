@@ -1,3 +1,5 @@
+import { doctorArtur } from '../../assets'
+
 export const months = [
    'января',
    'февраля',
@@ -67,3 +69,108 @@ export const departments = {
    Флебология: 'PHLEBOLOGY',
    Физиотерапия: 'PHYSIOTHERAPY',
 }
+
+export const scheduleData = [
+   {
+      scheduleId: 70,
+      doctorImage: doctorArtur,
+      doctorFullName: 'Иса Акунбаев',
+      doctorPosition: 'Врач-кардиолог',
+      dateDayTimeInfos: [
+         {
+            dateDay: '2023-12-05',
+            dayOfWeek: 'TUESDAY',
+            timeIntervals: [],
+         },
+         {
+            dateDay: '2023-12-06',
+            dayOfWeek: 'WEDNESDAY',
+            timeIntervals: [
+               {
+                  startTime: '08:00:00',
+                  endTime: '09:30:00',
+               },
+               {
+                  startTime: '11:00:00',
+                  endTime: '12:30:00',
+               },
+            ],
+         },
+         {
+            dateDay: '2023-12-07',
+            dayOfWeek: 'THURSDAY',
+            timeIntervals: [],
+         },
+         {
+            dateDay: '2023-12-08',
+            dayOfWeek: 'FRIDAY',
+            timeIntervals: [
+               {
+                  startTime: '08:00:00',
+                  endTime: '09:30:00',
+               },
+               {
+                  startTime: '09:30:00',
+                  endTime: '11:00:00',
+               },
+               {
+                  startTime: '11:00:00',
+                  endTime: '12:30:00',
+               },
+               {
+                  startTime: '14:00:00',
+                  endTime: '15:30:00',
+               },
+               {
+                  startTime: '15:30:00',
+                  endTime: '17:00:00',
+               },
+               {
+                  startTime: '17:00:00',
+                  endTime: '18:30:00',
+               },
+            ],
+         },
+         {
+            dateDay: '2023-12-09',
+            dayOfWeek: 'SATURDAY',
+            timeIntervals: [],
+         },
+         {
+            dateDay: '2023-12-10',
+            dayOfWeek: 'SUNDAY',
+            timeIntervals: [],
+         },
+         {
+            dateDay: '2023-12-11',
+            dayOfWeek: 'MONDAY',
+            timeIntervals: [
+               {
+                  startTime: '08:00:00',
+                  endTime: '09:30:00',
+               },
+               {
+                  startTime: '09:30:00',
+                  endTime: '11:00:00',
+               },
+               {
+                  startTime: '11:00:00',
+                  endTime: '12:30:00',
+               },
+               {
+                  startTime: '14:00:00',
+                  endTime: '15:30:00',
+               },
+               {
+                  startTime: '15:30:00',
+                  endTime: '17:00:00',
+               },
+               {
+                  startTime: '17:00:00',
+                  endTime: '18:30:00',
+               },
+            ],
+         },
+      ],
+   },
+]

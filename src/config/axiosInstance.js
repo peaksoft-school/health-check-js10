@@ -16,7 +16,9 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const { token } = store.getState().authorization
+   const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDM1OTgwNjgsImlhdCI6MTcwMTc4MzY2OCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.hVW5IyFyCst0J2bU8SX1TSyP1B1aw7H4U2uySenAXEAzDJwvMNKrpvDXJ-6wcAyz3r3inIsBhDdyIwCzn5TDaQ'
+   // const { token } = store.getState().authorization
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }

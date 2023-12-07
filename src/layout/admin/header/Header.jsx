@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { AllIcon, GroupIcon, HealthCheckIcon } from '../../../assets'
 import ReusableMenu from '../../../components/UI/Menu'
-import { routes } from '../../../utils/constants/constants'
+import { routes } from '../../../utils/constants/routes'
 
 const Header = ({ logoutHandler }) => {
    const menuItems = [

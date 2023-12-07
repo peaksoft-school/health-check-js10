@@ -2,30 +2,52 @@ import React from 'react'
 import { styled } from '@mui/material'
 import CustomizedAccordions from './UI/Accordion'
 import { prices } from '../utils/constants/accordions'
+import Header from '../layout/user/header/Header'
+import Footer from '../layout/Footer'
 
 const Prices = () => {
    return (
-      <div>
-         <StyledAccordions>
-            {prices.map((el) => (
-               <CustomizedAccordions key={el.id} title={el.title}>
-                  <StyledPrice>
-                     <div className="prices-data">
-                        <h2>{el.data}</h2> <h2>{el.price}com</h2>
-                     </div>
+      <>
+         <Header />
+         <Hr />
+         <MainPart>
+            <a href="/">Главная {'>'}</a>
+            <span className="service"> Прайс</span>
+         </MainPart>
+         <ServiceStyle>
+            <span>Наш</span>
+            <span className="our_service"> прайс</span>
+         </ServiceStyle>
+         <P>
+            Цены на услуги формируются в соответствии с действующими
+            Прейскурантами. Общая стоимость зависит от объема услуг, оказываемых
+            в рамках приёма. Объём оказываемых услуг определяется врачом, исходя
+            из показаний для обследования и пожеланий клиента.
+         </P>
 
-                     <p className="description">{el.description}</p>
-                     {el.prices.map((item) => (
-                        <div className="prices">
-                           <h3>{item.data}</h3>
-                           <h2>{item.price}com</h2>
+         <AccordionContainer>
+            <StyledAccordions>
+               {prices.map((el) => (
+                  <CustomizedAccordions key={el.id} title={el.title}>
+                     <StyledPrice>
+                        <div className="prices-data">
+                           <h2>{el.data}</h2> <h2>{el.price}com</h2>
                         </div>
-                     ))}
-                  </StyledPrice>
-               </CustomizedAccordions>
-            ))}
-         </StyledAccordions>
-      </div>
+
+                        <p className="description">{el.description}</p>
+                        {el.prices.map((item) => (
+                           <div className="prices">
+                              <h3>{item.data}</h3>
+                              <h2>{item.price}com</h2>
+                           </div>
+                        ))}
+                     </StyledPrice>
+                  </CustomizedAccordions>
+               ))}
+            </StyledAccordions>
+         </AccordionContainer>
+         <Footer />
+      </>
    )
 }
 
@@ -67,3 +89,59 @@ export const StyledAccordions = styled('div')`
 const StyledPrice = styled('div')`
    text-align: left;
 `
+
+const AccordionContainer = styled('div')(() => ({
+   width: '60%',
+   marginLeft: '98px',
+   marginBottom: '100px',
+}))
+
+const Hr = styled('hr')(() => ({
+   width: '100%',
+   height: '10px',
+   marginBottom: '30px',
+   background: '#DBF0E5',
+   border: 'none',
+}))
+
+const MainPart = styled('p')(() => ({
+   marginLeft: '95px',
+   fontFamily: ' Manrope',
+   fontSize: '14px',
+   fontWeight: 400,
+   lineHeight: '19px',
+   textAlign: 'left',
+   paddingTop: '25px',
+   a: {
+      color: '#959595',
+      textDecoration: 'none',
+   },
+   '& .service': {
+      color: '#048741',
+   },
+}))
+
+const ServiceStyle = styled('div')(() => ({
+   fontSize: '36px',
+   fontWeight: 600,
+   lineHeight: '49px',
+   fontFamily: 'Manrope',
+   color: '#222222',
+   marginLeft: '95px',
+   marginBottom: '34px',
+   marginTop: '26px',
+   '& .our_service': {
+      color: '#048741',
+   },
+}))
+const P = styled('p')(() => ({
+   width: '691px',
+   height: '100px',
+   fontSize: '18px',
+   fontWeight: 400,
+   lineHeight: '24px',
+   color: ' #4D4E51',
+   fontFamily: ' Manrope',
+   marginLeft: '95px',
+   marginBottom: '40px',
+}))

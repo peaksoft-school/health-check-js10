@@ -4,67 +4,76 @@ import { NavLink } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { DoctorImg, Rectange, Signature } from '../assets'
 import AboutClinicLayout from './AboutClinicLayout'
+import Header from '../layout/user/header/Header'
+import Footer from '../layout/Footer'
 
 const AboutHealth = () => {
    return (
-      <StyledBox>
-         <Container>
-            <div>
-               <NavigatePathTitle>
-                  <p>
-                     <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-                     <span>О клинике</span>
-                  </p>
-               </NavigatePathTitle>
-               <StyledTitleSubject>
-                  Здоровье — самое
-                  <span style={{ color: '#048741' }}> ценное в жизни</span>
-               </StyledTitleSubject>
-               <StyledMainContainer>
-                  <StyledAboutText>
+      <>
+         <Header />
+         <Hr />
+         <StyledBox>
+            <Container>
+               <div>
+                  <NavigatePathTitle>
                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor <br /> incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
-                        <br /> nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. <br />
-                        Duis aute irure dolor in reprehenderit in voluptate
-                        velit esse cillum dolore eu <br /> fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in
-                        <br /> culpa qui officia deserunt mollit anim id est
-                        laborum
+                        <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+                        <span>О клинике</span>
                      </p>
-                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor <br /> incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
-                        <br /> nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. <br />
-                        Duis aute irure dolor in reprehenderit in voluptate
-                        velit esse cillum dolore eu <br /> fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in
-                        <br /> culpa qui officia deserunt mollit anim id est
-                        laborum
-                     </p>
-                     <StyledSignatureImG>
-                        <img src={Signature} alt="main doctor" />
-                     </StyledSignatureImG>
-                  </StyledAboutText>
-                  <div>
-                     <StyledImageContainer>
-                        <Rectange />
-                        <StyledDoctorImG src={DoctorImg} alt="" />
-                        <h3>Руководитель клиники Medical Clinic</h3>
-                        <h2> Аниса Михаилова </h2>
-                     </StyledImageContainer>
-                  </div>
-               </StyledMainContainer>
-            </div>
-         </Container>
-         <AboutClinicLayout />
-      </StyledBox>
+                  </NavigatePathTitle>
+                  <StyledTitleSubject>
+                     Здоровье — самое
+                     <span style={{ color: '#048741' }}> ценное в жизни</span>
+                  </StyledTitleSubject>
+                  <StyledMainContainer>
+                     <StyledAboutText>
+                        <p>
+                           Lorem ipsum dolor sit amet, consectetur adipiscing
+                           elit, sed do eiusmod tempor <br /> incididunt ut
+                           labore et dolore magna aliqua. Ut enim ad minim
+                           veniam, quis <br /> nostrud exercitation ullamco
+                           laboris nisi ut aliquip ex ea commodo consequat.{' '}
+                           <br />
+                           Duis aute irure dolor in reprehenderit in voluptate
+                           velit esse cillum dolore eu <br /> fugiat nulla
+                           pariatur. Excepteur sint occaecat cupidatat non
+                           proident, sunt in
+                           <br /> culpa qui officia deserunt mollit anim id est
+                           laborum
+                        </p>
+                        <p>
+                           Lorem ipsum dolor sit amet, consectetur adipiscing
+                           elit, sed do eiusmod tempor <br /> incididunt ut
+                           labore et dolore magna aliqua. Ut enim ad minim
+                           veniam, quis <br /> nostrud exercitation ullamco
+                           laboris nisi ut aliquip ex ea commodo consequat.{' '}
+                           <br />
+                           Duis aute irure dolor in reprehenderit in voluptate
+                           velit esse cillum dolore eu <br /> fugiat nulla
+                           pariatur. Excepteur sint occaecat cupidatat non
+                           proident, sunt in
+                           <br /> culpa qui officia deserunt mollit anim id est
+                           laborum
+                        </p>
+                        <StyledSignatureImG>
+                           <img src={Signature} alt="main doctor" />
+                        </StyledSignatureImG>
+                     </StyledAboutText>
+                     <div>
+                        <StyledImageContainer>
+                           <Rectange />
+                           <StyledDoctorImG src={DoctorImg} alt="" />
+                           <h3>Руководитель клиники Medical Clinic</h3>
+                           <h2> Аниса Михаилова </h2>
+                        </StyledImageContainer>
+                     </div>
+                  </StyledMainContainer>
+               </div>
+            </Container>
+            <AboutClinicLayout />
+         </StyledBox>
+         <Footer />
+      </>
    )
 }
 
@@ -75,6 +84,15 @@ const StyledBox = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '6rem',
+}))
+
+const Hr = styled('hr')(() => ({
+   width: '100%',
+   height: '10px',
+   marginBottom: '30px',
+   marginTop: '10px',
+   background: '#DBF0E5',
+   border: 'none',
 }))
 
 const NavigatePathTitle = styled('div')(() => ({
@@ -108,6 +126,7 @@ const StyledMainContainer = styled.div`
 const StyledImageContainer = styled.div`
    position: relative;
    text-align: center;
+   margin-top: 2rem;
    h3 {
       font-size: 1.13rem;
       font-weight: 400;
@@ -135,6 +154,7 @@ const StyledTitleSubject = styled.h1`
    font-size: 2.25rem;
    font-weight: 600;
    line-height: 3.074rem;
+   margin-bottom: 3.5rem;
 `
 const StyledDoctorImG = styled('img')(() => ({
    width: '59%',

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { IconButton, InputAdornment, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Button from '../../../components/UI/Button'
@@ -204,10 +204,11 @@ const Header = ({ logoutHandler }) => {
                   <HealthCheckIcon />
                </StyleCheck>
                <NavList>
-                  <h3>О клинике</h3>
-                  <h3>Услуги</h3>
-                  <h3>Врачи</h3>
-                  <h3>Прайс</h3>
+                  <NavlinkStyled to="about-clinic">О клинике</NavlinkStyled>
+                  <NavlinkStyled to="service">Услуги</NavlinkStyled>
+                  <NavlinkStyled to="doctors">Врачи</NavlinkStyled>
+                  <NavlinkStyled to="prices">Прайс</NavlinkStyled>
+                  <NavlinkStyled to="contacts">Контакты</NavlinkStyled>
                </NavList>
                <ContainerButton>
                   <StyledButton variant="outlined">
@@ -266,6 +267,18 @@ const HeaderStyle = styled('header')(() => ({
    },
 }))
 
+const NavlinkStyled = styled(NavLink)(() => ({
+   '&': {
+      display: 'inline-block',
+      fontFamily: 'Manrope',
+      fontWeight: '500',
+      fontSize: '18px',
+      lineHeight: '19px',
+      textDecoration: 'none',
+      color: '#222222',
+   },
+}))
+
 const FirstNavStyle = styled('nav')`
    display: flex;
    justify-content: space-between;
@@ -296,11 +309,6 @@ const StyleCheck = styled('div')`
 const NavList = styled('div')`
    display: flex;
    gap: 60px;
-   h3 {
-      font-weight: 500;
-      font-size: 1.1rem;
-      cursor: pointer;
-   }
 `
 const ContainerButton = styled('div')`
    display: flex;

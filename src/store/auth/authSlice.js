@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { USER_KEY, routes } from '../../utils/constants/constants'
+import { USER_KEY } from '../../utils/constants/constants'
+import { routes } from '../../utils/constants/routes'
 import { changePassword, forgotPassword, signIn, signUp } from './authThunk'
 
 const initialState = {

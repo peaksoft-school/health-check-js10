@@ -6,6 +6,7 @@ import Header from '../layout/user/header/Header'
 import Footer from '../layout/Footer'
 
 const Prices = () => {
+   window.scrollTo({ top: 0 })
    return (
       <>
          <Header />

@@ -19,13 +19,16 @@ const ApplicationForm = () => {
 
    const handleChange = (e) => {
       const { name, value } = e.target
+      const sanitizedValue =
+         name === 'phoneNumber' ? value.replace(/\s/g, '') : value
       setFormData({
          ...formData,
-         [name]: value,
+         [name]: sanitizedValue,
       })
+
       if (name === 'name') {
          const nameRegex = /^[A-Za-zА-Яа-я\s]+$/
-         if (!nameRegex.test(value)) {
+         if (!nameRegex.test(sanitizedValue)) {
             setErrors({
                ...errors,
                name: 'Неправильное имя',
@@ -37,8 +40,8 @@ const ApplicationForm = () => {
             })
          }
       } else if (name === 'phoneNumber') {
-         const phoneRegex = /^\+996\d{9}$/
-         if (!phoneRegex.test(value)) {
+         const phoneRegex = /^(?:\+996|0)\d{9}$/
+         if (!phoneRegex.test(sanitizedValue)) {
             setErrors({
                ...errors,
                phoneNumber: 'Неправильный номер',

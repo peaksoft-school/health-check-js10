@@ -76,6 +76,7 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
          })
          .then((token) => {
             dispatch(authWithGoogle({ token, navigate }))
+            handleClose()
          })
    }
 
@@ -185,10 +186,6 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
                      {...register('password', {
                         setValueAs: (v) => v.trim(),
                         required: 'Поле не заполнено',
-                        maxLength: {
-                           value: 12,
-                           message: 'Слишком длинный пароль',
-                        },
                         minLength: {
                            value: 8,
                            message:

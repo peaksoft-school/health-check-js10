@@ -23,6 +23,7 @@ import SignUp from '../../login/SignUp'
 import ForgotPassword from '../../login/ForgotPassword'
 import { localStorageKeys } from '../../../utils/constants/constants'
 import OnlineAppointment from '../../../components/appointment/OnlineAppointment'
+import { routes } from '../../../utils/constants/routes'
 
 const Header = ({ logoutHandler }) => {
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
@@ -87,7 +88,7 @@ const Header = ({ logoutHandler }) => {
    }
 
    const navigateToProfile = () => {
-      navigate('profile')
+      navigate('/profile')
    }
 
    const menuItems = isAuth
@@ -204,11 +205,15 @@ const Header = ({ logoutHandler }) => {
                   <HealthCheckIcon />
                </StyleCheck>
                <NavList>
-                  <NavlinkStyled to="about-clinic">О клинике</NavlinkStyled>
-                  <NavlinkStyled to="service">Услуги</NavlinkStyled>
-                  <NavlinkStyled to="doctors">Врачи</NavlinkStyled>
-                  <NavlinkStyled to="prices">Прайс</NavlinkStyled>
-                  <NavlinkStyled to="contacts">Контакты</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.aboutClinic}>
+                     О клинике
+                  </NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.service}>Услуги</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.doctors}>Врачи</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.prices}>Прайс</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.contacts}>
+                     Контакты
+                  </NavlinkStyled>
                </NavList>
                <ContainerButton>
                   <StyledButton variant="outlined">

@@ -9,7 +9,6 @@ import Footer from '../layout/Footer'
 
 const Contacts = () => {
    window.scrollTo({ top: 0 })
-
    return (
       <>
          <Header />
@@ -19,7 +18,7 @@ const Contacts = () => {
             <Wrapper>
                <Stack spacing={2}>
                   <Container separator="›" aria-label="breadcrumb">
-                     <StyledNavLink to="/admin/specialists">
+                     <StyledNavLink to="/">
                         <p>Главная</p>
                      </StyledNavLink>
                      <p>Контакты</p>

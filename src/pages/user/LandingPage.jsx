@@ -31,7 +31,7 @@ const LandingPage = ({ logoutHandler }) => {
    }
 
    const naviageteToServicePage = () => {
-      navigate('service')
+      navigate('/service')
    }
 
    return (

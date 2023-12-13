@@ -25,3 +25,55 @@ export const getAllSchedules = createAsyncThunk(
       }
    }
 )
+
+export const addTimesheets = createAsyncThunk(
+   'schedule/addTimesheets',
+   async ({ formattedIntervals, doctorInfo }, { rejectWithValue }) => {
+      try {
+         const { data } = await axiosInstance.post(
+            'api/timesheets',
+            formattedIntervals,
+            {
+               params: {
+                  doctorId: doctorInfo.doctor.doctorId,
+                  scheduleDate: doctorInfo.date,
+               },
+            }
+         )
+         return data
+      } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export const changeTimesheets = createAsyncThunk(
+   'schedule/changeTimesheets',
+   async ({ formattedIntervals, doctorInfo }, { rejectWithValue }) => {
+      try {
+         const { data } = await axiosInstance.put(
+            'api/timesheets',
+            formattedIntervals,
+            {
+               params: {
+                  doctorId: doctorInfo.doctor.doctorId,
+                  scheduleDate: doctorInfo.date,
+               },
+            }
+         )
+         return data
+      } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
+      }
+   }
+)

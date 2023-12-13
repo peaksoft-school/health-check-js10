@@ -5,7 +5,7 @@
 // import { login } from './store/auth/authSlice'
 // import { USER_KEY } from './utils/constants/constants'
 // import AppRoutes from './routes/AppRoutes'
-import SchedulePage from './pages/admin/SchedulePage'
+import SchedulePage from './pages/admin/schedule/SchedulePage'
 
 function App() {
    // const dispatch = useDispatch()

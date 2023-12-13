@@ -1,17 +1,27 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/system'
 import { useDispatch, useSelector } from 'react-redux'
-import { MinusIcon } from '../../assets'
-import Button from '../../components/UI/Button'
-import TableSchedule from '../../components/UI/TableSchedule'
-import DatePicker from '../../components/UI/DatePicker'
-import { getAllSchedules } from '../../store/schedule/scheduleThunk'
+import { MinusIcon } from '../../../assets'
+import Button from '../../../components/UI/Button'
+import TableSchedule from '../../../components/UI/TableSchedule'
+import DatePicker from '../../../components/UI/DatePicker'
+import { getAllSchedules } from '../../../store/schedule/scheduleThunk'
+import AddTemplate from './AddTemplate'
+import ChangeTemplate from './ChangeTemplate'
 
 const SchedulePage = () => {
    const [startDate, setStartDate] = useState('')
    const [endDate, setEndDate] = useState('')
+   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false)
+   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
+   const [selectedCell, setSelectedCell] = useState({
+      date: '',
+      doctor: null,
+      rowIndex: -1,
+      times: [],
+   })
 
-   const { schedules, isLoading } = useSelector((state) => state.schedule)
+   const { isLoading, schedules } = useSelector((state) => state.schedule)
 
    const dispatch = useDispatch()
 
@@ -20,6 +30,15 @@ const SchedulePage = () => {
 
    const endDayOfMonth = endDate.$D < 10 ? `0${endDate.$D}` : endDate.$D
    const newEndDate = `${endDate.$y}-${endDate.$M + 1}-${endDayOfMonth}`
+
+   const getSchedules = () => {
+      dispatch(
+         getAllSchedules({
+            dateFrom: startDate ? newStartDate : undefined,
+            dateUntil: endDate ? newEndDate : undefined,
+         })
+      )
+   }
 
    useEffect(() => {
       dispatch(
@@ -41,6 +60,10 @@ const SchedulePage = () => {
       }
    }, [dispatch, startDate, endDate])
 
+   const currentDate = new Date()
+
+   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+
    const startDateHandler = (date) => {
       setStartDate(date)
    }
@@ -48,10 +71,41 @@ const SchedulePage = () => {
       setEndDate(date)
    }
 
-   const currentDate = new Date()
-   const currentMonth = new Date().toLocaleString('ru-RU', { month: 'long' })
+   const handleTemplateModalOpen = () => {
+      setIsTemplateModalOpen(true)
+   }
 
-   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+   const handleChangeModalOpen = () => {
+      setIsChangeModalOpen(true)
+   }
+
+   const handleCellClick = async (doctor, rowIndex, date) => {
+      const times =
+         doctor.dateDayTimeInfos
+            .find((day) => day.dateDay === date)
+            ?.timeIntervals.map((interval) => ({
+               startTime: interval.startTime,
+               endTime: interval.endTime,
+            })) || []
+
+      await setSelectedCell({
+         rowIndex,
+         doctor,
+         date,
+         times,
+      })
+   }
+
+   const generateNext10Days = () => {
+      const next10Days = Array.from({ length: 30 }, (_, index) => {
+         const date = new Date()
+         date.setDate(currentDate.getDate() + index)
+         return date.toISOString().split('T')[0]
+      })
+      return next10Days
+   }
+
+   const next10Days = generateNext10Days()
 
    const columns = useMemo(() => {
       const result = [
@@ -73,21 +127,17 @@ const SchedulePage = () => {
          },
       ]
 
-      const uniqueDates = Array.from(
-         new Set(
-            schedules.flatMap((doctor) =>
-               doctor.dateDayTimeInfos.map((day) => day.dateDay)
-            )
-         )
-      )
-
-      uniqueDates.forEach((date) => {
+      next10Days.forEach((date) => {
          const currentDate = new Date(date)
          const correctedDayOfWeek =
             currentDate.getDay() === 0 ? 7 : currentDate.getDay()
          const header = `${
             daysOfWeek[correctedDayOfWeek - 1]
-         } ${currentDate.getDate()} ${currentMonth}`
+         } ${currentDate.getDate()} ${new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate()
+         ).toLocaleString('ru-RU', { month: 'long' })}`
 
          result.push({
             header,
@@ -120,14 +170,28 @@ const SchedulePage = () => {
       })
 
       return result
-   }, [currentDate, schedules])
+   }, [currentDate, next10Days])
 
    return (
       <div>
          <Box>
             <div>
-               <ButtonsStyled>Изменить день</ButtonsStyled>
-               <ButtonsStyled>Установить по шаблону</ButtonsStyled>
+               <ButtonsStyled
+                  disabled={
+                     !selectedCell.date || selectedCell.times.length === 0
+                  }
+                  onClick={handleChangeModalOpen}
+               >
+                  Изменить день
+               </ButtonsStyled>
+               <ButtonsStyled
+                  disabled={
+                     !selectedCell.date || selectedCell.times.length !== 0
+                  }
+                  onClick={handleTemplateModalOpen}
+               >
+                  Установить по шаблону
+               </ButtonsStyled>
             </div>
             <div>
                <DatePicker value={startDate} onChange={startDateHandler} />
@@ -140,11 +204,30 @@ const SchedulePage = () => {
          {isLoading ? (
             <h1>Loading...</h1>
          ) : (
-            <GlobalContainer>
-               <TableBox>
-                  <TableSchedule columns={columns} rows={schedules} />
-               </TableBox>
-            </GlobalContainer>
+            <>
+               <GlobalContainer>
+                  <TableBox>
+                     <TableSchedule
+                        columns={columns}
+                        rows={schedules}
+                        onCellClick={handleCellClick}
+                        selectedCell={selectedCell}
+                     />
+                  </TableBox>
+               </GlobalContainer>
+               <AddTemplate
+                  open={isTemplateModalOpen}
+                  setOpen={setIsTemplateModalOpen}
+                  doctorInfo={selectedCell}
+                  schedueUpdate={getSchedules}
+               />
+               <ChangeTemplate
+                  open={isChangeModalOpen}
+                  setOpen={setIsChangeModalOpen}
+                  doctorInfo={selectedCell}
+                  schedueUpdate={getSchedules}
+               />
+            </>
          )}
       </div>
    )
@@ -157,21 +240,21 @@ const StyledDoctorImage = styled('img')(() => ({
    height: '46px',
    borderRadius: '50%',
 }))
-const ButtonsStyled = styled(Button)(() => ({
+const ButtonsStyled = styled(Button)(({ disabled }) => ({
    '&': {
       padding: '8px 20px 9px 20px',
-      color: '#4D4E51',
-      background: '#E0E2E7',
+      color: '#FFFF',
+      background: '#048741',
       borderRadius: '4px',
       marginLeft: '20px',
    },
    '&:hover': {
-      background: '#048741',
-      color: '#fff',
+      color: disabled ? '#4D4E51' : '#FFFF',
+      background: disabled ? '#E0E2E7' : '#048741',
    },
-   '&:active': {
-      background: '#048741',
-      color: '#FFFF',
+   '&:disabled': {
+      background: '#E0E2E7',
+      color: '#4D4E51',
    },
 }))
 const Box = styled('div')`

@@ -2,8 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { logout } from '../store/auth/authSlice'
 
-export const BASE_URL =
-   'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
+export const BASE_URL = 'http://3.70.97.1/'
 
 const headers = {
    'Content-type': 'application/json',
@@ -17,8 +16,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDM1OTgwNjgsImlhdCI6MTcwMTc4MzY2OCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.hVW5IyFyCst0J2bU8SX1TSyP1B1aw7H4U2uySenAXEAzDJwvMNKrpvDXJ-6wcAyz3r3inIsBhDdyIwCzn5TDaQ'
-   // const { token } = store.getState().authorization
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDQwOTQxOTgsImlhdCI6MTcwMjI3OTc5OCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.CuCtFSpiLL_8xLFXvA566kCbB2LubUCXCYWxnP6xi26shOQVUi0vdd2vfgd20mOYBb5IHUOHtMAqVEMUL0KGVA'
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }

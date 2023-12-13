@@ -14,7 +14,13 @@ import {
 
 import React from 'react'
 
-const TableSchedule = ({ rows, columns, tableCellStyle = true }) => {
+const TableSchedule = ({
+   rows,
+   columns,
+   tableCellStyle = true,
+   onCellClick,
+   selectedCell,
+}) => {
    return (
       <Grid>
          <PaperStyled>
@@ -44,7 +50,7 @@ const TableSchedule = ({ rows, columns, tableCellStyle = true }) => {
                         {rows.map((row, rowIndex) => {
                            return (
                               <TableRow key={row.id || row.appointmentId}>
-                                 {columns.map((column) => {
+                                 {columns.map((column, colIndex) => {
                                     if (column.render) {
                                        return (
                                           <TableCell
@@ -53,7 +59,22 @@ const TableSchedule = ({ rows, columns, tableCellStyle = true }) => {
                                                 color: row.isActive
                                                    ? ''
                                                    : '#C9C9C9',
+                                                border:
+                                                   selectedCell.rowIndex ===
+                                                      rowIndex &&
+                                                   selectedCell.date ===
+                                                      column.key
+                                                      ? '2px solid #1f6ed4'
+                                                      : '1px solid #d9d9d9',
                                              }}
+                                             onClick={() =>
+                                                colIndex !== 0 &&
+                                                onCellClick(
+                                                   row,
+                                                   rowIndex,
+                                                   column.key
+                                                )
+                                             }
                                           >
                                              {column.render(row)}
                                           </TableCell>

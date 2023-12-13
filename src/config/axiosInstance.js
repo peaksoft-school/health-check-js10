@@ -3,7 +3,7 @@ import { store } from '../store'
 import { logout } from '../store/auth/authSlice'
 
 export const BASE_URL =
-   'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
+   'http://ec2-3-70-97-1.eu-central-1.compute.amazonaws.com'
 
 const headers = {
    'Content-type': 'application/json',
@@ -16,10 +16,7 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   // const { token } = store.getState().authorization
-   const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDE4Njg4ODQsImlhdCI6MTcwMDA1NDQ4NCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.VoqDbKiA-y70DKiN-5ww77DVWSgyLfKsr6UKJRU3QFBtBptDw35xb0cjkD59iQDujuFxI5vM0kCB7amRepMmFg'
-   //   const userToken = "ссылка с свагера";
+   const { token } = store.getState().authorization
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }

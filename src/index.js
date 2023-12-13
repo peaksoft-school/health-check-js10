@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 import './index.css'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { theme } from './utils/constants/theme'
 import { store } from './store'
 import App from './App'
@@ -17,7 +19,12 @@ root.render(
          <BrowserRouter>
             <SnackbarProvider>
                <ThemeProvider theme={theme}>
-                  <App />
+                  <LocalizationProvider
+                     dateAdapter={AdapterDayjs}
+                     adapterLocale="ru"
+                  >
+                     <App />
+                  </LocalizationProvider>
                </ThemeProvider>
             </SnackbarProvider>
          </BrowserRouter>

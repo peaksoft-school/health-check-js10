@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../store/auth/authSlice'
+import Header from '../../layout/admin/header/Header'
 
 const AdminRoutes = () => {
    const dispatch = useDispatch()
@@ -11,11 +12,7 @@ const AdminRoutes = () => {
       navigate('/homepage')
       dispatch(logout())
    }
-   return (
-      <div>
-         AdminRoutes <button onClick={logoutHandler}>logout</button>
-      </div>
-   )
+   return <Header logoutHandler={logoutHandler} />
 }
 
 export default AdminRoutes

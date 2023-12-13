@@ -1,14 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { authSlice } from './auth/authSlice'
-import patientReducer from './patient/patientsSlice'
+import { appointmentSlice } from './appointment/appointmentSlice'
 import { applicationsSlice } from './applications/applicationsSlice'
 import myappointmentsSlice from './myappointments/myappointmentsSlice'
+import { departmentSlice } from './department/departmentSlice'
+import { patientSlice } from './patient/patientsSlice'
 
 export const store = configureStore({
    reducer: {
       [authSlice.name]: authSlice.reducer,
-      patients: patientReducer,
+      [appointmentSlice.name]: appointmentSlice.reducer,
       [applicationsSlice.name]: applicationsSlice.reducer,
       myappointments: myappointmentsSlice,
+      [patientSlice.name]: patientSlice.reducer,
+      [departmentSlice.name]: departmentSlice.reducer,
    },
 })

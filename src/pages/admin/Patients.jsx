@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DeleteOutline } from '@mui/icons-material'
 import { TextField } from '@mui/material'
 import styled from '@emotion/styled'
-import AppTable from '../UI/AppTable'
+import AppTable from '../../components/UI/AppTable'
 import { SearchIcon } from '../../assets'
 import {
    fetchPatients,

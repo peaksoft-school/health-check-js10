@@ -9,7 +9,12 @@ export const getProfileById = createAsyncThunk(
          const response = await axiosInstance.get('/api/patients/profile')
          return response.data
       } catch (error) {
-         return rejectWithValue(error.response?.data.message)
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
@@ -24,26 +29,29 @@ export const updateProfile = createAsyncThunk(
          )
          return response.data
       } catch (error) {
-         notify(error, 'error')
-         return rejectWithValue(
-            error.response?.data.message || 'Failed to update profile'
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
          )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
 
 export const updatePassword = createAsyncThunk(
    'authorization/updatePassword',
-   async ({ oldPassword, newPassword }, { rejectWithValue }) => {
+   async ({ oldPassword, newPassword }) => {
       try {
          await axiosInstance.put(
             `/api/patients/updatePassword?oldPassword=${oldPassword}&newPassword=${newPassword}`
          )
       } catch (error) {
-         notify(error, 'error')
-         rejectWithValue(
-            error.response?.data.message || 'Failed to update profile'
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
          )
+         notify(errorMessage, 'error')
       }
    }
 )

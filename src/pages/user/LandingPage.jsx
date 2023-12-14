@@ -17,7 +17,7 @@ import {
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
 
-const LandingPage = () => {
+const LandingPage = ({ logoutHandler }) => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
@@ -41,7 +41,7 @@ const LandingPage = () => {
 
    return (
       <>
-         <Header />
+         <Header logoutHandler={logoutHandler} />
          <GlobalContainer>
             <div>
                <Box>

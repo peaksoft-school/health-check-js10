@@ -9,7 +9,8 @@ import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
 import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
-import PatientComponent from '../components/patients/Patients'
+import PatientComponent from '../pages/admin/Patients'
+import { PatientsInternalPage } from '../pages/admin/PatientsInternalPage'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -53,6 +54,15 @@ const AppRoutes = () => {
             element={
                <PrivateRoutes
                   component={<PatientComponent />}
+                  isAuth={isAuth}
+               />
+            }
+         />
+         <Route
+            path={routes.ADMIN.patientsId}
+            element={
+               <PrivateRoutes
+                  component={<PatientsInternalPage />}
                   isAuth={isAuth}
                />
             }

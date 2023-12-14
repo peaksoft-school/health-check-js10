@@ -1,19 +1,11 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { AllIcon, GroupIcon, HealthCheckIcon } from '../../../assets'
 import ReusableMenu from '../../../components/UI/Menu'
-import { logout } from '../../../store/auth/authSlice'
+import { routes } from '../../../utils/constants/constants'
 
-const Header = () => {
-   const navigate = useNavigate()
-   const dispatch = useDispatch()
-
-   const logoutHandler = () => {
-      navigate('/signin')
-      dispatch(logout())
-   }
+const Header = ({ logoutHandler }) => {
    const menuItems = [
       {
          title: 'Администратор',
@@ -21,7 +13,7 @@ const Header = () => {
       },
       {
          title: 'Выйти',
-         onClick: () => logoutHandler,
+         onClick: logoutHandler,
          id: 2,
       },
    ]
@@ -36,24 +28,33 @@ const Header = () => {
             <ul>
                <li>
                   <StyledNavLink
-                     to="/online-registration"
+                     to={routes.ADMIN.onlineRegistration}
                      activeClassName="active"
                   >
                      Онлайн-запись
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/applications" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.applications}
+                     activeClassName="active"
+                  >
                      Заявки
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/specialists" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.specialists}
+                     activeClassName="active"
+                  >
                      Специалисты
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/patients" activeClassName="active">
+                  <StyledNavLink
+                     to={routes.ADMIN.patients}
+                     activeClassName="active"
+                  >
                      Пациенты
                   </StyledNavLink>
                </li>

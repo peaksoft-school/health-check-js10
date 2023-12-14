@@ -1,17 +1,16 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import MyInfo from '../../pages/MyInfo'
 import { ProfilePage } from '../../pages/ProfilePage'
 import { logout } from '../../store/auth/authSlice'
 import { PasswordChange } from '../../pages/PasswordChange'
+import LandingPage from '../../pages/user/LandingPage'
 
 const UserRoutes = () => {
    const dispatch = useDispatch()
-   const navigate = useNavigate()
 
    const logoutHandler = () => {
-      navigate('/homepage')
       dispatch(logout())
    }
    return (
@@ -24,6 +23,7 @@ const UserRoutes = () => {
                <Route path="passwordChange" element={<PasswordChange />} />
             </Route>
          </Routes>
+         <LandingPage logoutHandler={logoutHandler} />
       </div>
    )
 }

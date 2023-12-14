@@ -62,7 +62,7 @@ export { ReactComponent as RemoveIcon } from './icons/RemoveIcon.svg'
 export { ReactComponent as SortDescIcon } from './icons/SortDescIcon.svg'
 export { ReactComponent as barcodeIcon } from './icons/barcodeIcon.svg'
 export { ReactComponent as medcheckIcon } from './icons/MedCheckIcon.svg'
-export { ReactComponent as MedCheck } from './icons/MedCheck.svg'
+export { ReactComponent as MedCheck } from './icons/medCheck.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useReactToPrint } from 'react-to-print'
@@ -57,8 +56,7 @@ const GetResult = () => {
       try {
          html2canvas(pdfRef.current).then((canvas) => {
             const imgData = canvas.toDataURL('image/png')
-            // eslint-disable-next-line new-cap
-            const pdf = new jsPDF('p', 'px')
+            const pdf = jsPDF('p', 'px')
             pdf.addImage(imgData, 'PNG', 0, 0)
             pdf.save('document.pdf')
          })
@@ -103,10 +101,7 @@ const GetResult = () => {
                   </div>
                   <div className="buttonsBox">
                      {showButton && (
-                        <Button
-                           onClick={handleClose}
-                           style={{ background: '#F91515' }}
-                        >
+                        <Button className="closeBtn" onClick={handleClose}>
                            <RemoveIcon />
                            Закрыть результаты
                         </Button>
@@ -137,7 +132,7 @@ const GetResult = () => {
                      или сохранить вP DF формате с помощью кнопок, расположенной
                      в верхней части сайта;
                   </li>
-                  <li style={{ color: 'red' }}>
+                  <li className="liRed">
                      При возникновении проблем с отображением результатов, Вы
                      можете оставить заявку на получение результатов по
                      электронной почте, позвонив в Службу поддержки клиентов по
@@ -151,18 +146,10 @@ const GetResult = () => {
                         data={result.pdgFileCheque}
                         title="submit"
                         type="application/pdf"
-                        width="1000px"
-                        height="700px"
+                        width="900px"
+                        height="590px"
                      >
-                        <p
-                           style={{
-                              color: 'red',
-                              fontSize: '1.5rem',
-                              marginTop: '12rem',
-                           }}
-                        >
-                           Ваш браузер не поддерживает просмотр PDF.
-                        </p>
+                        <p>Ваш браузер не поддерживает просмотр PDF.</p>
                      </object>
                   )}
                </div>
@@ -198,6 +185,9 @@ const HeaderContainer = styled('div')(() => ({
       button: {
          background: ' #3977C0',
          gap: '1rem',
+         '&.closeBtn': {
+            background: 'red',
+         },
       },
    },
 }))
@@ -233,11 +223,16 @@ const Box = styled('div')(() => ({
    '.resultpaper': {
       display: 'flex',
       justifyContent: 'center',
-      paddingTop: '5rem',
+      padding: '7rem 1.5rem',
+      p: {
+         color: 'red',
+         fontSize: '1.5rem',
+         marginTop: '12rem',
+      },
    },
    '.file': {
       width: '100%',
-      height: '30vh',
+      height: '33vh',
       background: 'rgba(254, 251, 251, 0.50)',
       backdropFilter: 'blur(156px)',
       opacity: 0.8,
@@ -249,6 +244,9 @@ const Box = styled('div')(() => ({
       li: {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
+      },
+      '.liRed': {
+         color: 'red',
       },
    },
 }))

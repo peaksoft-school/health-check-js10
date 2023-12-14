@@ -4,19 +4,6 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const AppTable = ({ columns, data, variant }) => {
-   const getStatusColor = (status) => {
-      switch (status) {
-         case 'confirmed':
-            return 'green'
-         case 'prohibited':
-            return 'blue'
-         case 'canceled':
-            return 'red'
-         default:
-            return ''
-      }
-   }
-
    if (data.length === 0) {
       return (
          <StyledError>
@@ -60,9 +47,6 @@ const AppTable = ({ columns, data, variant }) => {
                               key={column.id}
                               title={String(item[column.id])}
                               condition={item.condition}
-                              className={`status ${getStatusColor(
-                                 item[column.id]
-                              )}`}
                            >
                               <Link to={`${item.id}`}>
                                  <StyledCondition condition={item[column.id]}>
@@ -74,13 +58,7 @@ const AppTable = ({ columns, data, variant }) => {
                                        : item[column.id]}
                                  </StyledCondition>
                                  {Array.isArray(column.ids) && (
-                                    <div
-                                       style={{
-                                          display: 'flex',
-                                          flexDirection: 'column',
-                                          lineHeight: '1.5',
-                                       }}
-                                    >
+                                    <div>
                                        {column.ids.map((id) => (
                                           <span key={id}>
                                              {data?.[0]?.[id]}

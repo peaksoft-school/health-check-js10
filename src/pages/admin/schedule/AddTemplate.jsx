@@ -8,7 +8,7 @@ import Button from '../../../components/UI/Button'
 import { addTimesheets } from '../../../store/schedule/scheduleThunk'
 import { notify } from '../../../utils/constants/snackbar'
 
-const AddTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
+const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
    const [intervalCount, setIntervalCount] = useState(1)
    const [intervalValues, setIntervalValues] = useState([
       {
@@ -98,6 +98,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
 
       return false
    }
+   console.log(doctorInfo, 'info')
 
    const handleSave = () => {
       const formattedIntervals = convertToSwaggerFormat(intervalValues)
@@ -112,6 +113,17 @@ const AddTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
 
       if (isEmptyTime) {
          notify('Введите значения для всех интервалов', 'error')
+         return
+      }
+
+      const isValid = intervalValues.every((interval) => {
+         const startHour = parseInt(interval.newStartTimeHour, 10)
+         const endHour = parseInt(interval.newEndTimeHour, 10)
+         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
+      })
+
+      if (!isValid) {
+         notify('Время не должно быть в диапазоне от 22:00 до 06:00', 'error')
          return
       }
 
@@ -154,20 +166,9 @@ const AddTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
          return
       }
 
-      const isValid = intervalValues.every((interval) => {
-         const startHour = parseInt(interval.newStartTimeHour, 10)
-         const endHour = parseInt(interval.newEndTimeHour, 10)
-         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
-      })
-
-      if (!isValid) {
-         notify('Время не должно быть в диапазоне от 22:00 до 06:00', 'error')
-         return
-      }
-
       dispatch(addTimesheets({ formattedIntervals, doctorInfo }))
          .then(() => {
-            schedueUpdate()
+            scheduleUpdate()
             handleClose()
             notify('Успешно сохранено')
          })

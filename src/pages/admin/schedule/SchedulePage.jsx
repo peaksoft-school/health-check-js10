@@ -219,13 +219,13 @@ const SchedulePage = () => {
                   open={isTemplateModalOpen}
                   setOpen={setIsTemplateModalOpen}
                   doctorInfo={selectedCell}
-                  schedueUpdate={getSchedules}
+                  scheduleUpdate={getSchedules}
                />
                <ChangeTemplate
                   open={isChangeModalOpen}
                   setOpen={setIsChangeModalOpen}
                   doctorInfo={selectedCell}
-                  schedueUpdate={getSchedules}
+                  scheduleUpdate={getSchedules}
                />
             </>
          )}

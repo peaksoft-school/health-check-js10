@@ -2,7 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { Input } from './input/Input'
 
-const TimePicker = ({ variant, value, ...rest }) => {
+const TimePicker = ({ type, variant, value, ...rest }) => {
    return (
       <StyledTimePicker
          type="number"

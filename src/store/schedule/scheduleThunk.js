@@ -77,3 +77,24 @@ export const changeTimesheets = createAsyncThunk(
       }
    }
 )
+
+export const deleteTimesheets = createAsyncThunk(
+   'schedule/deleteTimesheets',
+   async ({ scheduleData, time }) => {
+      try {
+         await axiosInstance.delete('api/timesheets', {
+            params: {
+               doctorId: scheduleData.doctor.doctorId,
+               scheduleDate: scheduleData.date,
+               time,
+            },
+         })
+      } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+      }
+   }
+)

@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
-import { CloseIcon, GreenPlus } from '../../../assets'
+import { CloseIcon, GreenPlus, RedClose } from '../../../assets'
 import TimePicker from '../../../components/UI/TimePicker'
 import Button from '../../../components/UI/Button'
-import { changeTimesheets } from '../../../store/schedule/scheduleThunk'
+import {
+   changeTimesheets,
+   deleteTimesheets,
+} from '../../../store/schedule/scheduleThunk'
 import { notify } from '../../../utils/constants/snackbar'
+import StartTimes from '../../../components/UI/StartTimes'
 
-const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
-   const [intervalCount, setIntervalCount] = useState(1)
+const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
+   const [isSaved, setIsSaved] = useState(false)
    const [intervalValues, setIntervalValues] = useState([
       {
-         id: 1,
+         id: Date.now(),
          newStartTimeHour: '',
          newStartTimeMinute: '',
          newEndTimeHour: '',
@@ -24,20 +28,27 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
 
    const handleClose = () => {
       setOpen(false)
+      scheduleUpdate()
    }
 
+   const maxIntervalsPerDay = 6
+   const availableSlots = maxIntervalsPerDay - doctorInfo.times.length
+
    const handleAddInterval = () => {
-      setIntervalCount((prevCount) => prevCount + 1)
-      setIntervalValues((prevValues) => [
-         ...prevValues,
-         {
-            id: intervalCount,
-            newStartTimeHour: '',
-            newStartTimeMinute: '',
-            newEndTimeHour: '',
-            newEndTimeMinute: '',
-         },
-      ])
+      if (intervalValues.length < availableSlots) {
+         setIntervalValues((prevValues) => [
+            ...prevValues,
+            {
+               id: Date.now(),
+               newStartTimeHour: '',
+               newStartTimeMinute: '',
+               newEndTimeHour: '',
+               newEndTimeMinute: '',
+            },
+         ])
+      } else {
+         notify('Максимальное число интервалов за день', 'error')
+      }
    }
 
    const handleRemoveInterval = (index) => {
@@ -75,7 +86,16 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
    }
 
    const checkOverlap = (intervals) => {
-      for (let i = 0; i < intervals.length - 1; i += 1) {
+      const existingIntervals = doctorInfo.times.map((interval) => {
+         return {
+            newStartTimeHour: interval.startTime.split(':')[0],
+            newStartTimeMinute: interval.startTime.split(':')[1],
+            newEndTimeHour: interval.endTime.split(':')[0],
+            newEndTimeMinute: interval.endTime.split(':')[1],
+         }
+      })
+
+      for (let i = 0; i < intervals.length; i += 1) {
          const intervalA = intervals[i]
 
          if (
@@ -84,12 +104,15 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
             intervalA.newEndTimeHour !== undefined &&
             intervalA.newEndTimeMinute !== undefined
          ) {
+            const startTimeA = new Date(
+               `2000-01-01T${intervalA.newStartTimeHour}:${intervalA.newStartTimeMinute}`
+            )
             const endTimeA = new Date(
                `2000-01-01T${intervalA.newEndTimeHour}:${intervalA.newEndTimeMinute}`
             )
 
-            for (let j = i + 1; j < intervals.length; j += 1) {
-               const intervalB = intervals[j]
+            for (let j = 0; j < existingIntervals.length; j += 1) {
+               const intervalB = existingIntervals[j]
 
                if (
                   intervalB.newStartTimeHour !== undefined &&
@@ -100,8 +123,11 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
                   const startTimeB = new Date(
                      `2000-01-01T${intervalB.newStartTimeHour}:${intervalB.newStartTimeMinute}`
                   )
+                  const endTimeB = new Date(
+                     `2000-01-01T${intervalB.newEndTimeHour}:${intervalB.newEndTimeMinute}`
+                  )
 
-                  if (startTimeB < endTimeA) {
+                  if (!(endTimeA < startTimeB || startTimeA >= endTimeB)) {
                      return true
                   }
                }
@@ -125,6 +151,19 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
 
       if (isEmptyTime) {
          notify('Введите значения для всех интервалов', 'error')
+         return
+      }
+
+      const isValid = intervalValues.every((interval) => {
+         const startHour = parseInt(interval.newStartTimeHour, 10)
+         const endHour = parseInt(interval.newEndTimeHour, 10)
+         return (
+            startHour < 22 && endHour <= 22 && startHour >= 6 && endHour >= 6
+         )
+      })
+
+      if (!isValid) {
+         notify('Время не должно быть в диапазоне от 22:00 до 06:00', 'error')
          return
       }
 
@@ -167,27 +206,75 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
          return
       }
 
-      const isValid = intervalValues.every((interval) => {
-         const startHour = parseInt(interval.newStartTimeHour, 10)
-         const endHour = parseInt(interval.newEndTimeHour, 10)
-         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
-      })
-
-      if (!isValid) {
-         notify('Время не должно быть в диапазоне от 22:00 до 06:00', 'error')
-         return
-      }
-
       dispatch(changeTimesheets({ formattedIntervals, doctorInfo }))
          .then(() => {
-            schedueUpdate()
-            handleClose()
+            setIsSaved(true)
             notify('Успешно сохранено')
          })
          .catch(() => {
             notify('Ошибка при сохранении')
          })
    }
+
+   console.log(intervalValues, 'intervalValues')
+
+   const handleDelete = (id) => {
+      dispatch(deleteTimesheets({ scheduleData: doctorInfo, time: id }))
+         .then(() => {
+            const updatedIntervals = intervalValues.filter(
+               (interval) =>
+                  `${interval.newStartTimeHour}:${interval.newStartTimeMinute}` !==
+                  id
+            )
+            setIntervalValues(updatedIntervals)
+
+            const updatedExistingTimes = doctorInfo.times.filter(
+               (interval) => interval.startTime.slice(0, -3) !== id
+            )
+            doctorInfo.times = updatedExistingTimes
+
+            const allStartTimesDeleted = updatedExistingTimes.length === 0
+            setIsSaved(!allStartTimesDeleted)
+            if (allStartTimesDeleted) {
+               setIntervalValues(() => [
+                  {
+                     id: Date.now(),
+                     newStartTimeHour: '',
+                     newStartTimeMinute: '',
+                     newEndTimeHour: '',
+                     newEndTimeMinute: '',
+                  },
+               ])
+            }
+
+            notify('Успешно удалено')
+         })
+         .catch(() => {
+            notify('Ошибка при удалении')
+         })
+   }
+
+   const existingTimes = doctorInfo.times.map((interval) => (
+      <div className="time" key={interval.startTime}>
+         <StartTimes
+            time={interval.startTime.slice(0, -3)}
+            onDelete={() => handleDelete(interval.startTime.slice(0, -3))}
+         />
+      </div>
+   ))
+
+   const newTimes = intervalValues.map((interval) => (
+      <div className="time" key={interval.id}>
+         <StartTimes
+            time={`${interval.newStartTimeHour}:${interval.newStartTimeMinute}`}
+            onDelete={() =>
+               handleDelete(
+                  `${interval.newStartTimeHour}:${interval.newStartTimeMinute}`
+               )
+            }
+         />
+      </div>
+   ))
 
    return (
       <Modal open={open} onClose={handleClose} padding="35px 45px">
@@ -209,76 +296,92 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, schedueUpdate }) => {
                </div>
                <div className="block">
                   <h6 className="chartt">График:</h6>
-                  <div className="charts">
-                     {intervalValues.map((interval, index) => (
-                        <div className="chart" key={interval.id}>
-                           <TimePicker
-                              variant="hours"
-                              value={interval.newStartTimeHour}
-                              onChange={(value) =>
-                                 handleTimeChange(
-                                    index,
-                                    'newStartTimeHour',
-                                    value.target.value
-                                 )
-                              }
-                           />
-                           <TimePicker
-                              value={interval.newStartTimeMinute}
-                              onChange={(value) =>
-                                 handleTimeChange(
-                                    index,
-                                    'newStartTimeMinute',
-                                    value.target.value
-                                 )
-                              }
-                           />
-                           <span>-</span>
-                           <TimePicker
-                              variant="hours"
-                              value={interval.newEndTimeHour}
-                              onChange={(value) =>
-                                 handleTimeChange(
-                                    index,
-                                    'newEndTimeHour',
-                                    value.target.value
-                                 )
-                              }
-                           />
-                           <TimePicker
-                              value={interval.newEndTimeMinute}
-                              onChange={(value) =>
-                                 handleTimeChange(
-                                    index,
-                                    'newEndTimeMinute',
-                                    value.target.value
-                                 )
-                              }
-                           />
-                           {index !== 0 && (
-                              <CloseIcon
-                                 onClick={() => handleRemoveInterval(index)}
+                  {isSaved || doctorInfo.times.length === 6 ? (
+                     <div className="times">
+                        {existingTimes}
+                        {doctorInfo.times.length < 6 ? newTimes : null}
+                     </div>
+                  ) : (
+                     <div className="charts">
+                        {intervalValues.map((interval, index) => (
+                           <div className="chart" key={interval.id}>
+                              <TimePicker
+                                 variant="hours"
+                                 value={interval.newStartTimeHour}
+                                 onChange={(value) =>
+                                    handleTimeChange(
+                                       index,
+                                       'newStartTimeHour',
+                                       value.target.value
+                                    )
+                                 }
                               />
-                           )}
-                        </div>
-                     ))}
-                  </div>
+                              <TimePicker
+                                 value={interval.newStartTimeMinute}
+                                 onChange={(value) =>
+                                    handleTimeChange(
+                                       index,
+                                       'newStartTimeMinute',
+                                       value.target.value
+                                    )
+                                 }
+                              />
+                              <span>-</span>
+                              <TimePicker
+                                 variant="hours"
+                                 value={interval.newEndTimeHour}
+                                 onChange={(value) =>
+                                    handleTimeChange(
+                                       index,
+                                       'newEndTimeHour',
+                                       value.target.value
+                                    )
+                                 }
+                              />
+                              <TimePicker
+                                 value={interval.newEndTimeMinute}
+                                 onChange={(value) =>
+                                    handleTimeChange(
+                                       index,
+                                       'newEndTimeMinute',
+                                       value.target.value
+                                    )
+                                 }
+                              />
+                              {index !== 0 && (
+                                 <RedClose
+                                    width="28px"
+                                    height="28px"
+                                    onClick={() => handleRemoveInterval(index)}
+                                 />
+                              )}
+                           </div>
+                        ))}
+                     </div>
+                  )}
                </div>
             </div>
-            <div
-               className="add-interval"
-               onClick={handleAddInterval}
-               onKeyDown={handleAddInterval}
-               role="presentation"
-            >
-               <GreenPlus />
-               <h4>Добавить интервал</h4>
-            </div>
+            {!isSaved ? (
+               <div
+                  className="add-interval"
+                  onClick={handleAddInterval}
+                  onKeyDown={handleAddInterval}
+                  role="presentation"
+               >
+                  <GreenPlus />
+                  <h4>Добавить интервал</h4>
+               </div>
+            ) : null}
+
             <div className="buttons">
                <Button variant="normal" onClick={handleClose}>
                   ОТМЕНИТЬ
                </Button>
-               <Button onClick={handleSave}>СОХРАНИТЬ</Button>
+               {isSaved ? (
+                  <Button onClick={handleClose}>СОХРАНИТЬ</Button>
+               ) : (
+                  <Button onClick={handleSave}>СОХРАНИТЬ</Button>
+               )}
             </div>
          </StyledForm>
       </Modal>
@@ -328,6 +431,12 @@ const StyledForm = styled('form')(() => ({
          },
       },
    },
+   '.times': {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px',
+      width: '450px',
+   },
    '.charts': {
       display: 'flex',
       flexDirection: 'column',
@@ -339,9 +448,8 @@ const StyledForm = styled('form')(() => ({
          alignItems: 'center',
          justifyContent: 'center',
          gap: '14px',
-         'svg, path': {
+         svg: {
             cursor: 'pointer',
-            fill: '#F91515',
          },
       },
    },

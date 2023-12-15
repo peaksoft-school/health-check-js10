@@ -14,6 +14,8 @@ export const routes = {
    },
    USER: {
       path: '/user',
+      appointments: '/user/appointments',
+      appointment: '/user/appointments/:appointmentId',
    },
    DOCTOR: {
       path: '/doctor',

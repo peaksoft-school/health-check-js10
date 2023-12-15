@@ -9,7 +9,9 @@ import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
 import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
-import PatientComponent from '../pages/admin/Patients'
+import Patients from '../pages/admin/Patients'
+import { Parents } from '../components/UI/TableParents'
+import PatientTable from '../components/UI/PatientTable'
 import { PatientsInternalPage } from '../pages/admin/PatientsInternalPage'
 
 const AppRoutes = () => {
@@ -52,11 +54,18 @@ const AppRoutes = () => {
          />
          <Route
             path={routes.ADMIN.patients}
+            element={<PrivateRoutes component={<Patients />} isAuth={isAuth} />}
+         />
+
+         <Route
+            path={routes.USER.appointments}
+            element={<PrivateRoutes component={<Parents />} isAuth={isAuth} />}
+         />
+
+         <Route
+            path={routes.USER.appointment}
             element={
-               <PrivateRoutes
-                  component={<PatientComponent />}
-                  isAuth={isAuth}
-               />
+               <PrivateRoutes component={<PatientTable />} isAuth={isAuth} />
             }
          />
          <Route

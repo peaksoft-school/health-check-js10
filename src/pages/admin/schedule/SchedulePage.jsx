@@ -171,6 +171,7 @@ const SchedulePage = () => {
                      hasTime={
                         daySchedule && daySchedule.timeIntervals.length > 0
                      }
+                     timeIntervals={daySchedule && daySchedule.timeIntervals}
                   >
                      {daySchedule &&
                         daySchedule.timeIntervals.map((interval) => (
@@ -341,12 +342,42 @@ const TimeBox = styled('div')`
    ${(props) =>
       props.hasTime &&
       `
-      background: #dbebff;
-      border-left: 3px solid #1f6ed4;
+      background: ${
+         props.timeIntervals.every(
+            (interval) => interval.isAvailable === 'false'
+         )
+            ? 'var(--Primary-green, #048741)'
+            : '#dbebff'
+      };
+      border-left: ${
+         props.timeIntervals.every(
+            (interval) => interval.isAvailable === 'false'
+         )
+            ? '3px solid red'
+            : '3px solid #1f6ed4'
+      };
    `}
    color: #1f6ed4;
    width: 110px;
    font-style: italic;
    font-weight: 500;
    padding: 5px;
+
+   p {
+      ${(props) =>
+         props.hasTime &&
+         props.timeIntervals &&
+         props.timeIntervals.map(
+            (interval) =>
+               interval.isAvailable === 'false' &&
+               `
+               &:nth-child(${props.timeIntervals.indexOf(interval) + 1}) {
+                  background: #048741;
+                  color: white;
+                  width: 6.7rem;
+                  margin-left: -0.3rem;
+               }
+            `
+         )}
+   }
 `

@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
-import { CloseIcon, GreenPlus } from '../../../assets'
+import { CloseIcon, GreenPlus, RedClose } from '../../../assets'
 import TimePicker from '../../../components/UI/TimePicker'
 import Button from '../../../components/UI/Button'
 import { addTimesheets } from '../../../store/schedule/scheduleThunk'
 import { notify } from '../../../utils/constants/snackbar'
 
 const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
-   const [intervalCount, setIntervalCount] = useState(1)
    const [intervalValues, setIntervalValues] = useState([
       {
          id: 1,
@@ -26,24 +25,40 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
       setOpen(false)
    }
 
+   const handleUpdate = () => {
+      setOpen(false)
+      scheduleUpdate()
+   }
+   const availableSlots = 6 - doctorInfo.times.length
+
    const handleAddInterval = () => {
-      setIntervalCount((prevCount) => prevCount + 1)
-      setIntervalValues((prevValues) => [
-         ...prevValues,
-         {
-            id: intervalCount,
-            newStartTimeHour: '',
-            newStartTimeMinute: '',
-            newEndTimeHour: '',
-            newEndTimeMinute: '',
-         },
-      ])
+      if (intervalValues.length < availableSlots) {
+         setIntervalValues((prevValues) => [
+            ...prevValues,
+            {
+               id: Date.now(),
+               newStartTimeHour: '',
+               newStartTimeMinute: '',
+               newEndTimeHour: '',
+               newEndTimeMinute: '',
+            },
+         ])
+      } else {
+         notify('Максимальное число интервалов за день', 'error')
+      }
+   }
+
+   const handleRemoveInterval = (index) => {
+      const updatedIntervals = intervalValues.filter((_, i) => i !== index)
+      setIntervalValues(updatedIntervals)
    }
 
    const handleTimeChange = (index, field, value) => {
       setIntervalValues((prevValues) => {
          const newValues = [...prevValues]
-         newValues[index][field] = value
+         newValues[index][field] =
+            value === 0 ? '00' : value.toString().padStart(2, '0')
+
          return newValues
       })
    }
@@ -62,7 +77,16 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
    }
 
    const checkOverlap = (intervals) => {
-      for (let i = 0; i < intervals.length - 1; i += 1) {
+      const existingIntervals = intervals.map((interval) => {
+         return {
+            newStartTimeHour: interval.newStartTimeHour,
+            newStartTimeMinute: interval.newStartTimeMinute,
+            newEndTimeHour: interval.newEndTimeHour,
+            newEndTimeMinute: interval.newEndTimeMinute,
+         }
+      })
+
+      for (let i = 0; i < intervals.length; i += 1) {
          const intervalA = intervals[i]
 
          if (
@@ -71,25 +95,33 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
             intervalA.newEndTimeHour !== undefined &&
             intervalA.newEndTimeMinute !== undefined
          ) {
+            const startTimeA = new Date(
+               `2000-01-01T${intervalA.newStartTimeHour}:${intervalA.newStartTimeMinute}`
+            )
             const endTimeA = new Date(
                `2000-01-01T${intervalA.newEndTimeHour}:${intervalA.newEndTimeMinute}`
             )
 
-            for (let j = i + 1; j < intervals.length; j += 1) {
-               const intervalB = intervals[j]
+            for (let j = 0; j < existingIntervals.length; j += 1) {
+               if (i !== j) {
+                  const intervalB = existingIntervals[j]
 
-               if (
-                  intervalB.newStartTimeHour !== undefined &&
-                  intervalB.newStartTimeMinute !== undefined &&
-                  intervalB.newEndTimeHour !== undefined &&
-                  intervalB.newEndTimeMinute !== undefined
-               ) {
-                  const startTimeB = new Date(
-                     `2000-01-01T${intervalB.newStartTimeHour}:${intervalB.newStartTimeMinute}`
-                  )
+                  if (
+                     intervalB.newStartTimeHour !== undefined &&
+                     intervalB.newStartTimeMinute !== undefined &&
+                     intervalB.newEndTimeHour !== undefined &&
+                     intervalB.newEndTimeMinute !== undefined
+                  ) {
+                     const startTimeB = new Date(
+                        `2000-01-01T${intervalB.newStartTimeHour}:${intervalB.newStartTimeMinute}`
+                     )
+                     const endTimeB = new Date(
+                        `2000-01-01T${intervalB.newEndTimeHour}:${intervalB.newEndTimeMinute}`
+                     )
 
-                  if (startTimeB < endTimeA) {
-                     return true
+                     if (!(endTimeA <= startTimeB || startTimeA >= endTimeB)) {
+                        return true
+                     }
                   }
                }
             }
@@ -98,7 +130,6 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
       return false
    }
-   console.log(doctorInfo, 'info')
 
    const handleSave = () => {
       const formattedIntervals = convertToSwaggerFormat(intervalValues)
@@ -119,7 +150,9 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
       const isValid = intervalValues.every((interval) => {
          const startHour = parseInt(interval.newStartTimeHour, 10)
          const endHour = parseInt(interval.newEndTimeHour, 10)
-         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
+         return (
+            startHour < 22 && endHour <= 22 && startHour >= 6 && endHour >= 6
+         )
       })
 
       if (!isValid) {
@@ -152,7 +185,9 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
             return false
          }
 
-         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
+         return (
+            startHour < 22 && endHour <= 22 && startHour >= 6 && endHour >= 6
+         )
       })
 
       if (!isMoreValid) {
@@ -168,8 +203,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
       dispatch(addTimesheets({ formattedIntervals, doctorInfo }))
          .then(() => {
-            scheduleUpdate()
-            handleClose()
+            handleUpdate()
             notify('Успешно сохранено')
          })
          .catch(() => {
@@ -230,6 +264,13 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                               )
                            }
                         />
+                        {index !== 0 && (
+                           <RedClose
+                              width="28px"
+                              height="28px"
+                              onClick={() => handleRemoveInterval(index)}
+                           />
+                        )}
                      </div>
                   ))}
                </div>
@@ -281,7 +322,7 @@ const StyledForm = styled('form')(() => ({
    '.charts': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'start',
       justifyContent: 'center',
       gap: '14px',
       '.chart': {
@@ -289,6 +330,9 @@ const StyledForm = styled('form')(() => ({
          alignItems: 'center',
          justifyContent: 'center',
          gap: '14px',
+         svg: {
+            cursor: 'pointer',
+         },
       },
    },
    '.add-interval': {

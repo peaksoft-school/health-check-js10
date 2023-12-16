@@ -28,14 +28,15 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
    const handleClose = () => {
       setOpen(false)
+   }
+
+   const handleUpdate = () => {
+      setOpen(false)
       scheduleUpdate()
    }
 
-   const maxIntervalsPerDay = 6
-   const availableSlots = maxIntervalsPerDay - doctorInfo.times.length
-
    const handleAddInterval = () => {
-      if (intervalValues.length < availableSlots) {
+      if (intervalValues.length < 6) {
          setIntervalValues((prevValues) => [
             ...prevValues,
             {
@@ -59,7 +60,9 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
    const handleTimeChange = (index, field, value) => {
       setIntervalValues((prevValues) => {
          const newValues = [...prevValues]
-         newValues[index][field] = value
+         newValues[index][field] =
+            value === 0 ? '00' : value.toString().padStart(2, '0')
+
          return newValues
       })
    }
@@ -88,10 +91,8 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
    const checkOverlap = (intervals) => {
       const existingIntervals = doctorInfo.times.map((interval) => {
          return {
-            newStartTimeHour: interval.startTime.split(':')[0],
-            newStartTimeMinute: interval.startTime.split(':')[1],
-            newEndTimeHour: interval.endTime.split(':')[0],
-            newEndTimeMinute: interval.endTime.split(':')[1],
+            newStartTime: new Date(`2000-01-01T${interval.startTime}`),
+            newEndTime: new Date(`2000-01-01T${interval.endTime}`),
          }
       })
 
@@ -113,23 +114,13 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
             for (let j = 0; j < existingIntervals.length; j += 1) {
                const intervalB = existingIntervals[j]
-
                if (
-                  intervalB.newStartTimeHour !== undefined &&
-                  intervalB.newStartTimeMinute !== undefined &&
-                  intervalB.newEndTimeHour !== undefined &&
-                  intervalB.newEndTimeMinute !== undefined
+                  !(
+                     endTimeA <= intervalB.newStartTime ||
+                     startTimeA >= intervalB.newEndTime
+                  )
                ) {
-                  const startTimeB = new Date(
-                     `2000-01-01T${intervalB.newStartTimeHour}:${intervalB.newStartTimeMinute}`
-                  )
-                  const endTimeB = new Date(
-                     `2000-01-01T${intervalB.newEndTimeHour}:${intervalB.newEndTimeMinute}`
-                  )
-
-                  if (!(endTimeA < startTimeB || startTimeA >= endTimeB)) {
-                     return true
-                  }
+                  return true
                }
             }
          }
@@ -192,7 +183,9 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
             return false
          }
 
-         return startHour < 22 && endHour < 22 && startHour >= 6 && endHour >= 6
+         return (
+            startHour < 22 && endHour <= 22 && startHour >= 6 && endHour >= 6
+         )
       })
 
       if (!isMoreValid) {
@@ -215,8 +208,6 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
             notify('Ошибка при сохранении')
          })
    }
-
-   console.log(intervalValues, 'intervalValues')
 
    const handleDelete = (id) => {
       dispatch(deleteTimesheets({ scheduleData: doctorInfo, time: id }))
@@ -246,8 +237,6 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                   },
                ])
             }
-
-            notify('Успешно удалено')
          })
          .catch(() => {
             notify('Ошибка при удалении')
@@ -299,7 +288,9 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                   {isSaved || doctorInfo.times.length === 6 ? (
                      <div className="times">
                         {existingTimes}
-                        {doctorInfo.times.length < 6 ? newTimes : null}
+                        {intervalValues[0]?.newStartTimeHour !== ''
+                           ? newTimes
+                           : null}
                      </div>
                   ) : (
                      <div className="charts">
@@ -378,7 +369,7 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                   ОТМЕНИТЬ
                </Button>
                {isSaved ? (
-                  <Button onClick={handleClose}>СОХРАНИТЬ</Button>
+                  <Button onClick={handleUpdate}>СОХРАНИТЬ</Button>
                ) : (
                   <Button onClick={handleSave}>СОХРАНИТЬ</Button>
                )}

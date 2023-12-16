@@ -96,16 +96,34 @@ const SchedulePage = () => {
       })
    }
 
-   const generateNext10Days = () => {
-      const next10Days = Array.from({ length: 30 }, (_, index) => {
-         const date = new Date()
-         date.setDate(currentDate.getDate() + index)
-         return date.toISOString().split('T')[0]
+   const allDatesFromSchedules = schedules.reduce((dates, doctor) => {
+      doctor.dateDayTimeInfos.forEach((day) => {
+         dates.push(day.dateDay)
       })
-      return next10Days
+      return dates
+   }, [])
+
+   const minDate = Math.min(
+      ...allDatesFromSchedules.map((date) => new Date(date).getTime())
+   )
+   const maxDate = Math.max(
+      ...allDatesFromSchedules.map((date) => new Date(date).getTime())
+   )
+
+   const generateAllDatesInRange = (start, end) => {
+      const result = []
+      const currentDate = new Date(start)
+      while (currentDate <= end) {
+         result.push(currentDate.toISOString().split('T')[0])
+         currentDate.setDate(currentDate.getDate() + 1)
+      }
+      return result
    }
 
-   const next10Days = generateNext10Days()
+   const uniqueDates = generateAllDatesInRange(
+      new Date(minDate),
+      new Date(maxDate)
+   )
 
    const columns = useMemo(() => {
       const result = [
@@ -127,7 +145,7 @@ const SchedulePage = () => {
          },
       ]
 
-      next10Days.forEach((date) => {
+      uniqueDates.forEach((date) => {
          const currentDate = new Date(date)
          const correctedDayOfWeek =
             currentDate.getDay() === 0 ? 7 : currentDate.getDay()
@@ -170,8 +188,7 @@ const SchedulePage = () => {
       })
 
       return result
-   }, [currentDate, next10Days])
-
+   }, [currentDate, uniqueDates])
    return (
       <div>
          <Box>

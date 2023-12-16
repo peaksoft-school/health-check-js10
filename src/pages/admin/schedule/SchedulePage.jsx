@@ -303,7 +303,7 @@ const TableBox = styled('div')`
          margin-bottom: 0.7rem;
       }
       div {
-         width: 140px;
+         width: 155px;
       }
    }
    td:not(:first-child) {

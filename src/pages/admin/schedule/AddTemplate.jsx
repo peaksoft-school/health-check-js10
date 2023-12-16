@@ -204,7 +204,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
       dispatch(addTimesheets({ formattedIntervals, doctorInfo }))
          .then(() => {
             handleUpdate()
-            notify('Успешно сохранено')
+            // notify('Успешно сохранено')
          })
          .catch(() => {
             notify('Ошибка при сохранении')

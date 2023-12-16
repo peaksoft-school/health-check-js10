@@ -28,6 +28,15 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
    const handleClose = () => {
       setOpen(false)
+      setIntervalValues([
+         {
+            id: Date.now(),
+            newStartTimeHour: '',
+            newStartTimeMinute: '',
+            newEndTimeHour: '',
+            newEndTimeMinute: '',
+         },
+      ])
    }
 
    const handleUpdate = () => {
@@ -36,7 +45,10 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
    }
 
    const handleAddInterval = () => {
-      if (intervalValues.length < 6) {
+      if (
+         intervalValues.length < 6 &&
+         intervalValues.length < 6 - doctorInfo.times.length
+      ) {
          setIntervalValues((prevValues) => [
             ...prevValues,
             {
@@ -202,7 +214,7 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
       dispatch(changeTimesheets({ formattedIntervals, doctorInfo }))
          .then(() => {
             setIsSaved(true)
-            notify('Успешно сохранено')
+            // notify('Успешно сохранено')
          })
          .catch(() => {
             notify('Ошибка при сохранении')
@@ -285,7 +297,7 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                </div>
                <div className="block">
                   <h6 className="chartt">График:</h6>
-                  {isSaved || doctorInfo.times.length === 6 ? (
+                  {isSaved || doctorInfo.times.length >= 6 ? (
                      <div className="times">
                         {existingTimes}
                         {intervalValues[0]?.newStartTimeHour !== ''

@@ -10,13 +10,15 @@ import {
    TextField,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-// import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import Button from './UI/Button'
 import { ButtonIcon, CloseIcon, Phone, Users } from '../assets'
+import { addApplications } from '../store/applications/applicationsThunk'
+import { notify } from '../utils/constants/snackbar'
 
 export const ApplicationModal = ({ onClose }) => {
-   //    const dispatch = useDispatch()
+   const dispatch = useDispatch()
 
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
@@ -32,7 +34,15 @@ export const ApplicationModal = ({ onClose }) => {
       setSuccessfulSent(false)
    }
 
-   const submitHandler = () => {}
+   const submitHandler = () => {
+      dispatch(addApplications({ name, phoneNumber: number }))
+         .then(() => {
+            setSuccessfulSent(true)
+         })
+         .catch(() => {
+            notify('Ошибка при отправке')
+         })
+   }
 
    return (
       <div>
@@ -175,7 +185,7 @@ const TextFieldStyled = styled(TextField)(() => ({
       border: ' 1px solid rgba(0, 147, 68, 0.5)',
       input: {
          fontFamily: 'Manrope',
-         padding: '10px 128px 10px 0px',
+         padding: '10px 34px 10px 0px',
       },
    },
 }))

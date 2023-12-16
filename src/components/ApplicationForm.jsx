@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { FormLabel, InputAdornment } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import PhotoWoman from '../assets/images/applicationform-woman.png'
 import Button from './UI/Button'
 import { UserIcon, PhoneIcon, ArrowIcon } from '../assets'
 import { Input } from './UI/input/Input'
+import { addApplications } from '../store/applications/applicationsThunk'
 
 const ApplicationForm = () => {
    const [formData, setFormData] = useState({
@@ -16,6 +18,8 @@ const ApplicationForm = () => {
       name: '',
       phoneNumber: '',
    })
+
+   const dispatch = useDispatch()
 
    const handleChange = (e) => {
       const { name, value } = e.target
@@ -65,7 +69,12 @@ const ApplicationForm = () => {
          })
          return
       }
-      console.log('Form Data:', formData)
+      dispatch(
+         addApplications({
+            name: formData.name,
+            phoneNumber: formData.phoneNumber,
+         })
+      )
    }
    return (
       <ApplicationFormContainer>

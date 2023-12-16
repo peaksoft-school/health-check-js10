@@ -1,8 +1,28 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Button } from '@mui/material'
 import styled from '@emotion/styled'
-import { table } from './TableMap'
+import { fetchAppointmentById } from '../../store/myappointments/myappointmentsThunk'
 
 const PatientTable = () => {
+   const { appointmentId } = useParams()
+   const dispatch = useDispatch()
+   const appointmentData = useSelector(
+      (state) => state.myappointments.selectedAppointment
+   )
+   const status = useSelector((state) => state.myappointments.status)
+
+   useEffect(() => {
+      if (status === 'idle') {
+         dispatch(fetchAppointmentById(appointmentId))
+      }
+   }, [dispatch, appointmentId, status])
+
+   if (status === 'failed') {
+      return <StyledError />
+   }
+
    return (
       <DivStyled>
          <div>
@@ -17,38 +37,38 @@ const PatientTable = () => {
             <ul>
                <ul className="child">
                   <li>Имя</li>
-                  <li>{table.name}</li>
+                  <li>{appointmentData.firstName}</li>
                </ul>
 
                <ul className="child">
                   <li>Фамилия</li>
-                  <li>{table.lastName}</li>
+                  <li>{appointmentData.lastName}</li>
                </ul>
 
                <ul className="child">
                   <li>Email</li>
-                  <li>{table.email}</li>
+                  <li>{appointmentData.email}</li>
                </ul>
                <ul className="child">
                   <li>Номер телефона</li>
-                  <li>{table.phone}</li>
+                  <li>{appointmentData.phoneNumber}</li>
                </ul>
             </ul>
 
             <ul className="boxtwo">
                <ul className="child">
                   <li>Дата и время</li>
-                  <li>{table.date}</li>
-                  <li>{table.oclock}</li>
+                  <li>{appointmentData.localDate}</li>
+                  <li>{appointmentData.time}</li>
                </ul>
 
                <ul className="child">
                   <li>Специалист</li>
-                  <li>{table.doctor}</li>
+                  <li>{appointmentData.doctorFullName}</li>
                </ul>
                <ul className="child">
                   <li>Услуга</li>
-                  <li>Дерматология</li>
+                  <li>{appointmentData.departmentName}</li>
                </ul>
             </ul>
          </div>
@@ -119,5 +139,28 @@ const DivStyled = styled('div')(() => ({
       fontFamily: 'Manrope',
       marginTop: '0.6rem',
       listStyle: 'none',
+   },
+}))
+
+const StyledError = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   minHeight: '200px',
+   width: '800px',
+   '& > div': {
+      textAlign: 'center',
+      borderRadius: 20,
+      padding: '20px',
+      border: '1px solid gray',
+      backgroundColor: '#cfcaca',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      maxWidth: '500px',
+      width: '100%',
+   },
+   '& > p': {
+      color: 'gray',
+      fontSize: '18px',
+      fontWeight: 'bold',
    },
 }))

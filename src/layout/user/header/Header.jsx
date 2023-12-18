@@ -25,7 +25,7 @@ import { localStorageKeys } from '../../../utils/constants/constants'
 import OnlineAppointment from '../../../components/appointment/OnlineAppointment'
 import { routes } from '../../../utils/constants/routes'
 
-const Header = ({ logoutHandler }) => {
+const Header = ({ logoutHandler, variant }) => {
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
    const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
@@ -225,6 +225,7 @@ const Header = ({ logoutHandler }) => {
                </ContainerButton>
             </SecondNavStyle>
          </HeaderStyle>
+         {variant === 'hr' ? <Hr /> : null}
       </>
    )
 }
@@ -270,6 +271,15 @@ const HeaderStyle = styled('header')(() => ({
          fontSize: '1.1rem',
       },
    },
+}))
+
+const Hr = styled('hr')(() => ({
+   width: '100%',
+   height: '10px',
+   marginBottom: '30px',
+   marginTop: '10px',
+   background: '#DBF0E5',
+   border: 'none',
 }))
 
 const NavlinkStyled = styled(NavLink)(() => ({

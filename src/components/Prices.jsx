@@ -9,8 +9,7 @@ const Prices = () => {
    window.scrollTo({ top: 0 })
    return (
       <>
-         <Header />
-         <Hr />
+         <Header variant="hr" />
          <MainPart>
             <a href="/">Главная {'>'}</a>
             <span className="service"> Прайс</span>
@@ -95,14 +94,6 @@ const AccordionContainer = styled('div')(() => ({
    width: '60%',
    marginLeft: '98px',
    marginBottom: '100px',
-}))
-
-const Hr = styled('hr')(() => ({
-   width: '100%',
-   height: '10px',
-   marginBottom: '30px',
-   background: '#DBF0E5',
-   border: 'none',
 }))
 
 const MainPart = styled('p')(() => ({

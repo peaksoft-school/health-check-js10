@@ -12,8 +12,7 @@ const OurAllServices = () => {
    window.scrollTo({ top: 0 })
    return (
       <div>
-         <Header />
-         <Hr />
+         <Header variant="hr" />
          <div>
             <ServiceStyle>
                <StyledStack spacing={2}>
@@ -71,14 +70,6 @@ const StyledNavLink = styled(NavLink)({
    fontFamily: 'Manrope',
    fontStyle: 'normal',
 })
-
-const Hr = styled('hr')(() => ({
-   width: '100%',
-   height: '10px',
-   marginBottom: '30px',
-   background: '#DBF0E5',
-   border: 'none',
-}))
 
 const ServiceStyle = styled('div')(() => ({
    fontSize: '36px',

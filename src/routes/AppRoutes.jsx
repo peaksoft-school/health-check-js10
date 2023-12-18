@@ -15,6 +15,8 @@ import OurAllServices from '../pages/user/OurAllServices'
 import AboutHealth from '../components/AboutHealth'
 import Prices from '../components/Prices'
 import Contacts from '../components/Contacts'
+import Profile from '../pages/user/Profile'
+import { PasswordChange } from '../pages/user/PasswordChange'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -28,6 +30,11 @@ const AppRoutes = () => {
          <Route path="/prices" element={<Prices />} />
          <Route path="/contacts" element={<Contacts />} />
          <Route path="/service" element={<OurAllServices />} />
+         <Route path="/profile" element={<Profile />} />
+         <Route
+            path="/profile/password-change"
+            element={<PasswordChange />} // Вставьте ваш компонент PasswordChange
+         />
          <Route
             path={routes.ADMIN.applications}
             element={

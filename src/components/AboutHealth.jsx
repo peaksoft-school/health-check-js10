@@ -11,8 +11,7 @@ const AboutHealth = () => {
    window.scrollTo({ top: 0 })
    return (
       <>
-         <Header />
-         <Hr />
+         <Header variant="hr" />
          <StyledBox>
             <Container>
                <div>
@@ -80,15 +79,6 @@ const StyledBox = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '6rem',
-}))
-
-const Hr = styled('hr')(() => ({
-   width: '100%',
-   height: '10px',
-   marginBottom: '30px',
-   marginTop: '10px',
-   background: '#DBF0E5',
-   border: 'none',
 }))
 
 const NavigatePathTitle = styled('div')(() => ({

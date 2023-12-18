@@ -11,8 +11,7 @@ const Contacts = () => {
    window.scrollTo({ top: 0 })
    return (
       <>
-         <Header />
-         <Hr />
+         <Header variant="hr" />
 
          <div>
             <Wrapper>
@@ -36,7 +35,7 @@ const Contacts = () => {
                <ContainerInfo>
                   <ContactInfo>Контактные номера:</ContactInfo>
                   <ContactInfoP>
-                     +996(800) 000 000 ; +996(505) 000 000{' '}
+                     +996(800) 000 000 ; +996(505) 000 000
                   </ContactInfoP>
                </ContainerInfo>
                <ContainerInfo>
@@ -145,12 +144,3 @@ const StyledNavLink = styled(NavLink)({
    fontFamily: 'Manrope',
    fontStyle: 'normal',
 })
-
-const Hr = styled('hr')(() => ({
-   width: '100%',
-   height: '10px',
-   marginBottom: '30px',
-   marginTop: '10px',
-   background: '#DBF0E5',
-   border: 'none',
-}))

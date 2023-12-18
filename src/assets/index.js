@@ -69,6 +69,8 @@ export { ReactComponent as LocationIcon } from './icons/location-outlined.svg'
 export { ReactComponent as InstagramWhite } from './icons/instagram_white.svg'
 export { ReactComponent as TelegramWhite } from './icons/telegram_white.svg'
 export { ReactComponent as WhatsAppWhite } from './icons/whatsapp_white.svg'
+export { ReactComponent as VisibilityOff } from './icons/VisibilityOff.svg'
+export { ReactComponent as Visibility } from './icons/Visibility.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

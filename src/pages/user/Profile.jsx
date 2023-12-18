@@ -188,7 +188,7 @@ const FormStyled = styled(Form)(() => ({
       marginLeft: '7.6rem',
       letterSpacing: '0.2px',
       fontWeight: '600',
-      fontSize: '1.125rem',
+      fontSize: '1.2rem',
    },
    '.cap': {
       marginTop: '1.875rem',
@@ -229,7 +229,8 @@ const ErrorMessageStyled = styled(ErrorMessage)(() => ({
 }))
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      height: '2.5rem',
+      widht: '20.625rem',
+      height: '2.4rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',

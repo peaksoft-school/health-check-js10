@@ -64,9 +64,7 @@ export const PasswordChange = () => {
                   <DivContainerStyled>
                      <h2>Профиль</h2>
                      <div className="LinkTwo">
-                        <NavLink className={setActive} to="/profile">
-                           личные данные
-                        </NavLink>
+                        <NavLink to="/profile">личные данные</NavLink>
 
                         <NavLink
                            className={setActive}
@@ -215,14 +213,17 @@ const FormStyled = styled(Form)(() => ({
    fontFamily: 'Manrope',
    marginLeft: '7.7rem',
    marginTop: '2.9rem',
+   '.buttonStyle': {
+      display: 'flex',
+      gap: '1rem',
+      marginTop: '2rem',
+   },
    '.buttons': {
-      height: '1.813rem',
-      width: '12.6rem',
+      height: '2.3rem',
+      width: '12.5rem',
       borderRadius: ' 0.625rem',
       fontSize: '0.675rem',
       fontFamily: 'Manrope',
-      marginTop: '1rem',
-      marginLeft: '0.405rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
    },
@@ -274,20 +275,22 @@ const DivContainerStyled = styled('div')(() => ({
    },
    '.changePassword': {
       marginTop: '1.563rem',
+      fontSize: '1.2rem',
    },
 }))
 
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
-   marginTop: '0.1rem',
+   marginTop: '3.8rem',
    color: 'red',
-   fontSize: '0.7rem',
+   fontSize: '0.8rem',
    fontFamily: 'Manrope',
+   position: 'absolute',
 }))
 
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
       widht: '20.625rem',
-      height: '1.875rem',
+      height: '2.4rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',

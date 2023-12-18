@@ -211,6 +211,14 @@ const SchedulePage = () => {
                   Установить по шаблону
                </ButtonsStyled>
             </div>
+            <div className="info">
+               <div className="inner-block">
+                  <div className="blue-block" /> <span>- Свободные дни</span>
+               </div>
+               <div className="inner-block">
+                  <div className="green-block" /> <span>- Записанные дни</span>
+               </div>
+            </div>
             <div>
                <DatePicker value={startDate} onChange={startDateHandler} />
 
@@ -280,6 +288,33 @@ const Box = styled('div')`
    justify-content: space-between;
    background-color: #fff;
    padding: 20px 20px 20px 0;
+   .info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+   }
+   .inner-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      span {
+         font-weight: 500;
+      }
+   }
+   .blue-block {
+      width: 30px;
+      height: 30px;
+      background-color: #a7cdfc;
+      border-radius: 50%;
+   }
+   .green-block {
+      width: 30px;
+      height: 30px;
+      background-color: #048741;
+      border-radius: 50%;
+   }
 `
 const GlobalContainer = styled('div')`
    background-color: #fff;

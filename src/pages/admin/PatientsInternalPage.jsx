@@ -2,14 +2,15 @@ import { styled } from '@mui/material'
 import {
    DesktopDatePicker,
    LocalizationProvider,
+   PickersLayout,
    ruRU,
 } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DemoItem } from '@mui/x-date-pickers/internals/demo'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
+import { useDropzone } from 'react-dropzone'
 import {
    FileGoogleIcon,
    FileGoogleIconWhite,
@@ -27,12 +28,26 @@ import {
 import { getAllDepartments } from '../../store/department/departmentThunk'
 import { TRANSLATED_MED_SERVICES } from '../../utils/services/med_service'
 
+const StyledPickersLayout = styled(PickersLayout)({
+   '.Mui-selected': {
+      color: '#ececec !important',
+      borderColor: '#048741 !important',
+      background: '#048741 !important',
+   },
+   '.MuiPickersDay-root:hover': {
+      color: '#ececec !important',
+      borderColor: '#048741 !important',
+      background: '#048741 !important',
+   },
+})
+
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [image, setImage] = useState('')
    const [newData, setNewData] = useState({ service: '', date: '' })
    const [isFormValid, setIsFormValid] = useState(false)
-   const [isHovered, setIsHovered] = useState(false)
+   // const [isHovered, setIsHovered] = useState(false)
+   const [isHovered, setIsHovered] = useState({ id: 0, isHovered: false })
 
    const { data, results } = useSelector((state) => state.patients)
    const { departments } = useSelector((state) => state.departmentSlice)
@@ -152,6 +167,9 @@ export const PatientsInternalPage = () => {
                                  id="due-date"
                                  defaultValue={dayjs()}
                                  onChange={onDateChange}
+                                 slots={{
+                                    layout: StyledPickersLayout,
+                                 }}
                               />
                            </DemoItem>
                         </LocalizationProvider>
@@ -255,10 +273,21 @@ export const PatientsInternalPage = () => {
                               <a
                                  href={result.pdgFileCheque}
                                  target="noreferrer"
-                                 onMouseEnter={() => setIsHovered(true)}
-                                 onMouseLeave={() => setIsHovered(false)}
+                                 onMouseEnter={() =>
+                                    setIsHovered({
+                                       isHovered: true,
+                                       id: result.id,
+                                    })
+                                 }
+                                 onMouseLeave={() =>
+                                    setIsHovered({
+                                       isHovered: false,
+                                       id: result.id,
+                                    })
+                                 }
                               >
-                                 {isHovered ? (
+                                 {isHovered.isHovered &&
+                                 isHovered.id === result.id ? (
                                     <FileGoogleIconWhite className="file-icon" />
                                  ) : (
                                     <FileGoogleIcon className="file-icon" />
@@ -336,6 +365,21 @@ const StyleModalContainer = styled('div')`
          height: 7vh;
          border: 1px solid #d9d9d9;
       }
+      .css-1qpqzc2-MuiButtonBase-root-MuiPickersDay-root {
+         background-color: green;
+      }
+      .Mui-selected {
+         background-color: green !important;
+      }
+
+      .MuiPickersDay-daySelected {
+         background-color: blue !important;
+      }
+
+      .MuiPickersDay-dayDisabled {
+         color: red !important;
+      }
+
       .css-1ljbs16-MuiInputBase-root-MuiOutlinedInput-root {
          height: 7vh;
       }
@@ -381,7 +425,7 @@ const StylePatientsData = styled('div')`
    border-radius: 8px;
    margin-top: 20px;
    padding: 20px 45px 20px 20px;
-   height: 100vh;
+   height: 100%;
    h3 {
       font-size: 20px;
       font-weight: 500;

@@ -13,15 +13,13 @@ import {
 import {
    selectPatients,
    selectPatientsLoading,
-   selectPatientsError,
 } from '../../store/patient/patientsSlice'
 import { notify } from '../../utils/constants/snackbar'
 
-const PatientComponent = () => {
+const Patients = () => {
    const dispatch = useDispatch()
    const patients = useSelector(selectPatients)
    const loading = useSelector(selectPatientsLoading)
-   const error = useSelector(selectPatientsError)
    const [searchTerm, setSearchTerm] = useState('')
 
    useEffect(() => {
@@ -60,7 +58,7 @@ const PatientComponent = () => {
 
    const columns = [
       { id: 'id', label: '№' },
-      { id: 'fullname', label: 'Имя Фамилия' },
+      { id: 'fullName', label: 'Имя Фамилия' },
       { id: 'phoneNumber', label: 'Номер телефона' },
       { id: 'email', label: 'Почта' },
       { id: 'date', label: 'Дата сдачи' },
@@ -91,20 +89,27 @@ const PatientComponent = () => {
                endAdornment: <StyledSearchIcon />,
             }}
          />
-         {loading === 'failed' && <p>Error: {error}</p>}
+         {loading === 'failed' && (
+            <StyledError>
+               <div>
+                  <p>Не удалось получить данные пациентов.</p>
+               </div>
+            </StyledError>
+         )}
          {loading === 'succeeded' && (
-            <AppTable data={patients} columns={columns} />
+            <AppTable data={patients} columns={columns} variant="patients" />
          )}
       </TableContainer>
    )
 }
 
-export default PatientComponent
+export default Patients
 
 const TableContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'flex-start',
+   minHeight: '100vh',
    padding: '4rem',
    background: '#ECECEC',
    fontFamily: 'Manrope',
@@ -137,6 +142,9 @@ const StyledTextField = styled(TextField)(() => ({
       '& input': {
          boxSizing: 'border-box',
       },
+      '& .error': {
+         color: 'red',
+      },
    },
 }))
 
@@ -150,4 +158,30 @@ const StyledDeleteButton = styled('button')(() => ({
    border: 'none',
    background: 'none',
    paddingLeft: '3rem',
+}))
+
+const StyledError = styled('div')(() => ({
+   backgroundColor: 'white',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   minHeight: '200px',
+   width: '800px',
+   marginTop: 20,
+   borderRadius: 20,
+   '& > div': {
+      textAlign: 'center',
+      borderRadius: 20,
+      padding: '20px',
+      border: '1px solid red',
+      backgroundColor: '#fae1e4',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      maxWidth: '500px',
+      width: '100%',
+   },
+   '& > p': {
+      color: '#ff0000',
+      fontSize: '18px',
+      fontWeight: 'bold',
+   },
 }))

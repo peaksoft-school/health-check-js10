@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { NavLink } from 'react-router-dom'
 import Logo from '../assets/icons/logo.svg'
 import PhoneIcon from '../assets/icons/phone-outlined1.svg'

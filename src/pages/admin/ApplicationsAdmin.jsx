@@ -1,7 +1,7 @@
 import { IconButton, InputAdornment, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useDebounce } from 'use-debounce'
 import React, { useEffect, useState } from 'react'
+import { useDebounce } from '@uidotdev/usehooks'
 import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import {

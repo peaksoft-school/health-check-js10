@@ -92,7 +92,7 @@ export const ApplicationsAdmin = () => {
 
    const columns = [
       {
-         id: '',
+         id: 'checkbox',
          label: (
             <CheckboxUI checked={selectAll} onChange={handleSelectAllChange} />
          ),
@@ -109,7 +109,7 @@ export const ApplicationsAdmin = () => {
          },
       },
       {
-         id: '',
+         id: 'deleteAll',
          label: (
             <AppDeleteIcon
                className="delete-icon"
@@ -122,7 +122,7 @@ export const ApplicationsAdmin = () => {
       { id: 'createdAt', label: 'Дата' },
       { id: 'phoneNumber', label: 'Номер телефона' },
       {
-         id: 'createdAt',
+         id: 'processed',
          label: 'Обработан',
          render: (el) => {
             return (
@@ -136,7 +136,7 @@ export const ApplicationsAdmin = () => {
          },
       },
       {
-         id: '',
+         id: 'delete',
          label: 'Действия',
          render: (el) => {
             return (
@@ -179,8 +179,8 @@ export const ApplicationsAdmin = () => {
 
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 0px 4%;
-   height: 100vh;
+   padding: 0px 4% 10px 4%;
+   height: 100%;
    .delete-icon {
       cursor: pointer;
    }
@@ -199,7 +199,7 @@ const StyledContainerApp = styled('div')`
       border-radius: 6px;
    }
 
-   .SXYBM {
+   .flxDTz {
       margin-top: 1.5rem;
    }
 
@@ -228,14 +228,17 @@ const StyledContainerApp = styled('div')`
       &:last-of-type > tr > th {
          border-bottom: none;
       }
+      thead,
       tr:nth-child(2n + 2) {
          background-color: rgba(245, 245, 245, 0.61);
       }
    }
+   .kRczSm .MuiTableCell-root {
+      background: none;
+   }
    .css-13wgndv-MuiTableRow-root {
       th:first-child {
-         text-align: center;
-         padding-left: 20px;
+         padding-left: 27px;
       }
       th:last-of-type {
          width: 10px;

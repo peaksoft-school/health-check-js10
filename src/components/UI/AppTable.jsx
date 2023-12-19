@@ -31,7 +31,7 @@ const AppTable = ({ columns, data }) => {
                         }
                         return (
                            <TableCell
-                              key={column.id}
+                              key={`${item.id}-${column.id}`}
                               title={String(item[column.id])}
                               condition={item.condition}
                            >

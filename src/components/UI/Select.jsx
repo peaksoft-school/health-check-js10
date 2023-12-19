@@ -22,6 +22,7 @@ export const SelectUI = ({
    onChange,
    placeholder,
    icon,
+   variant,
    ...rest
 }) => {
    const [selectVal, setSelectVal] = useState('')
@@ -55,7 +56,7 @@ export const SelectUI = ({
             {options &&
                options.map((item) => (
                   <MenuItemStyle key={item.id} value={item.id}>
-                     {item.title}
+                     {variant === 'doctors' ? item.fullName : item.title}
                   </MenuItemStyle>
                ))}
          </SelectMui>

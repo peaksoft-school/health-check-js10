@@ -10,6 +10,7 @@ export const routes = {
       applications: 'applications',
       specialists: 'specialists',
       patients: 'patients',
+      schedule: 'schedule',
    },
    USER: {
       path: '/user',

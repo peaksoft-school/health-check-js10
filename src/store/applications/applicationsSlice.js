@@ -56,5 +56,3 @@ export const applicationsSlice = createSlice({
          )
    },
 })
-
-export const { toggleCheckbox, toggleSelectAll } = applicationsSlice.actions

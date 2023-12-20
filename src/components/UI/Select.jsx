@@ -23,11 +23,8 @@ export const SelectUI = ({
    onChange,
    placeholder,
    icon,
-<<<<<<< HEAD
    variant,
-=======
    doctors,
->>>>>>> c9a68c4ab61d84e48d3a181eec0d0612d1b002f6
    ...rest
 }) => {
    const [selectOpen, setSelectOpen] = useState(false)
@@ -53,14 +50,12 @@ export const SelectUI = ({
             {...rest}
          >
             <StyledLabel value="">{placeholder}</StyledLabel>
-<<<<<<< HEAD
             {options &&
                options.map((item) => (
                   <MenuItemStyle key={item.id} value={item.id}>
                      {variant === 'doctors' ? item.fullName : item.title}
                   </MenuItemStyle>
                ))}
-=======
             {options && doctors
                ? options.map((item) => (
                     <SpecialistCard
@@ -78,7 +73,6 @@ export const SelectUI = ({
                        {item.title}
                     </MenuItemStyle>
                  ))}
->>>>>>> c9a68c4ab61d84e48d3a181eec0d0612d1b002f6
          </SelectMui>
       </StyledFormControl>
    )

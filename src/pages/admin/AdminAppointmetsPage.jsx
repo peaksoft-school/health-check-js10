@@ -305,7 +305,7 @@ export const AdminAppointmentsPage = () => {
 
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 16vh 4% 6vh 4%;
+   padding: 16vh 4% 3.8vh 4%;
    height: 100%;
    .style-nav {
       display: flex;
@@ -346,6 +346,7 @@ const StyledContainerApp = styled('div')`
    .table {
       background-color: #fff;
       border-radius: 6px;
+      min-height: 53vh;
    }
 
    .flxDTz {

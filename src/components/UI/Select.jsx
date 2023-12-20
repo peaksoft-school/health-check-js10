@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { FormControl, Select, styled } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import SpecialistCard from '../appointment/SpecialistCard'
 
 const menuProps = {
    PaperProps: {
@@ -24,10 +23,15 @@ export const SelectUI = ({
    placeholder,
    icon,
    variant,
-   doctors,
    ...rest
 }) => {
+   const [selectVal, setSelectVal] = useState('')
    const [selectOpen, setSelectOpen] = useState(false)
+
+   const handleChange = (e) => {
+      onChange(e.target.value)
+      setSelectVal(e.target.value)
+   }
 
    const openSelectHandler = () => {
       setSelectOpen((prev) => !prev)
@@ -39,9 +43,8 @@ export const SelectUI = ({
          <Icon>{icon}</Icon>
          <SelectMui
             open={selectOpen}
-            value={value}
-            label={label}
-            onChange={(e) => onChange(e)}
+            value={selectVal}
+            onChange={handleChange}
             IconComponent={KeyboardArrowDownIcon}
             inputProps={{ 'aria-label': 'Without label' }}
             MenuProps={menuProps}
@@ -56,23 +59,6 @@ export const SelectUI = ({
                      {variant === 'doctors' ? item.fullName : item.title}
                   </MenuItemStyle>
                ))}
-            {options && doctors
-               ? options.map((item) => (
-                    <SpecialistCard
-                       key={item.id}
-                       id={item.id}
-                       image={item.image}
-                       fullName={item.fullName}
-                       value={item.title}
-                    >
-                       {item.title}
-                    </SpecialistCard>
-                 ))
-               : options.map((item) => (
-                    <MenuItemStyle key={item.id} value={item.title}>
-                       {item.title}
-                    </MenuItemStyle>
-                 ))}
          </SelectMui>
       </StyledFormControl>
    )

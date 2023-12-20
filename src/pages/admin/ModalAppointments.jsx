@@ -10,6 +10,7 @@ import TimePicker from '../../components/UI/TimePicker'
 import {
    DEPARTMENTS,
    INTERVAL_IN_MINUTES,
+   MED_SERVICE,
    TRANSLATED_MED_SERVICES_ENG,
 } from '../../utils/services/med_service'
 import {
@@ -48,7 +49,7 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
 
    const serviceChangeHandler = (e) => {
       const selectedService = e
-      const selectedServiceObject = DEPARTMENTS.find(
+      const selectedServiceObject = MED_SERVICE.find(
          (service) => service.id === selectedService
       )
       if (selectedServiceObject) {
@@ -114,6 +115,12 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                   ],
             })
          )
+            .then(() => {
+               notify('Запись добавлен')
+            })
+            .catch(() => {
+               notify('Ошибка при записи', 'error')
+            })
          setIsModalOpen(false)
       }
    }

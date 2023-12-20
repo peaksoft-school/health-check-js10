@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
-import { AdminAppointmentsPage } from './pages/admin/AdminAppointmetsPage'
 import AppRoutes from './routes/AppRoutes'
-import Header from './layout/admin/header/Header'
 
 function App() {
    const dispatch = useDispatch()
@@ -21,9 +19,7 @@ function App() {
 
    return (
       <div className="App">
-         <Header />
-         <AdminAppointmentsPage />
-         {/* <AppRoutes /> */}
+         <AppRoutes />
       </div>
    )
 }

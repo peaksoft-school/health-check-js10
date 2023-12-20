@@ -35,13 +35,13 @@ export const ApplicationsAdmin = () => {
       dispatch(searchApplicationByIdAsyncThunk(value))
    }
 
-   useDebounce(() => {
-      handleSearchById(debouncedSearchValue)
-   }, 1000)
-
    useEffect(() => {
-      handleSearchById(debouncedSearchValue)
-   }, [debouncedSearchValue])
+      if (debouncedSearchValue) {
+         handleSearchById(debouncedSearchValue)
+      } else {
+         dispatch(applicationsThunk())
+      }
+   }, [debouncedSearchValue, dispatch])
 
    const handleChange = (event) => {
       setSearchValue(event.target.value)
@@ -171,7 +171,11 @@ export const ApplicationsAdmin = () => {
             />
          </div>
          <div className="table">
-            <AppTable columns={columns} data={items} />
+            <AppTable
+               columns={columns}
+               data={items}
+               empty={<h1>Заявки отсутствуют</h1>}
+            />
          </div>
       </StyledContainerApp>
    )
@@ -179,7 +183,7 @@ export const ApplicationsAdmin = () => {
 
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 0px 4% 10px 4%;
+   padding: 16vh 4% 3.8vh 4%;
    height: 100%;
    .delete-icon {
       cursor: pointer;
@@ -190,13 +194,14 @@ const StyledContainerApp = styled('div')`
       gap: 25px;
       span {
          font-size: 22px;
-         margin-top: 120px;
       }
    }
 
    .table {
       background-color: #fff;
       border-radius: 6px;
+      min-height: 64.4vh;
+      margin-top: 1.5rem;
    }
 
    .flxDTz {

@@ -274,7 +274,11 @@ export const AdminAppointmentsPage = () => {
             setIsModalOpen={setIsModalOpen}
          />
          <div className="table">
-            <AppTable columns={columns} data={items} />
+            <AppTable
+               columns={columns}
+               data={items}
+               empty={<h1>Записи отсутствуют</h1>}
+            />
          </div>
          <Modal open={deletdModal} onClose={() => setDeletedModal(false)}>
             <StyleDeletedModal>
@@ -347,6 +351,7 @@ const StyledContainerApp = styled('div')`
       background-color: #fff;
       border-radius: 6px;
       min-height: 53vh;
+      margin-top: 1.5rem;
    }
 
    .flxDTz {

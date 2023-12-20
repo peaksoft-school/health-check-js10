@@ -96,6 +96,7 @@ export const postNewAppointmentsThunk = createAsyncThunk(
       }
    }
 )
+
 export const getAllDoctors = createAsyncThunk(
    'appointment/doctors',
    async ({ departmentId }, { rejectWithValue }) => {

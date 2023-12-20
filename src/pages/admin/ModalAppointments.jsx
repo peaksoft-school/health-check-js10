@@ -115,12 +115,15 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                   ],
             })
          )
-            .then(() => {
-               notify('Запись добавлен')
+            .then((data) => {
+               if (data.status === 200) {
+                  notify('Запись добавлен')
+               }
             })
             .catch(() => {
                notify('Ошибка при записи', 'error')
             })
+         setValue('')
          setIsModalOpen(false)
       }
    }
@@ -215,7 +218,7 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                            render={({ field }) => (
                               <TimePicker
                                  {...field}
-                                 selected={field.value || '00:00'}
+                                 selected={field.value}
                                  onChange={(date) => field.onChange(date)}
                               />
                            )}

@@ -57,6 +57,7 @@ export { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
 export { ReactComponent as FileIcon } from './icons/file-icon.svg'
 export { ReactComponent as FileGoogleIcon } from './icons/icon-file-google-blue.svg'
 export { ReactComponent as FileGoogleIconWhite } from './icons/icon-file-google-white.svg'
+export { ReactComponent as PdfFileIcon } from './icons/pdf-download-2617.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

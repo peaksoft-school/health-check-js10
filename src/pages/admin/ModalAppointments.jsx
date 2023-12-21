@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Controller, useForm } from 'react-hook-form'
+import dayjs from 'dayjs'
 import { format } from 'date-fns'
 import Modal from '../../components/UI/Modal'
 import { SelectUI } from '../../components/UI/Select'
@@ -25,21 +26,25 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
    const { doctors } = useSelector((state) => state.appointmentsAdmin)
    const dispatch = useDispatch()
 
-   const { getValues, setValue, control, watch, handleSubmit } = useForm({
-      mode: 'all',
-      defaultValues: {
-         departmentName: '',
-         doctorId: 0,
-         startDateOfWork: '00:00',
-         endDateOfWork: '00:00',
-         startTimeOfWork: '00:00',
-         endTimeOfWork: '00:00',
-         startBreakTime: '00:00',
-         endBreakTime: '00:00',
-         intervalInMinutes: 0,
-         dayOfWeek: {},
-      },
-   })
+   const { getValues, setValue, control, watch, reset, handleSubmit } = useForm(
+      {
+         mode: 'all',
+         defaultValues: {
+            departmentName: '',
+            doctorId: 0,
+            startDateOfWork: '00:00',
+            endDateOfWork: '00:00',
+            startTimeOfWork: '00:00',
+            endTimeOfWork: '00:00',
+            startBreakTime: '00:00',
+            endBreakTime: '00:00',
+            intervalInMinutes: 0,
+            dayOfWeek: {},
+         },
+      }
+   )
+
+   const dateToday = dayjs()
 
    const startDate = watch('startDateOfWork')
 
@@ -115,16 +120,14 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                   ],
             })
          )
-            .then((data) => {
-               if (data.status === 200) {
-                  notify('Запись добавлен')
-               }
+            .then(() => {
+               notify('Запись добавлен')
             })
             .catch(() => {
                notify('Ошибка при записи', 'error')
             })
-         setValue('')
          setIsModalOpen(false)
+         reset()
       }
    }
    return (
@@ -185,6 +188,7 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                                     handleStartDateChange(date)
                                  }}
                                  variant="custom"
+                                 minDate={dateToday}
                               />
                            )}
                         />

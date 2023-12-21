@@ -7,6 +7,7 @@ import {
    FileGoogleIcon,
    FileGoogleIconWhite,
    FileIcon,
+   PdfFileIcon,
    PlusIcon,
 } from '../../assets'
 import Button from '../../components/UI/Button'
@@ -21,6 +22,7 @@ import { getAllDepartments } from '../../store/department/departmentThunk'
 import { DEPARTMENTS } from '../../utils/services/med_service'
 import DatePicker from '../../components/UI/DatePicker'
 import { notify } from '../../utils/constants/snackbar'
+import '@react-pdf-viewer/core/lib/styles/index.css'
 
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,8 +42,8 @@ export const PatientsInternalPage = () => {
       }
    }
 
-   const handleDrop = (acceptedFiles) => {
-      const file = acceptedFiles[0]
+   const handleDrop = (AcceptFiles) => {
+      const file = AcceptFiles[0]
       if (file.type === 'application/pdf') {
          setImage(file)
       } else {
@@ -51,7 +53,7 @@ export const PatientsInternalPage = () => {
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop: handleDrop,
-      accept: 'application/pdf',
+      Accept: 'application/pdf',
    })
 
    const dispatch = useDispatch()
@@ -71,7 +73,7 @@ export const PatientsInternalPage = () => {
 
    const validateForm = () => {
       const isValid =
-         newData.service !== '' && newData.date !== '' && image !== ''
+         newData.service !== '' && newData.date !== '' && image !== null
       setIsFormValid(isValid)
    }
    useEffect(() => {
@@ -106,7 +108,7 @@ export const PatientsInternalPage = () => {
          })
       )
       setIsModalOpen(false)
-      setImage('')
+      setImage(null)
    }
 
    const patientLabels = {
@@ -159,14 +161,11 @@ export const PatientsInternalPage = () => {
                         >
                            <label htmlFor="file">
                               {image ? (
-                                 <Img
-                                    src={
-                                       typeof image === 'string'
-                                          ? image
-                                          : URL.createObjectURL(image)
-                                    }
-                                    alt="image"
-                                 />
+                                 <div>
+                                    {image.type === 'application/pdf' && (
+                                       <PdfFileIcon className="insert-file" />
+                                    )}
+                                 </div>
                               ) : (
                                  <FileIcon className="insert-file" />
                               )}

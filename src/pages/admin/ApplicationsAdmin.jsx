@@ -19,8 +19,6 @@ export const ApplicationsAdmin = () => {
    const [selectAll, setSelectAll] = useState(false)
    const [items, setItems] = useState(applications)
 
-   const [debouncedSearchValue] = useDebounce(searchValue, 1000)
-
    const dispatch = useDispatch()
 
    useEffect(() => {
@@ -36,15 +34,20 @@ export const ApplicationsAdmin = () => {
    }
 
    useEffect(() => {
-      if (debouncedSearchValue) {
-         handleSearchById(debouncedSearchValue)
-      } else {
-         dispatch(applicationsThunk())
-      }
-   }, [debouncedSearchValue, dispatch])
+      const delayDebounceFn = setTimeout(() => {
+         if (searchValue) {
+            handleSearchById(searchValue)
+         } else {
+            dispatch(applicationsThunk())
+         }
+      }, 1000)
+
+      return () => clearTimeout(delayDebounceFn)
+   }, [searchValue, dispatch])
 
    const handleChange = (event) => {
-      setSearchValue(event.target.value)
+      const inputValue = event.target.value
+      setSearchValue(inputValue)
    }
    const handleDeleteSelected = () => {
       const selectedIds = []

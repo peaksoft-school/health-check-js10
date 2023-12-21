@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
 import { CloseIcon, GreenPlus, RedClose } from '../../../assets'
-import TimePicker from '../../../components/UI/TimePicker'
+import TimePickerNumber from '../../../components/UI/TimePickerNumber'
 import Button from '../../../components/UI/Button'
 import { addTimesheets } from '../../../store/schedule/scheduleThunk'
 import { notify } from '../../../utils/constants/snackbar'
@@ -221,7 +221,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                <div className="charts">
                   {intervalValues.map((interval, index) => (
                      <div className="chart" key={interval.id}>
-                        <TimePicker
+                        <TimePickerNumber
                            variant="hours"
                            value={interval.newStartTimeHour}
                            onChange={(value) =>
@@ -232,7 +232,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                               )
                            }
                         />
-                        <TimePicker
+                        <TimePickerNumber
                            value={interval.newStartTimeMinute}
                            onChange={(value) =>
                               handleTimeChange(
@@ -243,7 +243,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                            }
                         />
                         <span>-</span>
-                        <TimePicker
+                        <TimePickerNumber
                            variant="hours"
                            value={interval.newEndTimeHour}
                            onChange={(value) =>
@@ -254,7 +254,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                               )
                            }
                         />
-                        <TimePicker
+                        <TimePickerNumber
                            value={interval.newEndTimeMinute}
                            onChange={(value) =>
                               handleTimeChange(

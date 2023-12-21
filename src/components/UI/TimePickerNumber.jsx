@@ -2,7 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material'
 import { Input } from './input/Input'
 
-const TimePicker = ({ type, variant, value, ...rest }) => {
+const TimePickerNumber = ({ type, variant, value, ...rest }) => {
    return (
       <StyledTimePicker
          type="number"
@@ -22,7 +22,7 @@ const TimePicker = ({ type, variant, value, ...rest }) => {
    )
 }
 
-export default TimePicker
+export default TimePickerNumber
 
 const StyledTimePicker = styled(Input)(() => ({
    '.MuiOutlinedInput-input': {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
@@ -26,8 +26,18 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
    const dispatch = useDispatch()
 
+   useEffect(() => {
+      if (
+         doctorInfo.times.filter((interval) => JSON.parse(interval.isAvailable))
+            .length >= 8
+      ) {
+         setIsSaved(true)
+      }
+   }, [doctorInfo])
+
    const handleClose = () => {
       setOpen(false)
+      setIsSaved(false)
       setIntervalValues([
          {
             id: Date.now(),
@@ -41,13 +51,18 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
 
    const handleUpdate = () => {
       setOpen(false)
+      setIsSaved(false)
       scheduleUpdate()
    }
 
    const handleAddInterval = () => {
       if (
-         intervalValues.length < 6 &&
-         intervalValues.length < 6 - doctorInfo.times.length
+         intervalValues.length < 8 &&
+         intervalValues.length <
+            8 -
+               doctorInfo.times.filter((interval) =>
+                  JSON.parse(interval.isAvailable)
+               ).length
       ) {
          setIntervalValues((prevValues) => [
             ...prevValues,
@@ -237,7 +252,7 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
             doctorInfo.times = updatedExistingTimes
 
             const allStartTimesDeleted = updatedExistingTimes.length === 0
-            setIsSaved(!allStartTimesDeleted)
+            // setIsSaved(!allStartTimesDeleted)
             if (allStartTimesDeleted) {
                setIntervalValues(() => [
                   {
@@ -255,14 +270,16 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
          })
    }
 
-   const existingTimes = doctorInfo.times.map((interval) => (
-      <div className="time" key={interval.startTime}>
-         <StartTimes
-            time={interval.startTime.slice(0, -3)}
-            onDelete={() => handleDelete(interval.startTime.slice(0, -3))}
-         />
-      </div>
-   ))
+   const existingTimes = doctorInfo.times
+      .filter((interval) => JSON.parse(interval.isAvailable))
+      .map((interval) => (
+         <div className="time" key={interval.startTime}>
+            <StartTimes
+               time={interval.startTime.slice(0, -3)}
+               onDelete={() => handleDelete(interval.startTime.slice(0, -3))}
+            />
+         </div>
+      ))
 
    const newTimes = intervalValues.map((interval) => (
       <div className="time" key={interval.id}>
@@ -297,7 +314,7 @@ const ChangeTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
                </div>
                <div className="block">
                   <h6 className="chartt">График:</h6>
-                  {isSaved || doctorInfo.times.length >= 6 ? (
+                  {isSaved ? (
                      <div className="times">
                         {existingTimes}
                         {intervalValues[0]?.newStartTimeHour !== ''

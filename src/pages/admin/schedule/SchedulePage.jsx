@@ -86,6 +86,7 @@ const SchedulePage = () => {
             ?.timeIntervals.map((interval) => ({
                startTime: interval.startTime,
                endTime: interval.endTime,
+               isAvailable: interval.isAvailable,
             })) || []
 
       await setSelectedCell({
@@ -196,7 +197,10 @@ const SchedulePage = () => {
             <div>
                <ButtonsStyled
                   disabled={
-                     !selectedCell.date || selectedCell.times.length === 0
+                     !selectedCell.date ||
+                     selectedCell.times.filter((interval) =>
+                        JSON.parse(interval.isAvailable)
+                     ).length === 0
                   }
                   onClick={handleChangeModalOpen}
                >
@@ -204,7 +208,10 @@ const SchedulePage = () => {
                </ButtonsStyled>
                <ButtonsStyled
                   disabled={
-                     !selectedCell.date || selectedCell.times.length !== 0
+                     !selectedCell.date ||
+                     selectedCell.times.filter((interval) =>
+                        JSON.parse(interval.isAvailable)
+                     ).length !== 0
                   }
                   onClick={handleTemplateModalOpen}
                >

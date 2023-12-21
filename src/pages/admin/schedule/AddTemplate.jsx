@@ -29,7 +29,7 @@ const AddTemplate = ({ open, setOpen, doctorInfo, scheduleUpdate }) => {
       setOpen(false)
       scheduleUpdate()
    }
-   const availableSlots = 6 - doctorInfo.times.length
+   const availableSlots = 8 - doctorInfo.times.length
 
    const handleAddInterval = () => {
       if (intervalValues.length < availableSlots) {

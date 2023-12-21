@@ -45,7 +45,7 @@ export const searchPatients = createAsyncThunk(
    async (searchTerm, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('/api/patients', {
-            params: { searchTerm },
+            params: { word: searchTerm },
          })
          return response.data
       } catch (error) {

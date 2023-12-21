@@ -5,11 +5,13 @@ import { daysOfWeekMap } from '../../utils/constants/commons'
 
 const DatePicker = ({
    value,
+   label,
    onChange,
    onBlur,
    format,
    maxDate,
    minDate,
+   variant,
    error,
    ...rest
 }) => {
@@ -18,6 +20,7 @@ const DatePicker = ({
    return (
       <StyledDatePicker
          value={parsedValue}
+         label={label}
          onChange={(date) => onChange(date)}
          onBlur={onBlur}
          dayOfWeekFormatter={(_day, weekday) =>
@@ -70,8 +73,8 @@ const DatePicker = ({
                      right: '100px',
                   },
                   '.MuiPickersDay-root': {
-                     borderRadius: '3px',
-                     height: '28px',
+                     borderRadius: variant === 'custom' ? '50%' : '3px',
+                     height: variant === 'custom' ? 'none' : '28px',
                      marginTop: '0.5rem',
                      fontWeight: '500',
                      color: 'var(--primary-black-gray, #4D4E51)',

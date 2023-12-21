@@ -56,6 +56,7 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
             signUp({
                values,
                handleClose,
+               navigate,
             })
          )
          values.firstName = ''

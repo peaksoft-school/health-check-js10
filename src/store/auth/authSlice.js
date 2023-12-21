@@ -12,7 +12,7 @@ const initialState = {
    isLoading: false,
 }
 
-const authActions = [signIn, signUp, forgotPassword, changePassword]
+const authActions = [signUp, forgotPassword, changePassword]
 
 export const authSlice = createSlice({
    name: 'authorization',
@@ -33,6 +33,10 @@ export const authSlice = createSlice({
       },
    },
    extraReducers: (builder) => {
+      builder.addCase(signIn.fulfilled, (state) => {
+         state.isAuth = true
+      })
+
       authActions.forEach((action) => {
          builder
             .addCase(action.pending, (state) => {

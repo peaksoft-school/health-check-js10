@@ -5,7 +5,6 @@ import ChangePassword from '../layout/login/ChangePassword'
 import { routes } from '../utils/constants/routes'
 import AdminRoutes from './adminRoutes/AdminRoutes'
 import DoctorRoutes from './doctorRoutes/DoctorRoutes'
-import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
 import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
@@ -17,6 +16,7 @@ import Prices from '../components/Prices'
 import Contacts from '../components/Contacts'
 import Profile from '../pages/user/Profile'
 import { PasswordChange } from '../pages/user/PasswordChange'
+import { PrivateRoutes } from './PrivateRoutes'
 
 const AppRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
@@ -61,15 +61,6 @@ const AppRoutes = () => {
             path={routes.DOCTOR.path}
             element={
                <PrivateRoutes component={<DoctorRoutes />} isAuth={isAuth} />
-            }
-         />
-         <Route
-            path={routes.ADMIN.patients}
-            element={
-               <PrivateRoutes
-                  component={<PatientComponent />}
-                  isAuth={isAuth}
-               />
             }
          />
          <Route

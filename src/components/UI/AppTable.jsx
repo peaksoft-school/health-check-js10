@@ -3,7 +3,22 @@ import { Table, TableHead, TableRow, TableCell } from '@mui/material'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const AppTable = ({ columns, data, renderCellValue }) => {
+const AppTable = ({ columns, data, empty }) => {
+   if (!data || data.length === 0) {
+      return <StyledAbsence>{empty}</StyledAbsence>
+   }
+   // if (data.length === 0) {
+   //    return (
+   //       <StyledError>
+   //          <div>
+   //             <p>
+   //                {variant === 'patients' && 'Не удалось найти пациентов.'}
+   //                {variant === 'appointments' && 'Не удалось найти записей.'}
+   //             </p>
+   //          </div>
+   //       </StyledError>
+   //    )
+   // }
    return (
       <Container>
          <Table className="navlink">
@@ -14,14 +29,10 @@ const AppTable = ({ columns, data, renderCellValue }) => {
                         key={column.id}
                         style={{
                            fontWeight: 'bold',
-                           textAlign:
-                              column.id === 'delete' && renderCellValue
-                                 ? 'right'
-                                 : 'left',
                         }}
                      >
-                        {renderCellValue ? null : <span>{column.icon}</span>}
-                        {column.label}
+                        <span>{column.icon}</span>
+                        <div>{column.label}</div>
                      </TableCell>
                   ))}
                </TableRow>
@@ -30,47 +41,35 @@ const AppTable = ({ columns, data, renderCellValue }) => {
                {data?.map((item) => (
                   <TableRow key={item.id}>
                      {columns?.map((column) => {
-                        const isRenderCell = column.render && renderCellValue
-
-                        if (isRenderCell) {
-                           return (
-                              <TableCell key={column.id}>
-                                 {column.render(item)}
-                              </TableCell>
-                           )
+                        if (column.render) {
+                           return column.render(item)
                         }
-
-                        const cellValue = item[column.id]
-                        const displayedValue =
-                           cellValue !== undefined &&
-                           cellValue !== null &&
-                           cellValue !== ''
-                              ? cellValue
-                              : '-'
-
                         return (
                            <TableCell
-                              key={column.id}
-                              title={String(displayedValue)}
+                              key={`${item.id}-${column.id}`}
+                              title={String(item[column.id])}
                               condition={item.condition}
                            >
-                              {column.link ? (
-                                 <Link to={`${item.id}`}>
-                                    <StyledCondition
-                                       condition={item[column.id]}
-                                    >
-                                       {renderCellValue
-                                          ? renderCellValue(item, column)
-                                          : displayedValue}
-                                    </StyledCondition>
-                                 </Link>
-                              ) : (
+                              <Link to={`${item.id}`}>
                                  <StyledCondition condition={item[column.id]}>
-                                    {renderCellValue
-                                       ? renderCellValue(item, column)
-                                       : displayedValue}
+                                    {item[column.id]?.length > 13
+                                       ? `${item[column.id].substring(
+                                            0,
+                                            13
+                                         )}...`
+                                       : item[column.id]}
                                  </StyledCondition>
-                              )}
+                                 {Array.isArray(column.ids) && (
+                                    <div>
+                                       {column.ids.map((id) => (
+                                          <span key={id}>
+                                             {data?.[0]?.[id]}
+                                             <br />
+                                          </span>
+                                       ))}
+                                    </div>
+                                 )}
+                              </Link>
                            </TableCell>
                         )
                      })}
@@ -88,14 +87,14 @@ const Container = styled('div')({
    // marginLeft: '6rem',
    fontFamily: 'Manrope',
    fontSize: '1.3rem',
-   borderRadius: '10px 10px 0px 0px',
+   borderTopLeftRadius: '10px',
+   borderTopRightRadius: '10px',
    background: '#ffff',
    '& h2': {
       display: 'flex',
       marginLeft: '0.6rem',
    },
 })
-
 const TableHeadStyle = styled(TableHead)(() => ({
    '.MuiTableCell-root ': {
       width: '160px',
@@ -108,7 +107,6 @@ const TableHeadStyle = styled(TableHead)(() => ({
       marginTop: '1rem',
    },
 }))
-
 const TableBodyStyle = styled(TableHead)(() => ({
    '.MuiTableCell-root': {
       width: '10px',
@@ -120,7 +118,6 @@ const TableBodyStyle = styled(TableHead)(() => ({
       background: '#ffff',
    },
 }))
-
 const getConditionColor = (condition) => {
    switch (condition) {
       case 'Отменён':
@@ -136,5 +133,31 @@ const getConditionColor = (condition) => {
 const StyledCondition = styled.span(({ condition }) => ({
    color: getConditionColor(condition),
 }))
-
+const StyledAbsence = styled('div')(() => ({
+   textAlign: 'center',
+   padding: '20vh 0',
+   opacity: '20%',
+}))
+// const StyledError = styled('div')(() => ({
+//    display: 'flex',
+//    justifyContent: 'center',
+//    alignItems: 'center',
+//    minHeight: '200px',
+//    width: '800px',
+//    '& > div': {
+//       textAlign: 'center',
+//       borderRadius: 20,
+//       padding: '20px',
+//       border: '1px solid gray',
+//       backgroundColor: '#CFCACA',
+//       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+//       maxWidth: '500px',
+//       width: '100%',
+//    },
+//    '& > p': {
+//       color: 'gray',
+//       fontSize: '18px',
+//       fontWeight: 'bold',
+//    },
+// }))
 export default AppTable

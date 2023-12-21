@@ -52,6 +52,7 @@ const SignIn = ({
          signIn({
             values,
             handleClose,
+            navigate,
          })
       )
       values.email = ''

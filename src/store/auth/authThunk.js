@@ -90,7 +90,7 @@ export const signUp = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
    'authorization/login',
-   async ({ values, handleClose }, { rejectWithValue, dispatch }) => {
+   async ({ values, handleClose, navigate }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post('/api/auth/signIn', {
             email: values.email,
@@ -99,7 +99,7 @@ export const signIn = createAsyncThunk(
          localStorage.setItem(USER_KEY, JSON.stringify(data))
          notify('Вход успешно выполнен')
          handleClose()
-         return dispatch(login({ data }))
+         return dispatch(login({ data, navigate }))
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,

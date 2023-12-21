@@ -5,6 +5,7 @@ import { applicationsSlice } from './applications/applicationsSlice'
 import myappointmentsSlice from './myappointments/myappointmentsSlice'
 import { departmentSlice } from './department/departmentSlice'
 import { patientSlice } from './patient/patientsSlice'
+import { scheduleSlice } from './schedule/scheduleSlice'
 
 export const store = configureStore({
    reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
       myappointments: myappointmentsSlice,
       [patientSlice.name]: patientSlice.reducer,
       [departmentSlice.name]: departmentSlice.reducer,
+      [scheduleSlice.name]: scheduleSlice.reducer,
    },
 })

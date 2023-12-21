@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f76f1f9-17f5-4414-be7d-42f3e7d7e101" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/appointment/AppointmentForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appointment/AppointmentForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/appointment/ChooseDate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/appointment/ChooseDate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/axiosInstance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/axiosInstance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/admin/schedule/AddTemplate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/admin/schedule/AddTemplate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/admin/schedule/ChangeTemplate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/admin/schedule/ChangeTemplate.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +18,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2YyalJIWxBajI50ChJ5r4MhP6ax" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,7 +31,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/onlineAppointment-part2",
+    "git-widget-placeholder": "feature/onlineAppointmentSchedule",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -43,7 +47,11 @@
       <option name="presentableId" value="Default" />
       <updated>1701500453403</updated>
       <workItem from="1701500453409" duration="27000" />
+      <workItem from="1702721896959" duration="247000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

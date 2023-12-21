@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { logout } from '../store/auth/authSlice'
 
-export const BASE_URL = 'http://3.70.97.1'
+export const BASE_URL = 'http://3.70.97.1/'
 
 const headers = {
    'Content-type': 'application/json',

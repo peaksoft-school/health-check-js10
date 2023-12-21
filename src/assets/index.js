@@ -58,6 +58,12 @@ export { ReactComponent as FileIcon } from './icons/file-icon.svg'
 export { ReactComponent as FileGoogleIcon } from './icons/icon-file-google-blue.svg'
 export { ReactComponent as FileGoogleIconWhite } from './icons/icon-file-google-white.svg'
 export { ReactComponent as PdfFileIcon } from './icons/pdf-download-2617.svg'
+export { ReactComponent as MinusIcon } from './icons/MinusIcon.svg'
+export { ReactComponent as GreenPlus } from './icons/green-plus.svg'
+export { ReactComponent as RedClose } from './icons/red-close.svg'
+
+export { default as doctorAvatar } from './icons/Doctor.svg'
+export { default as doctorArtur } from './icons/DoctorArtur.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

@@ -1,6 +1,6 @@
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
-import { parseISO } from 'date-fns'
 import { styled } from '@mui/material/styles'
+import { parseISO } from 'date-fns'
 import { daysOfWeekMap } from '../../utils/constants/commons'
 
 const DatePicker = ({

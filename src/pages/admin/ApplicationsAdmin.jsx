@@ -35,13 +35,13 @@ export const ApplicationsAdmin = () => {
       dispatch(searchApplicationByIdAsyncThunk(value))
    }
 
-   useDebounce(() => {
-      handleSearchById(debouncedSearchValue)
-   }, 1000)
+   // useDebounce(() => {
+   //    handleSearchById(debouncedSearchValue)
+   // }, 1000)
 
-   useEffect(() => {
-      handleSearchById(debouncedSearchValue)
-   }, [debouncedSearchValue])
+   // useEffect(() => {
+   //    handleSearchById(debouncedSearchValue)
+   // }, [debouncedSearchValue])
 
    const handleChange = (event) => {
       setSearchValue(event.target.value)

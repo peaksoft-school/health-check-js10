@@ -31,10 +31,7 @@ const AppRoutes = () => {
          <Route path="/contacts" element={<Contacts />} />
          <Route path="/service" element={<OurAllServices />} />
          <Route path="/profile" element={<Profile />} />
-         <Route
-            path="/profile/password-change"
-            element={<PasswordChange />} // Вставьте ваш компонент PasswordChange
-         />
+         <Route path="/profile/password-change" element={<PasswordChange />} />
          <Route
             path={routes.ADMIN.applications}
             element={

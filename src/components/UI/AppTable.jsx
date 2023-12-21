@@ -3,7 +3,7 @@ import { Table, TableHead, TableRow, TableCell } from '@mui/material'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const AppTable = ({ columns, data }) => {
+const AppTable = ({ columns, data, renderCellValue }) => {
    return (
       <Container>
          <Table className="navlink">
@@ -14,9 +14,13 @@ const AppTable = ({ columns, data }) => {
                         key={column.id}
                         style={{
                            fontWeight: 'bold',
+                           textAlign:
+                              column.id === 'delete' && renderCellValue
+                                 ? 'right'
+                                 : 'left',
                         }}
                      >
-                        <span>{column.icon}</span>
+                        {renderCellValue ? null : <span>{column.icon}</span>}
                         {column.label}
                      </TableCell>
                   ))}
@@ -26,25 +30,47 @@ const AppTable = ({ columns, data }) => {
                {data?.map((item) => (
                   <TableRow key={item.id}>
                      {columns?.map((column) => {
-                        if (column.render) {
-                           return column.render(item)
+                        const isRenderCell = column.render && renderCellValue
+
+                        if (isRenderCell) {
+                           return (
+                              <TableCell key={column.id}>
+                                 {column.render(item)}
+                              </TableCell>
+                           )
                         }
+
+                        const cellValue = item[column.id]
+                        const displayedValue =
+                           cellValue !== undefined &&
+                           cellValue !== null &&
+                           cellValue !== ''
+                              ? cellValue
+                              : '-'
+
                         return (
                            <TableCell
                               key={column.id}
-                              title={String(item[column.id])}
+                              title={String(displayedValue)}
                               condition={item.condition}
                            >
-                              <Link to={`${item.id}`}>
+                              {column.link ? (
+                                 <Link to={`${item.id}`}>
+                                    <StyledCondition
+                                       condition={item[column.id]}
+                                    >
+                                       {renderCellValue
+                                          ? renderCellValue(item, column)
+                                          : displayedValue}
+                                    </StyledCondition>
+                                 </Link>
+                              ) : (
                                  <StyledCondition condition={item[column.id]}>
-                                    {item[column.id]?.length > 13
-                                       ? `${item[column.id].substring(
-                                            0,
-                                            13
-                                         )}...`
-                                       : item[column.id]}
+                                    {renderCellValue
+                                       ? renderCellValue(item, column)
+                                       : displayedValue}
                                  </StyledCondition>
-                              </Link>
+                              )}
                            </TableCell>
                         )
                      })}
@@ -62,8 +88,7 @@ const Container = styled('div')({
    // marginLeft: '6rem',
    fontFamily: 'Manrope',
    fontSize: '1.3rem',
-   borderTopLeftRadius: '10px',
-   borderTopRightRadius: '10px',
+   borderRadius: '10px 10px 0px 0px',
    background: '#ffff',
    '& h2': {
       display: 'flex',

@@ -111,7 +111,7 @@ const StyledNavLink = styled(NavLink)`
    text-decoration: none;
    color: #707070;
    border-bottom: 3px solid transparent;
-   padding-bottom: 3.6vh;
+   padding-bottom: 3.8vh;
    &:active {
       color: #048741;
    }

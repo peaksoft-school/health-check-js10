@@ -10,18 +10,12 @@ import {
    deletePatient,
    searchPatients,
 } from '../../store/patient/patientsThunk'
-import {
-   selectPatients,
-   selectPatientsLoading,
-   selectPatientsError,
-} from '../../store/patient/patientsSlice'
 import { notify } from '../../utils/constants/snackbar'
+import Header from '../../layout/admin/header/Header'
 
 const PatientComponent = () => {
    const dispatch = useDispatch()
-   const patients = useSelector(selectPatients)
-   const loading = useSelector(selectPatientsLoading)
-   const error = useSelector(selectPatientsError)
+   const { patients, loading, error } = useSelector((state) => state.patients)
    const [searchTerm, setSearchTerm] = useState('')
 
    useEffect(() => {
@@ -30,8 +24,7 @@ const PatientComponent = () => {
 
    function debounce(func, delay) {
       let timer
-      // eslint-disable-next-line func-names
-      return function (...args) {
+      return function fn(...args) {
          clearTimeout(timer)
          timer = setTimeout(() => {
             func.apply(this, args)
@@ -60,7 +53,7 @@ const PatientComponent = () => {
 
    const columns = [
       { id: 'id', label: '№' },
-      { id: 'fullname', label: 'Имя Фамилия' },
+      { id: 'fullName', label: 'Имя Фамилия' },
       { id: 'phoneNumber', label: 'Номер телефона' },
       { id: 'email', label: 'Почта' },
       { id: 'date', label: 'Дата сдачи' },
@@ -68,34 +61,57 @@ const PatientComponent = () => {
          id: 'delete',
          label: 'Действия',
          render: (patient) => (
-            <StyledDeleteButton
-               variant="outlined"
-               color="error"
-               onClick={() => handleDelete(patient.id)}
-            >
-               <DeleteOutline />
-            </StyledDeleteButton>
+            <StyledBox>
+               <StyledDeleteButton
+                  variant="outlined"
+                  color="error"
+                  onClick={() => handleDelete(patient.id)}
+               >
+                  <DeleteOutline />
+               </StyledDeleteButton>
+            </StyledBox>
          ),
       },
    ]
 
+   const renderCellValue = (row, column) => {
+      const value = row[column.id]
+      if (value || value === 0) {
+         return value
+      }
+      return '—'
+   }
+
    return (
-      <TableContainer>
-         <h3>Пациенты</h3>
-         <StyledTextField
-            placeholder="Поиск..."
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleInputChange}
-            InputProps={{
-               endAdornment: <StyledSearchIcon />,
-            }}
-         />
-         {loading === 'failed' && <p>Error: {error}</p>}
-         {loading === 'succeeded' && (
-            <AppTable data={patients} columns={columns} />
-         )}
-      </TableContainer>
+      <>
+         <Header />
+         <TableContainer>
+            <h3>Пациенты</h3>
+            <StyledTextField
+               placeholder="Поиск..."
+               variant="outlined"
+               value={searchTerm}
+               onChange={handleInputChange}
+               InputProps={{
+                  endAdornment: <StyledSearchIcon />,
+               }}
+            />
+            {loading === 'loading' ? (
+               <h1>Loading...</h1>
+            ) : (
+               <>
+                  {loading === 'failed' && <p>Error: {error}</p>}
+                  {loading === 'succeeded' && (
+                     <AppTable
+                        data={patients}
+                        columns={columns}
+                        renderCellValue={renderCellValue}
+                     />
+                  )}
+               </>
+            )}
+         </TableContainer>
+      </>
    )
 }
 
@@ -106,13 +122,36 @@ const TableContainer = styled('div')(() => ({
    flexDirection: 'column',
    alignItems: 'flex-start',
    padding: '4rem',
+   paddingTop: 'calc(11vh + 3rem)',
    background: '#ECECEC',
    fontFamily: 'Manrope',
-   '& h3': {
-      fontSize: '22px',
-      fontWeight: '400',
+   table: {
+      width: '87rem',
+   },
+   'th:nth-child(1)': {
+      width: '4%',
+   },
+   'th:nth-child(2)': {
+      width: '27%',
+   },
+   'th:nth-child(3)': {
+      width: '20%',
+   },
+   'th:nth-child(4)': {
+      width: '10%',
+   },
+   'th:nth-child(5)': {
+      width: '9%',
+   },
+   h3: {
+      fontSize: '24px',
+      fontWeight: '500',
       paddingBottom: '3rem',
    },
+}))
+
+const StyledBox = styled('div')(() => ({
+   paddingLeft: '18rem',
 }))
 
 const StyledTextField = styled(TextField)(() => ({
@@ -149,5 +188,4 @@ const StyledDeleteButton = styled('button')(() => ({
    cursor: 'pointer',
    border: 'none',
    background: 'none',
-   paddingLeft: '3rem',
 }))

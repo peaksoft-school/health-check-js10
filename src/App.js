@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
 import AppRoutes from './routes/AppRoutes'
-import { AdminAppointmentsPage } from './pages/admin/AdminAppointmetsPage'
-import { ApplicationsAdmin } from './pages/admin/ApplicationsAdmin'
-import { PatientsInternalPage } from './pages/admin/PatientsInternalPage'
 
 function App() {
    const dispatch = useDispatch()
@@ -22,9 +19,7 @@ function App() {
 
    return (
       <div className="App">
-         <AdminAppointmentsPage />
-         <ApplicationsAdmin />
-         <PatientsInternalPage />
+         <AppRoutes />
       </div>
    )
 }

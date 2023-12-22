@@ -1,7 +1,6 @@
 import { IconButton, InputAdornment, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { useDebounce } from '@uidotdev/usehooks'
 import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import {
@@ -19,8 +18,6 @@ export const ApplicationsAdmin = () => {
    const [selectAll, setSelectAll] = useState(false)
    const [items, setItems] = useState(applications)
 
-   const [debouncedSearchValue] = useDebounce(searchValue, 1000)
-
    const dispatch = useDispatch()
 
    useEffect(() => {
@@ -35,16 +32,21 @@ export const ApplicationsAdmin = () => {
       dispatch(searchApplicationByIdAsyncThunk(value))
    }
 
-   // useDebounce(() => {
-   //    handleSearchById(debouncedSearchValue)
-   // }, 1000)
+   useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+         if (searchValue) {
+            handleSearchById(searchValue)
+         } else {
+            dispatch(applicationsThunk())
+         }
+      }, 1000)
 
-   // useEffect(() => {
-   //    handleSearchById(debouncedSearchValue)
-   // }, [debouncedSearchValue])
+      return () => clearTimeout(delayDebounceFn)
+   }, [searchValue, dispatch])
 
    const handleChange = (event) => {
-      setSearchValue(event.target.value)
+      const inputValue = event.target.value
+      setSearchValue(inputValue)
    }
    const handleDeleteSelected = () => {
       const selectedIds = []
@@ -92,7 +94,7 @@ export const ApplicationsAdmin = () => {
 
    const columns = [
       {
-         id: '',
+         id: 'checkbox',
          label: (
             <CheckboxUI checked={selectAll} onChange={handleSelectAllChange} />
          ),
@@ -109,7 +111,7 @@ export const ApplicationsAdmin = () => {
          },
       },
       {
-         id: '',
+         id: 'deleteAll',
          label: (
             <AppDeleteIcon
                className="delete-icon"
@@ -122,7 +124,7 @@ export const ApplicationsAdmin = () => {
       { id: 'createdAt', label: 'Дата' },
       { id: 'phoneNumber', label: 'Номер телефона' },
       {
-         id: 'createdAt',
+         id: 'processed',
          label: 'Обработан',
          render: (el) => {
             return (
@@ -136,7 +138,7 @@ export const ApplicationsAdmin = () => {
          },
       },
       {
-         id: '',
+         id: 'delete',
          label: 'Действия',
          render: (el) => {
             return (
@@ -153,7 +155,7 @@ export const ApplicationsAdmin = () => {
    return (
       <StyledContainerApp>
          <div className="appInput">
-            <span>Заявки</span>
+            <h3>Заявки</h3>
             <StyledInput
                type="text"
                placeholder="Поиск"
@@ -171,7 +173,11 @@ export const ApplicationsAdmin = () => {
             />
          </div>
          <div className="table">
-            <AppTable columns={columns} data={items} />
+            <AppTable
+               columns={columns}
+               data={items}
+               empty={<h1>Заявки отсутствуют</h1>}
+            />
          </div>
       </StyledContainerApp>
    )
@@ -179,8 +185,8 @@ export const ApplicationsAdmin = () => {
 
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 0px 4%;
-   height: 100vh;
+   padding: calc(11vh + 3rem) 4% 3.8vh 4%;
+   height: 100%;
    .delete-icon {
       cursor: pointer;
    }
@@ -188,18 +194,21 @@ const StyledContainerApp = styled('div')`
       display: flex;
       flex-direction: column;
       gap: 25px;
-      span {
-         font-size: 22px;
-         margin-top: 120px;
+      h3 {
+         font-size: 24px;
+         font-weight: 500;
+         padding-bottom: 3rem;
       }
    }
 
    .table {
       background-color: #fff;
       border-radius: 6px;
+      min-height: 64.4vh;
+      margin-top: 1.5rem;
    }
 
-   .SXYBM {
+   .flxDTz {
       margin-top: 1.5rem;
    }
 
@@ -228,14 +237,17 @@ const StyledContainerApp = styled('div')`
       &:last-of-type > tr > th {
          border-bottom: none;
       }
+      thead,
       tr:nth-child(2n + 2) {
          background-color: rgba(245, 245, 245, 0.61);
       }
    }
+   .kRczSm .MuiTableCell-root {
+      background: none;
+   }
    .css-13wgndv-MuiTableRow-root {
       th:first-child {
-         text-align: center;
-         padding-left: 20px;
+         padding-left: 27px;
       }
       th:last-of-type {
          width: 10px;

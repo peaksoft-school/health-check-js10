@@ -11,9 +11,8 @@ import {
    searchPatients,
 } from '../../store/patient/patientsThunk'
 import { notify } from '../../utils/constants/snackbar'
-import Header from '../../layout/admin/header/Header'
 
-const PatientComponent = () => {
+const Patients = () => {
    const dispatch = useDispatch()
    const { patients, loading, error } = useSelector((state) => state.patients)
    const [searchTerm, setSearchTerm] = useState('')
@@ -83,47 +82,45 @@ const PatientComponent = () => {
    }
 
    return (
-      <>
-         <Header />
-         <TableContainer>
-            <h3>Пациенты</h3>
-            <StyledTextField
-               placeholder="Поиск..."
-               variant="outlined"
-               value={searchTerm}
-               onChange={handleInputChange}
-               InputProps={{
-                  endAdornment: <StyledSearchIcon />,
-               }}
-            />
-            {loading === 'loading' ? (
-               <h1>Loading...</h1>
-            ) : (
-               <>
-                  {loading === 'failed' && <p>Error: {error}</p>}
-                  {loading === 'succeeded' && (
-                     <AppTable
-                        data={patients}
-                        columns={columns}
-                        renderCellValue={renderCellValue}
-                     />
-                  )}
-               </>
-            )}
-         </TableContainer>
-      </>
+      <TableContainer>
+         <h3>Пациенты</h3>
+         <StyledTextField
+            placeholder="Поиск..."
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleInputChange}
+            InputProps={{
+               endAdornment: <StyledSearchIcon />,
+            }}
+         />
+         {loading === 'loading' ? (
+            <h1>Loading...</h1>
+         ) : (
+            <>
+               {loading === 'failed' && <p>Error: {error}</p>}
+               {loading === 'succeeded' && (
+                  <AppTable
+                     data={patients}
+                     columns={columns}
+                     renderCellValue={renderCellValue}
+                  />
+               )}
+            </>
+         )}
+      </TableContainer>
    )
 }
 
-export default PatientComponent
+export default Patients
 
 const TableContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'flex-start',
+   minHeight: '100vh',
    padding: '4rem',
    paddingTop: 'calc(11vh + 3rem)',
-   background: '#ECECEC',
+   background: '#f5f5f5',
    fontFamily: 'Manrope',
    table: {
       width: '87rem',
@@ -175,6 +172,9 @@ const StyledTextField = styled(TextField)(() => ({
       },
       '& input': {
          boxSizing: 'border-box',
+      },
+      '& .error': {
+         color: 'red',
       },
    },
 }))

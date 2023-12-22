@@ -12,6 +12,8 @@ export const Input = React.forwardRef(
          type,
          height = '3rem',
          width = '26rem',
+         min,
+         max,
          ...rest
       },
       ref
@@ -53,6 +55,7 @@ export const Input = React.forwardRef(
             error={Boolean(error)}
             invalid={invalid}
             type={type}
+            inputProps={{ min, max }}
             {...rest}
          />
       )

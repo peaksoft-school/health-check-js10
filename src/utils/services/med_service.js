@@ -149,6 +149,29 @@ export const MED_SERVICE = [
    },
 ]
 
+export const INTERVAL_IN_MINUTES = [
+   {
+      id: 1,
+      title: '30 минут',
+      time: 30,
+   },
+   {
+      id: 2,
+      title: '45 минут',
+      time: 45,
+   },
+   {
+      id: 3,
+      title: ' 1 час',
+      time: 60,
+   },
+   {
+      id: 4,
+      title: '1,5 часа',
+      time: 90,
+   },
+]
+
 export const TRANSLATED_MED_SERVICES = {
    ALLERGOLOGY: 'Аллергология',
 
@@ -190,11 +213,147 @@ export const TRANSLATED_MED_SERVICES = {
 
    THERAPY: 'Терапия',
 
-   facilityName: 'Флебология',
+   FLEBOLOGY: 'Флебология',
 
    PHYSIOTHERAPY: 'Физиотерапия',
 }
 
+export const TRANSLATED_MED_SERVICES_ENG = {
+   Аллергология: 'ALLERGOLOGY',
+
+   Вакцинация: 'VACCINATION',
+
+   Гинекология: 'GYNECOLOGY',
+
+   Кардиология: 'CARDIOLOGY',
+
+   Нейрохирургия: 'NEUROSURGERY',
+
+   Ортопедия: 'ORTHOPEDICS',
+
+   Офтальмология: 'OPHTHALMOLOGY',
+
+   Психотерапия: 'PSYCHOTHERAPY',
+
+   Ревматология: 'RHEUMATOLOGY',
+
+   Урология: 'UROLOGY',
+
+   Эндокринология: 'ENDOCRINOLOGY',
+
+   Анестезиология: 'ANESTHESIOLOGY',
+
+   Гастроэнтерология: 'GASTROENTEROLOGY',
+
+   Дерматология: 'DERMATOLOGY',
+
+   Неврология: 'NEUROLOGY',
+
+   Онкология: 'ONCOLOGY',
+
+   Отоларингология: 'OTOLARYNGOLOGY',
+
+   Проктология: 'PROCTOLOGY',
+
+   Пульмонология: 'PULMONOLOGY',
+
+   Терапия: 'THERAPY',
+
+   Флебология: 'FLEBOLOGY',
+
+   PHYSIOTHERAPY: 'Физиотерапия',
+}
+
+export const DEPARTMENTS = [
+   {
+      id: 1,
+      title: 'Аллергология',
+   },
+   {
+      id: 2,
+      title: 'Вакцинация',
+   },
+   {
+      id: 3,
+      title: 'Гинекология',
+   },
+   {
+      id: 4,
+      title: 'Кардиология',
+   },
+   {
+      id: 5,
+      title: 'Нейрохирургия',
+   },
+   {
+      id: 6,
+      title: 'Ортопедия',
+   },
+   {
+      id: 7,
+      title: 'Офтальмология',
+   },
+   {
+      id: 8,
+      title: 'Психотерапия',
+   },
+   {
+      id: 9,
+      title: 'Ревматология',
+   },
+   {
+      id: 10,
+      title: 'Урология',
+   },
+   {
+      id: 11,
+      title: 'Эндокринология',
+   },
+   {
+      id: 12,
+      title: 'Анестезиология',
+   },
+   {
+      id: 13,
+      title: 'Гастроэнтерология',
+   },
+   {
+      id: 14,
+      title: 'Дерматология',
+   },
+   {
+      id: 15,
+      title: 'Неврология',
+   },
+   {
+      id: 16,
+      title: 'Онкология',
+   },
+   {
+      id: 17,
+      title: 'Отоларингология',
+   },
+   {
+      id: 18,
+      title: 'Проктология',
+   },
+   {
+      id: 19,
+      title: 'Пульмонология',
+   },
+   {
+      id: 20,
+      title: 'Терапия',
+   },
+   {
+      id: 21,
+      title: 'Флебология',
+   },
+   {
+      id: 22,
+      title: 'Физиотерапия',
+   },
+]
 export const MAIN_MED_SERVICES = [
    {
       id: 1,

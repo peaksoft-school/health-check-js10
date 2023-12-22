@@ -8,6 +8,7 @@ import { routes } from '../../utils/constants/routes'
 import { ApplicationsAdmin } from '../../pages/admin/ApplicationsAdmin'
 import PatientComponent from '../../pages/admin/Patients'
 import Specialists from '../../components/appointment/Specialists'
+import { AdminAppointmentsPage } from '../../pages/admin/AdminAppointmetsPage'
 
 const AdminRoutes = () => {
    const dispatch = useDispatch()
@@ -23,6 +24,15 @@ const AdminRoutes = () => {
       <>
          <Header logoutHandler={logoutHandler} />
          <Routes>
+            <Route
+               path={routes.ADMIN.onlineRegistration}
+               element={
+                  <PrivateRoutes
+                     component={<AdminAppointmentsPage />}
+                     isAuth={isAuth}
+                  />
+               }
+            />
             <Route
                path={routes.ADMIN.applications}
                element={

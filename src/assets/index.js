@@ -71,6 +71,13 @@ export { ReactComponent as TelegramWhite } from './icons/telegram_white.svg'
 export { ReactComponent as WhatsAppWhite } from './icons/whatsapp_white.svg'
 export { ReactComponent as VisibilityOff } from './icons/VisibilityOff.svg'
 export { ReactComponent as Visibility } from './icons/Visibility.svg'
+export { ReactComponent as PdfFileIcon } from './icons/pdf-download-2617.svg'
+export { ReactComponent as MinusIcon } from './icons/MinusIcon.svg'
+export { ReactComponent as GreenPlus } from './icons/green-plus.svg'
+export { ReactComponent as RedClose } from './icons/red-close.svg'
+
+export { default as doctorAvatar } from './icons/Doctor.svg'
+export { default as doctorArtur } from './icons/DoctorArtur.svg'
 
 export { default as drElena } from './images/drElena.png'
 export { default as Building } from './images/Rectangle 387.png'

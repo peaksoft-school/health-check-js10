@@ -133,6 +133,7 @@ const getConditionColor = (condition) => {
 const StyledCondition = styled.span(({ condition }) => ({
    color: getConditionColor(condition),
 }))
+
 const StyledAbsence = styled('div')(() => ({
    textAlign: 'center',
    padding: '20vh 0',
@@ -149,7 +150,7 @@ const StyledAbsence = styled('div')(() => ({
 //       borderRadius: 20,
 //       padding: '20px',
 //       border: '1px solid gray',
-//       backgroundColor: '#CFCACA',
+//       backgroundColor: '#cfcaca',
 //       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
 //       maxWidth: '500px',
 //       width: '100%',

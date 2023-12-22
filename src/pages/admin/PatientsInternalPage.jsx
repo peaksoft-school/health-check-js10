@@ -1,12 +1,4 @@
 import { styled } from '@mui/material'
-import {
-   DesktopDatePicker,
-   LocalizationProvider,
-   PickersLayout,
-   ruRU,
-} from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DemoItem } from '@mui/x-date-pickers/internals/demo'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +7,7 @@ import {
    FileGoogleIcon,
    FileGoogleIconWhite,
    FileIcon,
+   PdfFileIcon,
    PlusIcon,
 } from '../../assets'
 import Button from '../../components/UI/Button'
@@ -26,44 +19,40 @@ import {
 } from '../../store/patient/patientsThunk'
 
 import { getAllDepartments } from '../../store/department/departmentThunk'
-import { TRANSLATED_MED_SERVICES } from '../../utils/services/med_service'
-
-const StyledPickersLayout = styled(PickersLayout)({
-   '.Mui-selected': {
-      color: '#ececec !important',
-      borderColor: '#048741 !important',
-      background: '#048741 !important',
-   },
-   '.MuiPickersDay-root:hover': {
-      color: '#ececec !important',
-      borderColor: '#048741 !important',
-      background: '#048741 !important',
-   },
-})
+import { DEPARTMENTS } from '../../utils/services/med_service'
+import DatePicker from '../../components/UI/DatePicker'
+import { notify } from '../../utils/constants/snackbar'
 
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [image, setImage] = useState('')
    const [newData, setNewData] = useState({ service: '', date: '' })
    const [isFormValid, setIsFormValid] = useState(false)
-   // const [isHovered, setIsHovered] = useState(false)
    const [isHovered, setIsHovered] = useState({ id: 0, isHovered: false })
 
    const { data, results } = useSelector((state) => state.patients)
-   const { departments } = useSelector((state) => state.departmentSlice)
 
    const handleChange = (e) => {
       const file = e.target.files[0]
-      setImage(file)
+      if (file.type === 'application/pdf') {
+         setImage(file)
+      } else {
+         notify('должен pdf файл', 'warning')
+      }
    }
 
-   const handleDrop = (acceptedFiles) => {
-      setImage(acceptedFiles[0])
+   const handleDrop = (AcceptFiles) => {
+      const file = AcceptFiles[0]
+      if (file.type === 'application/pdf') {
+         setImage(file)
+      } else {
+         notify('Должен быть PDF файл', 'warning')
+      }
    }
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop: handleDrop,
-      accept: 'image/*',
+      Accept: 'application/pdf',
    })
 
    const dispatch = useDispatch()
@@ -83,7 +72,7 @@ export const PatientsInternalPage = () => {
 
    const validateForm = () => {
       const isValid =
-         newData.service !== '' && newData.date !== '' && image !== ''
+         newData.service !== '' && newData.date !== '' && image !== null
       setIsFormValid(isValid)
    }
    useEffect(() => {
@@ -118,7 +107,7 @@ export const PatientsInternalPage = () => {
          })
       )
       setIsModalOpen(false)
-      setImage('')
+      setImage(null)
    }
 
    const patientLabels = {
@@ -147,32 +136,21 @@ export const PatientsInternalPage = () => {
                      <div className="select-date">
                         <SelectUI
                            placeholder="Выберите услугу"
-                           options={departments}
+                           options={DEPARTMENTS}
                            className="custom-select"
                            label="Услуги"
                            onChange={onServiceChange}
                         />
-                        <LocalizationProvider
-                           localeText={
-                              ruRU.components.MuiLocalizationProvider
-                                 .defaultProps.localeText
-                           }
-                           adapterLocale="ru"
-                           dateAdapter={AdapterDayjs}
-                        >
-                           <DemoItem>
-                              <label htmlFor="due-date">Дата сдачи</label>
-                              <DesktopDatePicker
-                                 className="custom-date-picker"
-                                 id="due-date"
-                                 defaultValue={dayjs()}
-                                 onChange={onDateChange}
-                                 slots={{
-                                    layout: StyledPickersLayout,
-                                 }}
-                              />
-                           </DemoItem>
-                        </LocalizationProvider>
+                        <div>
+                           <label htmlFor="due-date">Дата сдачи</label>
+                           <DatePicker
+                              className="custom-date-picker"
+                              id="due-date"
+                              defaultValue={dayjs()}
+                              onChange={onDateChange}
+                              variant="custom"
+                           />
+                        </div>
                      </div>
                      <div>
                         <label htmlFor="file">Файлы</label>
@@ -182,14 +160,11 @@ export const PatientsInternalPage = () => {
                         >
                            <label htmlFor="file">
                               {image ? (
-                                 <Img
-                                    src={
-                                       typeof image === 'string'
-                                          ? image
-                                          : URL.createObjectURL(image)
-                                    }
-                                    alt="image"
-                                 />
+                                 <div>
+                                    {image.type === 'application/pdf' && (
+                                       <PdfFileIcon className="insert-file" />
+                                    )}
+                                 </div>
                               ) : (
                                  <FileIcon className="insert-file" />
                               )}
@@ -249,56 +224,56 @@ export const PatientsInternalPage = () => {
                   )}
                </StyledList>
             </div>
-            <StyledPatientsCard>
-               {results?.map((result) => (
-                  <StyledResult key={result.id}>
-                     <p>
-                        Услуга
-                        <span>
-                           {TRANSLATED_MED_SERVICES[result.departmentName]}
-                        </span>
-                     </p>
-                     <p>
-                        Дата и время
-                        <span> {result.dateOfUploadingResult}</span>
-                        <span>{result.timeOfUploadingResult}</span>
-                     </p>
-                     <p>
-                        Номер заказа <span>{result.resultNumber}</span>
-                     </p>
-                     <p>
-                        Загруженный файл
-                        <span>
-                           {result.pdgFileCheque && (
-                              <a
-                                 href={result.pdgFileCheque}
-                                 target="noreferrer"
-                                 onMouseEnter={() =>
-                                    setIsHovered({
-                                       isHovered: true,
-                                       id: result.id,
-                                    })
-                                 }
-                                 onMouseLeave={() =>
-                                    setIsHovered({
-                                       isHovered: false,
-                                       id: result.id,
-                                    })
-                                 }
-                              >
-                                 {isHovered.isHovered &&
-                                 isHovered.id === result.id ? (
-                                    <FileGoogleIconWhite className="file-icon" />
-                                 ) : (
-                                    <FileGoogleIcon className="file-icon" />
-                                 )}
-                              </a>
-                           )}
-                        </span>
-                     </p>
-                  </StyledResult>
-               ))}
-            </StyledPatientsCard>
+            {results && results.length > 0 && (
+               <StyledPatientsCard>
+                  {results?.map((result) => (
+                     <StyledResult key={result.id}>
+                        <p>
+                           Услуга
+                           <span>{result.departmentName}</span>
+                        </p>
+                        <p>
+                           Дата и время
+                           <span> {result.dateOfUploadingResult}</span>
+                           <span>{result.timeOfUploadingResult}</span>
+                        </p>
+                        <p>
+                           Номер заказа <span>{result.resultNumber}</span>
+                        </p>
+                        <p>
+                           Загруженный файл
+                           <span>
+                              {result.pdgFileCheque && (
+                                 <a
+                                    href={result.pdgFileCheque}
+                                    target="noreferrer"
+                                    onMouseEnter={() =>
+                                       setIsHovered({
+                                          isHovered: true,
+                                          id: result.id,
+                                       })
+                                    }
+                                    onMouseLeave={() =>
+                                       setIsHovered({
+                                          isHovered: false,
+                                          id: result.id,
+                                       })
+                                    }
+                                 >
+                                    {isHovered.isHovered &&
+                                    isHovered.id === result.id ? (
+                                       <FileGoogleIconWhite className="file-icon" />
+                                    ) : (
+                                       <FileGoogleIcon className="file-icon" />
+                                    )}
+                                 </a>
+                              )}
+                           </span>
+                        </p>
+                     </StyledResult>
+                  ))}
+               </StyledPatientsCard>
+            )}
          </StylePatientsData>
       </StyleBgPatients>
    )
@@ -327,9 +302,6 @@ const Container = styled('div')`
    }
 `
 
-const Img = styled('img')`
-   height: 15vh;
-`
 const StyledPatientsCard = styled('div')`
    display: flex;
    flex-direction: column;
@@ -361,9 +333,9 @@ const StyleModalContainer = styled('div')`
          margin-top: 8px;
       }
       .custom-date-picker {
-         border-radius: 6px;
+         margin-top: 8px;
          height: 7vh;
-         border: 1px solid #d9d9d9;
+         border: 2px solid #d9d9d9;
       }
       .css-1qpqzc2-MuiButtonBase-root-MuiPickersDay-root {
          background-color: green;
@@ -425,7 +397,7 @@ const StylePatientsData = styled('div')`
    border-radius: 8px;
    margin-top: 20px;
    padding: 20px 45px 20px 20px;
-   height: 100%;
+   min-height: 74vh;
    h3 {
       font-size: 20px;
       font-weight: 500;

@@ -8,7 +8,9 @@ import DoctorRoutes from './doctorRoutes/DoctorRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
 import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
-import PatientComponent from '../pages/admin/Patients'
+import Patients from '../pages/admin/Patients'
+import { Parents } from '../components/UI/TableParents'
+import PatientTable from '../components/UI/PatientTable'
 import { PatientsInternalPage } from '../pages/admin/PatientsInternalPage'
 import OurAllServices from '../pages/user/OurAllServices'
 import AboutHealth from '../components/AboutHealth'
@@ -17,13 +19,16 @@ import Contacts from '../components/Contacts'
 import Profile from '../pages/user/Profile'
 import { PasswordChange } from '../pages/user/PasswordChange'
 import { PrivateRoutes } from './PrivateRoutes'
+import { AdminAppointmentsPage } from '../pages/admin/AdminAppointmetsPage'
+import SchedulePage from '../pages/admin/schedule/SchedulePage'
 
 const AppRoutes = () => {
-   const { isAuth } = useSelector((state) => state.authorization)
+   const { isAuth, role } = useSelector((state) => state.authorization)
 
    return (
-      <Routes>
-         <Route path="/" element={<LandingPage />} />
+      <>
+         {role === 'ADMIN' ? <AdminRoutes /> : null}
+         {/* <Route path="/" element={<LandingPage />} />
          <Route path="/homepage" element={<LandingPage />} />
          <Route path="/service" element={<OurAllServices />} />
          <Route path="/about-clinic" element={<AboutHealth />} />
@@ -31,27 +36,27 @@ const AppRoutes = () => {
          <Route path="/contacts" element={<Contacts />} />
          <Route path="/service" element={<OurAllServices />} />
          <Route path="/profile" element={<Profile />} />
-         <Route path="/profile/password-change" element={<PasswordChange />} />
-         <Route
+         <Route path="/profile/password-change" element={<PasswordChange />} /> */}
+         {/* <Route
             path={routes.ADMIN.applications}
             element={
-               <PrivateRoutes
+               <PrivateRoutese
                   component={<ApplicationsAdmin />}
                   isAuth={isAuth}
                />
             }
-         />
-         <Route
+         /> */}
+         {/* <Route
             path={`${routes.LOGIN.changePassword}/:uniqueId`}
             element={<ChangePassword />}
-         />
-         <Route
+         /> */}
+         {/* <Route
             path={routes.ADMIN.path}
             element={
                <PrivateRoutes component={<AdminRoutes />} isAuth={isAuth} />
             }
-         />
-         <Route
+         /> */}
+         {/* <Route
             path={routes.USER.path}
             element={
                <PrivateRoutes component={<UserRoutes />} isAuth={isAuth} />
@@ -62,8 +67,41 @@ const AppRoutes = () => {
             element={
                <PrivateRoutes component={<DoctorRoutes />} isAuth={isAuth} />
             }
+         /> */}
+         {/* <Route
+            path={routes.ADMIN.patients}
+            element={<PrivateRoutes component={<Patients />} isAuth={isAuth} />}
          />
+
          <Route
+            path={routes.ADMIN.onlineRegistration}
+            element={
+               <PrivateRoutes
+                  component={<AdminAppointmentsPage />}
+                  isAuth={isAuth}
+               />
+            }
+         /> */}
+
+         {/* <Route
+            path="online-registration/schedule"
+            element={
+               <PrivateRoutes component={<SchedulePage />} isAuth={isAuth} />
+            }
+         /> */}
+
+         {/* <Route
+            path={routes.USER.appointments}
+            element={<PrivateRoutes component={<Parents />} isAuth={isAuth} />}
+         />
+
+         <Route
+            path={routes.USER.appointment}
+            element={
+               <PrivateRoutes component={<PatientTable />} isAuth={isAuth} />
+            }
+         /> */}
+         {/* <Route
             path={routes.ADMIN.patientsId}
             element={
                <PrivateRoutes
@@ -71,8 +109,8 @@ const AppRoutes = () => {
                   isAuth={isAuth}
                />
             }
-         />
-      </Routes>
+         /> */}
+      </>
    )
 }
 

@@ -9,25 +9,22 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { theme } from './utils/constants/theme'
 import { store } from './store'
-import App from './App'
 import { injectStore } from './config/axiosInstance'
+import App from './App'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
-      <Provider store={injectStore(store)}>
-         <BrowserRouter>
-            <SnackbarProvider>
-               <ThemeProvider theme={theme}>
-                  <LocalizationProvider
-                     dateAdapter={AdapterDayjs}
-                     adapterLocale="ru"
-                  >
+      <LocalizationProvider adapterLocale="ru" dateAdapter={AdapterDayjs}>
+         <Provider store={injectStore(store)}>
+            <BrowserRouter>
+               <SnackbarProvider>
+                  <ThemeProvider theme={theme}>
                      <App />
-                  </LocalizationProvider>
-               </ThemeProvider>
-            </SnackbarProvider>
-         </BrowserRouter>
-      </Provider>
+                  </ThemeProvider>
+               </SnackbarProvider>
+            </BrowserRouter>
+         </Provider>
+      </LocalizationProvider>
    </React.StrictMode>
 )

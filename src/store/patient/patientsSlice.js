@@ -5,6 +5,7 @@ import {
    getPatientsAsyncThunk,
    getPatientsResultThunk,
    postPatientsResultThunk,
+   deletePatient,
 } from './patientsThunk'
 
 export const patientSlice = createSlice({
@@ -36,6 +37,20 @@ export const patientSlice = createSlice({
          .addCase(searchPatients.fulfilled, (state, action) => {
             state.loading = 'succeeded'
             state.patients = action.payload
+         })
+         .addCase(deletePatient.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+         .addCase(deletePatient.fulfilled, (state, action) => {
+            state.loading = false
+            state.patients = state.patients.filter(
+               (app) => app.id !== action.payload
+            )
+         })
+         .addCase(deletePatient.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message
          })
          .addCase(getPatientsAsyncThunk.pending, (state) => {
             state.loading = 'loading'

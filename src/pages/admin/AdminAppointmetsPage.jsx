@@ -359,7 +359,7 @@ const StyledContainerApp = styled('div')`
    }
 
    thead:first-of-type > .css-13wgndv-MuiTableRow-root {
-      th:nth-child(-n + 3) {
+      th:nth-of-type(-n + 3) {
          label {
             margin: 0;
             text-align: left;
@@ -373,13 +373,13 @@ const StyledContainerApp = styled('div')`
          text-align: end;
          padding-left: 0;
       }
-      th:nth-last-child(-n + 2) {
+      th:nth-last-of-type(-n + 2) {
          width: 30px;
          text-align: end;
       }
    }
    .css-13wgndv-MuiTableRow-root {
-      th:first-child {
+      th:first-of-type {
          padding-left: 27px;
       }
       th:last-of-type {
@@ -387,7 +387,7 @@ const StyledContainerApp = styled('div')`
          text-align: end;
          padding-right: 10px;
       }
-      th:nth-last-child(-n + 2) {
+      th:nth-last-of-type(-n + 2) {
          width: 30px;
          text-align: end;
          padding-right: 10px;

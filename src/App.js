@@ -3,10 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
-// import AppRoutes from './routes/AppRoutes'
-import { PatientsAdmin } from './pages/admin/Patients'
-import Header from './layout/admin/header/Header'
-import { PatientsInternalPage } from './pages/admin/PatientsInternalPage'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()
@@ -22,10 +19,7 @@ function App() {
 
    return (
       <div className="App">
-         {/* <AppRoutes /> */}
-         <Header />
-         <PatientsAdmin />
-         <PatientsInternalPage />
+         <AppRoutes />
       </div>
    )
 }

@@ -61,6 +61,7 @@ export { ReactComponent as PdfFileIcon } from './icons/pdf-download-2617.svg'
 export { ReactComponent as MinusIcon } from './icons/MinusIcon.svg'
 export { ReactComponent as GreenPlus } from './icons/green-plus.svg'
 export { ReactComponent as RedClose } from './icons/red-close.svg'
+export { ReactComponent as Vector } from './icons/vector.svg'
 
 export { default as doctorAvatar } from './icons/Doctor.svg'
 export { default as doctorArtur } from './icons/DoctorArtur.svg'

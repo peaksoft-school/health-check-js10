@@ -39,7 +39,7 @@ const Doctors = () => {
    return (
       <StyledDoctorsContainer>
          <h2>
-            Наши <span style={{ color: '#048741' }}>врачи</span>
+            Наши <GreenText>врачи</GreenText>
          </h2>
          <p>
             Попасть в команду медицинской клиники «Medical Clinic» могут <br />
@@ -126,4 +126,8 @@ const StyledText = styled('p')(() => ({
 
 const StyledSpan = styled('span')(() => ({
    margin: '7rem auto',
+}))
+
+const GreenText = styled('span')(() => ({
+   color: '#048741',
 }))

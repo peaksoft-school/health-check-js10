@@ -48,13 +48,9 @@ const DoctorInnerPage = () => {
                <p>
                   Должность: <b>{selectedDoctor.position}</b>
                </p>
-               <Button
-                  variant="contained"
-                  type="submit"
-                  style={{ marginTop: '2rem' }}
-               >
+               <StButton variant="contained" type="submit">
                   Записаться на прием
-               </Button>
+               </StButton>
             </div>
          </StyledDoctorsInnerContainer>
 
@@ -146,6 +142,10 @@ const StyledDoctorsContainer = styled('div')(() => ({
 
 const StyledText = styled('p')(() => ({
    padding: '10px 0',
+}))
+
+const StButton = styled(Button)(() => ({
+   marginTop: '2rem',
 }))
 
 const StyledDoctorsInnerContainer = styled('div')(() => ({

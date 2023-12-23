@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { pdfjs } from 'react-pdf'
+import pdfjs from 'pdfjs-dist'
 import { applicationsThunk } from './store/applications/applicationsThunk'
+
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
 // eslint-disable-next-line import/no-unresolved
@@ -23,13 +24,9 @@ function App() {
       }
    }, [])
 
-   useEffect(() => {
-      dispatch(applicationsThunk())
-   }, [dispatch])
-
    return (
       <div className="App">
-         <GetResult />
+         <AppRoutes />
       </div>
    )
 }

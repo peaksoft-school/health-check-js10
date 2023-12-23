@@ -1,5 +1,5 @@
-import { styled } from '@mui/material/styles'
 import React, { useEffect, useState } from 'react'
+import { styled } from '@mui/material/styles'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { MainDoctorImage, WelcomeWord } from '../../assets'
@@ -16,6 +16,9 @@ import {
    BEST_DOCTORS_IMAGES,
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
+import Header from '../../layout/user/header/Header'
+import Footer from '../../components/Footer'
+import AboutClinicLayout from '../../components/AboutClinicLayout'
 
 const LandingPage = ({ logoutHandler }) => {
    window.scrollTo({ top: 0 })

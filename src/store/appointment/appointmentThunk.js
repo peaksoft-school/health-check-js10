@@ -48,7 +48,6 @@ export const getCode = createAsyncThunk(
          const { data } = await axiosInstance.get('api/appointments/received', {
             params: { email },
          })
-         console.log(data, 'code')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(

@@ -15,19 +15,16 @@ import { injectStore } from './config/axiosInstance'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
-      <Provider store={injectStore(store)}>
-         <BrowserRouter>
-            <SnackbarProvider>
-               <ThemeProvider theme={theme}>
-                  <LocalizationProvider
-                     dateAdapter={AdapterDayjs}
-                     adapterLocale="ru"
-                  >
+      <LocalizationProvider adapterLocale="ru" dateAdapter={AdapterDayjs}>
+         <Provider store={injectStore(store)}>
+            <BrowserRouter>
+               <SnackbarProvider>
+                  <ThemeProvider theme={theme}>
                      <App />
-                  </LocalizationProvider>
-               </ThemeProvider>
-            </SnackbarProvider>
-         </BrowserRouter>
-      </Provider>
+                  </ThemeProvider>
+               </SnackbarProvider>
+            </BrowserRouter>
+         </Provider>
+      </LocalizationProvider>
    </React.StrictMode>
 )

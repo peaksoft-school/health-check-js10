@@ -25,7 +25,7 @@ const Button = ({
          '&:hover': {
             backgroundColor: ' #F5F5F5',
             border: 'none',
-            padding: '11px 27px',
+            padding: '10.5px 27px',
          },
          '&:active': {
             border: 'none',

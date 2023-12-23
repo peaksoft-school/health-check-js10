@@ -3,7 +3,24 @@ import { Table, TableHead, TableRow, TableCell } from '@mui/material'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const AppTable = ({ columns, data }) => {
+const AppTable = ({ columns, data, empty }) => {
+   if (!data || data.length === 0) {
+      return <StyledAbsence>{empty}</StyledAbsence>
+   }
+
+   // if (data.length === 0) {
+   //    return (
+   //       <StyledError>
+   //          <div>
+   //             <p>
+   //                {variant === 'patients' && 'Не удалось найти пациентов.'}
+   //                {variant === 'appointments' && 'Не удалось найти записей.'}
+   //             </p>
+   //          </div>
+   //       </StyledError>
+   //    )
+   // }
+
    return (
       <Container>
          <Table className="navlink">
@@ -17,7 +34,7 @@ const AppTable = ({ columns, data }) => {
                         }}
                      >
                         <span>{column.icon}</span>
-                        {column.label}
+                        <div>{column.label}</div>
                      </TableCell>
                   ))}
                </TableRow>
@@ -31,7 +48,7 @@ const AppTable = ({ columns, data }) => {
                         }
                         return (
                            <TableCell
-                              key={column.id}
+                              key={`${item.id}-${column.id}`}
                               title={String(item[column.id])}
                               condition={item.condition}
                            >
@@ -44,6 +61,16 @@ const AppTable = ({ columns, data }) => {
                                          )}...`
                                        : item[column.id]}
                                  </StyledCondition>
+                                 {Array.isArray(column.ids) && (
+                                    <div>
+                                       {column.ids.map((id) => (
+                                          <span key={id}>
+                                             {data?.[0]?.[id]}
+                                             <br />
+                                          </span>
+                                       ))}
+                                    </div>
+                                 )}
                               </Link>
                            </TableCell>
                         )
@@ -112,4 +139,31 @@ const StyledCondition = styled.span(({ condition }) => ({
    color: getConditionColor(condition),
 }))
 
+const StyledAbsence = styled('div')(() => ({
+   textAlign: 'center',
+   padding: '20vh 0',
+   opacity: '20%',
+}))
+// const StyledError = styled('div')(() => ({
+//    display: 'flex',
+//    justifyContent: 'center',
+//    alignItems: 'center',
+//    minHeight: '200px',
+//    width: '800px',
+//    '& > div': {
+//       textAlign: 'center',
+//       borderRadius: 20,
+//       padding: '20px',
+//       border: '1px solid gray',
+//       backgroundColor: '#cfcaca',
+//       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+//       maxWidth: '500px',
+//       width: '100%',
+//    },
+//    '& > p': {
+//       color: 'gray',
+//       fontSize: '18px',
+//       fontWeight: 'bold',
+//    },
+// }))
 export default AppTable

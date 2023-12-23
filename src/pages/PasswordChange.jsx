@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
-import { Formik, ErrorMessage, Form } from 'formik'
-import { NavLink } from 'react-router-dom'
-import * as Yup from 'yup'
 import { IconButton, InputAdornment, styled } from '@mui/material'
+import { ErrorMessage, Form, Formik } from 'formik'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import * as Yup from 'yup'
 import { HideIcon, ShowIcon } from '../assets'
-import { Input } from '../components/UI/input/Input'
 import Button from '../components/UI/Button'
+import { Input } from '../components/UI/input/Input'
+import { updatePassword } from '../store/profile/profileThunk'
 
 export const PasswordChange = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const [showPasswordEnd, setShowPasswordEnd] = useState(false)
-   const setActive = ({ isActive }) => `Enabled  ${isActive && 'active-link'}`
+   const dispatch = useDispatch()
 
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -52,22 +53,17 @@ export const PasswordChange = () => {
                .required('Пароль не совпадают'),
          })}
          onSubmit={(values) => {
-            console.log(values)
+            dispatch(
+               updatePassword({
+                  oldPassword: values.lastpassword,
+                  newPassword: values.newpassword,
+               })
+            )
          }}
       >
          {({ values, handleChange }) => (
             <FormStyled>
                <DivContainerStyled>
-                  <h2>Профиль</h2>
-                  <div className="LinkTwo">
-                     <NavLink className={setActive} to="/Profile">
-                        личные данные
-                     </NavLink>
-
-                     <NavLink className={setActive} to="/PasswordChange">
-                        Сменить пароль
-                     </NavLink>
-                  </div>
                   <h4 className="changePassword">Смена пароля</h4>
                   <div className="boxOne">
                      <label className="label" htmlFor="lastpassword">
@@ -75,7 +71,6 @@ export const PasswordChange = () => {
                      </label>
                      <InputStyled
                         type={showPassword ? 'text' : 'password'}
-                        id="lastpassword"
                         name="lastpassword"
                         placeholder="Введите ваш пароль"
                         InputProps={{
@@ -103,7 +98,6 @@ export const PasswordChange = () => {
                      </label>
                      <InputStyled
                         type={showPasswordCopy ? 'text' : 'password'}
-                        id="newpassword"
                         name="newpassword"
                         placeholder="Введите новый пароль"
                         InputProps={{
@@ -134,7 +128,6 @@ export const PasswordChange = () => {
                      </label>
                      <InputStyled
                         type={showPasswordEnd ? 'text' : 'password'}
-                        id="confirmpassword"
                         name="confirmpassword"
                         placeholder="Подтвердите пароль"
                         InputProps={{

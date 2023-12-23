@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import Button from '../../components/UI/Button'
-import { FeedbackSlider } from '../../components/UI/slider/FeedbackSlider'
-import Modal from '../../components/UI/Modal'
-import ApplicationForm from '../../components/ApplicationForm'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { MainDoctorImage, WelcomeWord } from '../../assets'
+import AboutClinicLayout from '../../components/AboutClinicLayout'
+import ApplicationForm from '../../components/ApplicationForm'
+import Button from '../../components/UI/Button'
+import Modal from '../../components/UI/Modal'
+import { FeedbackSlider } from '../../components/UI/slider/FeedbackSlider'
+import Footer from '../../layout/Footer'
+import Header from '../../layout/user/header/Header'
+import { login } from '../../store/auth/authSlice'
+import { USER_KEY } from '../../utils/constants/constants'
 import {
    BEST_DOCTORS_IMAGES,
    MAIN_MED_SERVICES,
@@ -17,6 +24,8 @@ const LandingPage = ({ logoutHandler }) => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const showModalHandler = () => {
       setShowApplicationModal(true)
@@ -25,6 +34,13 @@ const LandingPage = ({ logoutHandler }) => {
    const closeModalHandler = () => {
       setShowApplicationModal(false)
    }
+
+   useEffect(() => {
+      const user = JSON.parse(localStorage.getItem(USER_KEY)) || {}
+      if (user.token) {
+         dispatch(login({ data: user, navigate }))
+      }
+   }, [])
 
    return (
       <>

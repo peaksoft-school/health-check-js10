@@ -5,7 +5,6 @@ import { logout } from '../store/auth/authSlice'
 export const BASE_URL =
    // 'http://ec2-3-71-86-3.eu-central-1.compute.amazonaws.com'
    'http://3.70.97.1'
-;('http://ec2-3-70-97-1.eu-central-1.compute.amazonaws.com')
 
 const headers = {
    'Content-type': 'application/json',

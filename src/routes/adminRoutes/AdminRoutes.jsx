@@ -6,9 +6,11 @@ import Header from '../../layout/admin/header/Header'
 import { PrivateRoutes } from '../PrivateRoutes'
 import { routes } from '../../utils/constants/routes'
 import { ApplicationsAdmin } from '../../pages/admin/ApplicationsAdmin'
-import PatientComponent from '../../pages/admin/Patients'
-import Specialists from '../../components/appointment/Specialists'
+import { PatientsAdmin } from '../../pages/admin/Patients'
 import { AdminAppointmentsPage } from '../../pages/admin/AdminAppointmetsPage'
+import SchedulePage from '../../pages/admin/schedule/SchedulePage'
+import { notify } from '../../utils/constants/snackbar'
+import { PatientsInternalPage } from '../../pages/admin/PatientsInternalPage'
 
 const AdminRoutes = () => {
    const dispatch = useDispatch()
@@ -17,13 +19,23 @@ const AdminRoutes = () => {
    const { isAuth } = useSelector((state) => state.authorization)
 
    const logoutHandler = () => {
-      navigate('/homepage')
       dispatch(logout())
+      notify('Выход успешно выполнен')
+      navigate('/homepage')
    }
    return (
       <>
          <Header logoutHandler={logoutHandler} />
          <Routes>
+            <Route
+               path="/"
+               element={
+                  <PrivateRoutes
+                     component={<AdminAppointmentsPage />}
+                     isAuth={isAuth}
+                  />
+               }
+            />
             <Route
                path={routes.ADMIN.onlineRegistration}
                element={
@@ -31,6 +43,12 @@ const AdminRoutes = () => {
                      component={<AdminAppointmentsPage />}
                      isAuth={isAuth}
                   />
+               }
+            />
+            <Route
+               path="/online-registration/schedule"
+               element={
+                  <PrivateRoutes component={<SchedulePage />} isAuth={isAuth} />
                }
             />
             <Route
@@ -45,17 +63,24 @@ const AdminRoutes = () => {
             <Route
                path={routes.ADMIN.specialists}
                element={
-                  <PrivateRoutes component={<Specialists />} isAuth={isAuth} />
+                  <PrivateRoutes
+                     component={<PatientsAdmin />}
+                     isAuth={isAuth}
+                  />
                }
             />
             <Route
                path={routes.ADMIN.patients}
                element={
                   <PrivateRoutes
-                     component={<PatientComponent />}
+                     component={<PatientsAdmin />}
                      isAuth={isAuth}
                   />
                }
+            />
+            <Route
+               path={routes.ADMIN.patientsId}
+               element={<PatientsInternalPage />}
             />
          </Routes>
       </>

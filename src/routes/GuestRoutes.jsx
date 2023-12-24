@@ -1,25 +1,21 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, Routes, useNavigate } from 'react-router-dom'
-import { logout } from '../../store/auth/authSlice'
-import Header from '../../layout/user/header/Header'
-import LandingPage from '../../pages/user/LandingPage'
-import OurAllServices from '../../pages/user/OurAllServices'
-import AboutHealth from '../../components/AboutHealth'
-import Prices from '../../components/Prices'
-import Contacts from '../../components/Contacts'
-import Profile from '../../pages/user/Profile'
-import Footer from '../../layout/Footer'
-import { notify } from '../../utils/constants/snackbar'
+import { Route, Routes } from 'react-router-dom'
+import { logout } from '../store/auth/authSlice'
+import Header from '../layout/user/header/Header'
+import LandingPage from '../pages/user/LandingPage'
+import OurAllServices from '../pages/user/OurAllServices'
+import AboutHealth from '../components/AboutHealth'
+import Prices from '../components/Prices'
+import Contacts from '../components/Contacts'
+import Profile from '../pages/user/Profile'
+import Footer from '../layout/Footer'
 
-const UserRoutes = () => {
+const GuestRoutes = () => {
    const dispatch = useDispatch()
-   const navigate = useNavigate()
 
    const logoutHandler = () => {
       dispatch(logout())
-      notify('Выход успешно выполнен')
-      navigate('/homepage')
    }
    return (
       <>
@@ -43,4 +39,4 @@ const UserRoutes = () => {
    )
 }
 
-export default UserRoutes
+export default GuestRoutes

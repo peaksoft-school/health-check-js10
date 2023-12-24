@@ -2,14 +2,11 @@ import React from 'react'
 import { styled } from '@mui/material'
 import CustomizedAccordions from './UI/Accordion'
 import { prices } from '../utils/constants/accordions'
-import Header from '../layout/user/header/Header'
-import Footer from '../layout/Footer'
 
 const Prices = () => {
    window.scrollTo({ top: 0 })
    return (
       <>
-         <Header variant="hr" />
          <MainPart>
             <a href="/">Главная {'>'}</a>
             <span className="service"> Прайс</span>
@@ -46,7 +43,6 @@ const Prices = () => {
                ))}
             </StyledAccordions>
          </AccordionContainer>
-         <Footer />
       </>
    )
 }

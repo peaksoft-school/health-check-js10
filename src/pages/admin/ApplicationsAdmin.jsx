@@ -197,7 +197,6 @@ const StyledContainerApp = styled('div')`
       h3 {
          font-size: 24px;
          font-weight: 500;
-         padding-bottom: 3rem;
       }
    }
 
@@ -213,7 +212,7 @@ const StyledContainerApp = styled('div')`
    }
 
    thead:first-of-type > .css-13wgndv-MuiTableRow-root {
-      th:nth-child(-n + 3) {
+      th:nth-of-type(-n + 3) {
          label {
             margin: 0;
             text-align: left;
@@ -227,7 +226,7 @@ const StyledContainerApp = styled('div')`
          text-align: end;
          padding-left: 0;
       }
-      th:nth-last-child(-n + 2) {
+      th:nth-last-of-type(-n + 2) {
          width: 30px;
          text-align: end;
       }
@@ -238,7 +237,7 @@ const StyledContainerApp = styled('div')`
          border-bottom: none;
       }
       thead,
-      tr:nth-child(2n + 2) {
+      tr:nth-of-type(2n + 2) {
          background-color: rgba(245, 245, 245, 0.61);
       }
    }
@@ -246,7 +245,7 @@ const StyledContainerApp = styled('div')`
       background: none;
    }
    .css-13wgndv-MuiTableRow-root {
-      th:first-child {
+      th:first-of-type {
          padding-left: 27px;
       }
       th:last-of-type {
@@ -254,7 +253,7 @@ const StyledContainerApp = styled('div')`
          text-align: end;
          padding-right: 10px;
       }
-      th:nth-last-child(-n + 2) {
+      th:nth-last-of-type(-n + 2) {
          width: 30px;
          text-align: end;
          padding-right: 10px;

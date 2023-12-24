@@ -6,8 +6,6 @@ import { IconButton, InputAdornment, styled } from '@mui/material'
 import { HideIcon, ShowIcon } from '../../assets'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
-import Header from '../../layout/user/header/Header'
-import Footer from '../../layout/Footer'
 
 export const PasswordChange = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -31,179 +29,152 @@ export const PasswordChange = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
    }
    return (
-      <>
-         <Header variant="hr" />
-         <Formik
-            initialValues={{
-               lastpassword: '',
-               newpassword: '',
-               confirmpassword: '',
-            }}
-            validationSchema={Yup.object({
-               lastpassword: Yup.string()
-                  .min(6, 'Старый пароль должен содержать максимум 6 символов')
-                  .required('Пожалуйста, напишите старый пароль'),
+      <Formik
+         initialValues={{
+            lastpassword: '',
+            newpassword: '',
+            confirmpassword: '',
+         }}
+         validationSchema={Yup.object({
+            lastpassword: Yup.string()
+               .min(6, 'Старый пароль должен содержать максимум 6 символов')
+               .required('Пожалуйста, напишите старый пароль'),
 
-               newpassword: Yup.string()
-                  .min(6, 'Пароль должен содержать не менее 6 букв')
-                  .notOneOf(
-                     [Yup.ref('lastpassword'), null],
-                     'Новый пароль должен отличаться от старого⁠⁠'
-                  ),
+            newpassword: Yup.string()
+               .min(6, 'Пароль должен содержать не менее 6 букв')
+               .notOneOf(
+                  [Yup.ref('lastpassword'), null],
+                  'Новый пароль должен отличаться от старого⁠⁠'
+               ),
 
-               confirmpassword: Yup.string()
-                  .oneOf([Yup.ref('newpassword'), null], 'Пароли не совпадают')
-                  .required('Пароль не совпадают'),
-            })}
-            onSubmit={(values) => {
-               console.log(values)
-            }}
-         >
-            {({ values, handleChange }) => (
-               <FormStyled>
-                  <DivContainerStyled>
-                     <h2>Профиль</h2>
-                     <div className="LinkTwo">
-                        <NavLink to="/profile">личные данные</NavLink>
+            confirmpassword: Yup.string()
+               .oneOf([Yup.ref('newpassword'), null], 'Пароли не совпадают')
+               .required('Пароль не совпадают'),
+         })}
+         onSubmit={(values) => {
+            console.log(values)
+         }}
+      >
+         {({ values, handleChange }) => (
+            <FormStyled>
+               <DivContainerStyled>
+                  <h2>Профиль</h2>
+                  <div className="LinkTwo">
+                     <NavLink to="/profile">личные данные</NavLink>
 
-                        <NavLink
-                           className={setActive}
-                           to="/profile/password-change"
-                        >
-                           Сменить пароль
-                        </NavLink>
-                     </div>
-                     <h4 className="changePassword">Смена пароля</h4>
-                     <div className="boxOne">
-                        <label className="label" htmlFor="lastpassword">
-                           Старый пароль
-                        </label>
-                        <InputStyled
-                           type={showPassword ? 'text' : 'password'}
-                           id="lastpassword"
-                           name="lastpassword"
-                           placeholder="Введите ваш пароль"
-                           InputProps={{
-                              endAdornment: (
-                                 <InputAdornment
-                                    className="Eyes"
-                                    position="start"
-                                 >
-                                    <IconButton
-                                       onMouseDown={showPasswordHandle}
-                                       onClick={togglePasswordVisibility}
-                                    >
-                                       {showPassword ? (
-                                          <ShowIcon />
-                                       ) : (
-                                          <HideIcon />
-                                       )}
-                                    </IconButton>
-                                 </InputAdornment>
-                              ),
-                           }}
-                           onChange={handleChange}
-                           value={values.lastpassword}
-                        />
-
-                        <ErrorMessageStyled
-                           name="lastpassword"
-                           component="div"
-                        />
-                     </div>
-
-                     <div className="boxOne">
-                        <label className="label" htmlFor="newpassword">
-                           Новый пароль
-                        </label>
-                        <InputStyled
-                           type={showPasswordCopy ? 'text' : 'password'}
-                           id="newpassword"
-                           name="newpassword"
-                           placeholder="Введите новый пароль"
-                           InputProps={{
-                              endAdornment: (
-                                 <InputAdornment
-                                    position="start"
-                                    className="Eyes"
-                                 >
-                                    <IconButton
-                                       onMouseDown={showPasswordCopyHandler}
-                                       onClick={togglePasswordVisibility}
-                                    >
-                                       {showPasswordCopy ? (
-                                          <ShowIcon />
-                                       ) : (
-                                          <HideIcon />
-                                       )}
-                                    </IconButton>
-                                 </InputAdornment>
-                              ),
-                           }}
-                           onChange={handleChange}
-                           value={values.newpassword}
-                        />
-                        <ErrorMessageStyled
-                           name="newpassword"
-                           component="div"
-                        />
-                     </div>
-
-                     <div className="boxOne">
-                        <label className="label" htmlFor="confirmpassword">
-                           Подтвердить новый пароль
-                        </label>
-                        <InputStyled
-                           type={showPasswordEnd ? 'text' : 'password'}
-                           id="confirmpassword"
-                           name="confirmpassword"
-                           placeholder="Подтвердите пароль"
-                           InputProps={{
-                              endAdornment: (
-                                 <InputAdornment
-                                    position="start"
-                                    className="Eyes"
-                                 >
-                                    <IconButton
-                                       onMouseDown={showPasswordEndHandler}
-                                       onClick={togglePasswordVisibility}
-                                    >
-                                       {showPasswordEnd ? (
-                                          <ShowIcon />
-                                       ) : (
-                                          <HideIcon />
-                                       )}
-                                    </IconButton>
-                                 </InputAdornment>
-                              ),
-                           }}
-                           onChange={handleChange}
-                           value={values.confirmpassword}
-                        />
-                        <ErrorMessageStyled
-                           name="confirmpassword"
-                           component="div"
-                        />
-                     </div>
-                  </DivContainerStyled>
-
-                  <div className="buttonStyle">
-                     <Button
-                        className="buttons"
-                        type="button"
-                        variant="outlined"
+                     <NavLink
+                        className={setActive}
+                        to="/profile/password-change"
                      >
-                        назад
-                     </Button>
-                     <Button className="buttons" type="submit">
-                        подтвердить
-                     </Button>
+                        Сменить пароль
+                     </NavLink>
                   </div>
-               </FormStyled>
-            )}
-         </Formik>
-         <Footer />
-      </>
+                  <h4 className="changePassword">Смена пароля</h4>
+                  <div className="boxOne">
+                     <label className="label" htmlFor="lastpassword">
+                        Старый пароль
+                     </label>
+                     <InputStyled
+                        type={showPassword ? 'text' : 'password'}
+                        id="lastpassword"
+                        name="lastpassword"
+                        placeholder="Введите ваш пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment className="Eyes" position="start">
+                                 <IconButton
+                                    onMouseDown={showPasswordHandle}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPassword ? <ShowIcon /> : <HideIcon />}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.lastpassword}
+                     />
+
+                     <ErrorMessageStyled name="lastpassword" component="div" />
+                  </div>
+
+                  <div className="boxOne">
+                     <label className="label" htmlFor="newpassword">
+                        Новый пароль
+                     </label>
+                     <InputStyled
+                        type={showPasswordCopy ? 'text' : 'password'}
+                        id="newpassword"
+                        name="newpassword"
+                        placeholder="Введите новый пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment position="start" className="Eyes">
+                                 <IconButton
+                                    onMouseDown={showPasswordCopyHandler}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPasswordCopy ? (
+                                       <ShowIcon />
+                                    ) : (
+                                       <HideIcon />
+                                    )}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.newpassword}
+                     />
+                     <ErrorMessageStyled name="newpassword" component="div" />
+                  </div>
+
+                  <div className="boxOne">
+                     <label className="label" htmlFor="confirmpassword">
+                        Подтвердить новый пароль
+                     </label>
+                     <InputStyled
+                        type={showPasswordEnd ? 'text' : 'password'}
+                        id="confirmpassword"
+                        name="confirmpassword"
+                        placeholder="Подтвердите пароль"
+                        InputProps={{
+                           endAdornment: (
+                              <InputAdornment position="start" className="Eyes">
+                                 <IconButton
+                                    onMouseDown={showPasswordEndHandler}
+                                    onClick={togglePasswordVisibility}
+                                 >
+                                    {showPasswordEnd ? (
+                                       <ShowIcon />
+                                    ) : (
+                                       <HideIcon />
+                                    )}
+                                 </IconButton>
+                              </InputAdornment>
+                           ),
+                        }}
+                        onChange={handleChange}
+                        value={values.confirmpassword}
+                     />
+                     <ErrorMessageStyled
+                        name="confirmpassword"
+                        component="div"
+                     />
+                  </div>
+               </DivContainerStyled>
+
+               <div className="buttonStyle">
+                  <Button className="buttons" type="button" variant="outlined">
+                     назад
+                  </Button>
+                  <Button className="buttons" type="submit">
+                     подтвердить
+                  </Button>
+               </div>
+            </FormStyled>
+         )}
+      </Formik>
    )
 }
 

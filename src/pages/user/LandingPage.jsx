@@ -10,12 +10,10 @@ import {
    BEST_DOCTORS_IMAGES,
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
-import Header from '../../layout/user/header/Header'
-import Footer from '../../layout/Footer'
 import AboutClinicLayout from '../../components/AboutClinicLayout'
 import { ApplicationModal } from '../../components/ApplicationModal'
 
-const LandingPage = ({ logoutHandler }) => {
+const LandingPage = () => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
@@ -36,7 +34,6 @@ const LandingPage = ({ logoutHandler }) => {
 
    return (
       <>
-         <Header logoutHandler={logoutHandler} />
          <GlobalContainer>
             <div>
                <Box>
@@ -148,7 +145,6 @@ const LandingPage = ({ logoutHandler }) => {
          </GlobalDoctorContainer>
          <FeedbackSlider />
          <ApplicationForm />
-         <Footer />
       </>
    )
 }

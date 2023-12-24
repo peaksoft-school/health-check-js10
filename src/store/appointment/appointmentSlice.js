@@ -17,7 +17,11 @@ const initialState = {
 export const appointmentSlice = createSlice({
    name: 'appointment',
    initialState,
-   reducer: {},
+   reducers: {
+      clearError: (state) => {
+         state.error = null
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(getAllDoctors.fulfilled, (state, action) => {
          state.doctors = action.payload
@@ -39,4 +43,4 @@ export const appointmentSlice = createSlice({
    },
 })
 
-export const { getDoctors } = appointmentSlice.actions
+export const { getDoctors, clearError } = appointmentSlice.actions

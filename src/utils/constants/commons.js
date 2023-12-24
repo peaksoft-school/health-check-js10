@@ -93,7 +93,7 @@ export const departments = {
    Нейрохирургия: 'NEUROSURGERY',
    Ортопедия: 'ORTHOPEDICS',
    Офтальмология: 'OPHTHALMOLOGY',
-   Психтерапия: 'PSYCHOTHERAPY',
+   Психотерапия: 'PSYCHOTHERAPY',
    Ревмотология: 'RHEUMATOLOGY',
    Урология: 'UROLOGY',
    Эндокринология: 'ENDOCRINOLOGY',

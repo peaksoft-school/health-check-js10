@@ -4,8 +4,6 @@ import * as Yup from 'yup'
 import { styled } from '@mui/material'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
-import Header from '../../layout/user/header/Header'
-import Footer from '../../layout/Footer'
 
 const Profile = () => {
    const initialValues = {
@@ -36,120 +34,107 @@ const Profile = () => {
    const setActive = ({ isActive }) => `Enabled  ${isActive && 'active-link'}`
 
    return (
-      <>
-         <Header variant="hr" />
-         <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-         >
-            {({ values, handleChange }) => (
-               <FormStyled>
-                  <h2 className="cap">Профиль</h2>
-                  <div className="LinkTwo">
-                     <NavLink to="/profile" className={setActive}>
-                        личные данные
-                     </NavLink>
-                     <NavLink
-                        to="/profile/password-change"
-                        className={setActive}
-                     >
-                        cменить пароль
-                     </NavLink>
-                  </div>
-                  <h4 className="personalData">Ваши личные данные</h4>
+      <Formik
+         initialValues={initialValues}
+         validationSchema={validationSchema}
+         onSubmit={onSubmit}
+      >
+         {({ values, handleChange }) => (
+            <FormStyled>
+               <h2 className="cap">Профиль</h2>
+               <div className="LinkTwo">
+                  <NavLink to="/profile" className={setActive}>
+                     личные данные
+                  </NavLink>
+                  <NavLink to="/profile/password-change" className={setActive}>
+                     cменить пароль
+                  </NavLink>
+               </div>
+               <h4 className="personalData">Ваши личные данные</h4>
 
-                  <div className="firstContainer">
-                     <div className="Parent">
-                        <div className="box">
-                           <label className="label" htmlFor="username">
-                              Имя
-                           </label>
-                           <InputStyled
-                              onChange={handleChange}
-                              value={values.username}
-                              type="text"
-                              name="username"
-                              placeholder="Имя"
-                           />
-                           <ErrorMessageStyled
-                              name="username"
-                              component="span"
-                           />
-                        </div>
-                        <div className="box">
-                           <label className="label" htmlFor="useremail">
-                              E-mail
-                           </label>
-                           <InputStyled
-                              type="text"
-                              name="useremail"
-                              placeholder="Email"
-                              onChange={handleChange}
-                              value={values.useremail}
-                           />
-                           <ErrorMessageStyled
-                              name="useremail"
-                              component="span"
-                           />
-                        </div>
+               <div className="firstContainer">
+                  <div className="Parent">
+                     <div className="box">
+                        <label className="label" htmlFor="username">
+                           Имя
+                        </label>
+                        <InputStyled
+                           onChange={handleChange}
+                           value={values.username}
+                           type="text"
+                           name="username"
+                           placeholder="Имя"
+                        />
+                        <ErrorMessageStyled name="username" component="span" />
                      </div>
-
-                     <div>
-                        <div className="box">
-                           <label className="label" htmlFor="userlastname">
-                              Фамилия
-                           </label>
-                           <InputStyled
-                              onChange={handleChange}
-                              value={values.userlastname}
-                              type="text"
-                              name="userlastname"
-                              placeholder="Фамилия"
-                           />
-                           <ErrorMessageStyled
-                              name="userlastname"
-                              component="span"
-                           />
-                        </div>
-
-                        <div className="box">
-                           <label className="label" htmlFor="usertelefone">
-                              Телефон
-                           </label>
-                           <InputStyled
-                              onChange={handleChange}
-                              value={values.usertelefone}
-                              type="text"
-                              name="usertelefone"
-                              placeholder="+996 (_ _ _) _ _  _ _  _ _"
-                           />
-                           <ErrorMessageStyled
-                              name="usertelefone"
-                              component="span"
-                           />
-                        </div>
+                     <div className="box">
+                        <label className="label" htmlFor="useremail">
+                           E-mail
+                        </label>
+                        <InputStyled
+                           type="text"
+                           name="useremail"
+                           placeholder="Email"
+                           onChange={handleChange}
+                           value={values.useremail}
+                        />
+                        <ErrorMessageStyled name="useremail" component="span" />
                      </div>
                   </div>
 
-                  <ButtonStyled>
-                     <Button
-                        className="buttonStyle"
-                        type="button"
-                        onClick={handleCancel}
-                        variant="outlined"
-                     >
-                        назад
-                     </Button>
-                     <Button className="buttonStyle" type="submit">
-                        Редактировать
-                     </Button>
-                  </ButtonStyled>
-               </FormStyled>
-            )}
-         </Formik>
-         <Footer />
-      </>
+                  <div>
+                     <div className="box">
+                        <label className="label" htmlFor="userlastname">
+                           Фамилия
+                        </label>
+                        <InputStyled
+                           onChange={handleChange}
+                           value={values.userlastname}
+                           type="text"
+                           name="userlastname"
+                           placeholder="Фамилия"
+                        />
+                        <ErrorMessageStyled
+                           name="userlastname"
+                           component="span"
+                        />
+                     </div>
+
+                     <div className="box">
+                        <label className="label" htmlFor="usertelefone">
+                           Телефон
+                        </label>
+                        <InputStyled
+                           onChange={handleChange}
+                           value={values.usertelefone}
+                           type="text"
+                           name="usertelefone"
+                           placeholder="+996 (_ _ _) _ _  _ _  _ _"
+                        />
+                        <ErrorMessageStyled
+                           name="usertelefone"
+                           component="span"
+                        />
+                     </div>
+                  </div>
+               </div>
+
+               <ButtonStyled>
+                  <Button
+                     className="buttonStyle"
+                     type="button"
+                     onClick={handleCancel}
+                     variant="outlined"
+                  >
+                     назад
+                  </Button>
+                  <Button className="buttonStyle" type="submit">
+                     Редактировать
+                  </Button>
+               </ButtonStyled>
+            </FormStyled>
+         )}
+      </Formik>
    )
 }
 

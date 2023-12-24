@@ -4,42 +4,35 @@ import { Breadcrumbs, Stack } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import ServiceCard from '../../components/UI/ServiceCard'
 import ApplicationForm from '../../components/ApplicationForm'
-import Header from '../../layout/user/header/Header'
 import FAQ from '../../components/FAQ'
-import Footer from '../../layout/Footer'
 
 const OurAllServices = () => {
    window.scrollTo({ top: 0 })
    return (
       <div>
-         <Header variant="hr" />
-         <div>
-            <ServiceStyle>
-               <StyledStack spacing={2}>
-                  <Container separator="›" aria-label="breadcrumb">
-                     <StyledNavLink to="/">
-                        <p>Главная</p>
-                     </StyledNavLink>
-                     <p>Услуги</p>
-                  </Container>
-               </StyledStack>
-               <span className="label">Наши</span>
-               <span className="our_service"> услуги</span>
+         <ServiceStyle>
+            <StyledStack spacing={2}>
+               <Container separator="›" aria-label="breadcrumb">
+                  <StyledNavLink to="/">
+                     <p>Главная</p>
+                  </StyledNavLink>
+                  <p>Услуги</p>
+               </Container>
+            </StyledStack>
+            <span className="label">Наши</span>
+            <span className="our_service"> услуги</span>
 
-               <ServiceCard />
-               <SelectContent>
-                  <p className="topic">Часто задаваемые вопросы</p>
-                  <p className="info">
-                     Специалисты нашей клиники с удовольствием ответят на все
-                     ваши вопросы. <br /> Ниже представленны наиболее
-                     популярные.
-                  </p>
-                  <FAQ />
-               </SelectContent>
-            </ServiceStyle>
-            <ApplicationForm />
-         </div>
-         <Footer />
+            <ServiceCard />
+            <SelectContent>
+               <p className="topic">Часто задаваемые вопросы</p>
+               <p className="info">
+                  Специалисты нашей клиники с удовольствием ответят на все ваши
+                  вопросы. <br /> Ниже представленны наиболее популярные.
+               </p>
+               <FAQ />
+            </SelectContent>
+         </ServiceStyle>
+         <ApplicationForm />
       </div>
    )
 }
@@ -54,6 +47,7 @@ const Container = styled(Breadcrumbs)({
    fontWeight: 400,
    fontSize: '14px',
    lineHeight: '19px',
+   paddingTop: '25px',
    fontFamily: 'Manrope',
    fontStyle: 'normal',
    '& .css-1bifq5f-MuiTypography-root-MuiBreadcrumbs-root': {

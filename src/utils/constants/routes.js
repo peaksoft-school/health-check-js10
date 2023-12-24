@@ -3,22 +3,19 @@ export const routes = {
       changePassword: '/change-password',
    },
    ADMIN: {
-      path: '/admin',
+      path: '/online-registration',
       onlineRegistration: '/online-registration',
       applications: '/applications',
       specialists: '/specialists',
       patients: '/patients',
-      patientsId: '/patients/:id',
+      patientsId: '/patients/:patientId',
    },
    USER: {
-      path: '/user',
+      path: '/homepage',
       service: '/service',
       doctors: '/doctors',
       aboutClinic: '/about-clinic',
       prices: '/prices',
       contacts: '/contacts',
-   },
-   DOCTOR: {
-      path: '/doctor',
    },
 }

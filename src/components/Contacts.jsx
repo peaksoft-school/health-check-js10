@@ -4,61 +4,53 @@ import React from 'react'
 import { Breadcrumbs } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import Map from './Map'
-import Header from '../layout/user/header/Header'
-import Footer from '../layout/Footer'
 
 const Contacts = () => {
    window.scrollTo({ top: 0 })
    return (
-      <>
-         <Header variant="hr" />
-
-         <div>
-            <Wrapper>
-               <Stack spacing={2}>
-                  <Container separator="›" aria-label="breadcrumb">
-                     <StyledNavLink to="/">
-                        <p>Главная</p>
-                     </StyledNavLink>
-                     <p>Контакты</p>
-                  </Container>
-               </Stack>
-               <Titl>
-                  Наши <span style={{ color: '#048741' }}>контакты</span>
-               </Titl>
-               <Title>
-                  Комфорт и спокойствие пациента — это часть качественного
-                  лечения! Предупредите администратора, что вы едете к нам на
-                  машине и мы предложим бесплатную подземную парковку при нашей
-                  клинике.
-               </Title>
-               <ContainerInfo>
-                  <ContactInfo>Контактные номера:</ContactInfo>
-                  <ContactInfoP>
-                     +996(800) 000 000 ; +996(505) 000 000
-                  </ContactInfoP>
-               </ContainerInfo>
-               <ContainerInfo>
-                  <ContactInfo>Наш адрес:</ContactInfo>
-                  <ContactInfoP>
-                     Кыргызстан, г. Бишкек, Гражданская 119
-                  </ContactInfoP>
-               </ContainerInfo>
-               <ContainerInfo>
-                  <ContactInfo>Режим работы клиники:</ContactInfo>
-                  <ContactInfoP>
-                     Понедельник - суббота с 08:00 до 18:00.
-                  </ContactInfoP>
-               </ContainerInfo>
-               <ContainerInfo>
-                  <ContactInfo>Электронная почта :</ContactInfo>
-                  <ContactInfoP> healthchek.kg</ContactInfoP>
-               </ContainerInfo>
-            </Wrapper>
-            <Map />
-         </div>
-         <Footer />
-      </>
+      <div>
+         <Wrapper>
+            <Stack spacing={2}>
+               <Container separator="›" aria-label="breadcrumb">
+                  <StyledNavLink to="/">
+                     <p>Главная</p>
+                  </StyledNavLink>
+                  <p>Контакты</p>
+               </Container>
+            </Stack>
+            <Titl>
+               Наши <span style={{ color: '#048741' }}>контакты</span>
+            </Titl>
+            <Title>
+               Комфорт и спокойствие пациента — это часть качественного лечения!
+               Предупредите администратора, что вы едете к нам на машине и мы
+               предложим бесплатную подземную парковку при нашей клинике.
+            </Title>
+            <ContainerInfo>
+               <ContactInfo>Контактные номера:</ContactInfo>
+               <ContactInfoP>
+                  +996(800) 000 000 ; +996(505) 000 000
+               </ContactInfoP>
+            </ContainerInfo>
+            <ContainerInfo>
+               <ContactInfo>Наш адрес:</ContactInfo>
+               <ContactInfoP>
+                  Кыргызстан, г. Бишкек, Гражданская 119
+               </ContactInfoP>
+            </ContainerInfo>
+            <ContainerInfo>
+               <ContactInfo>Режим работы клиники:</ContactInfo>
+               <ContactInfoP>
+                  Понедельник - суббота с 08:00 до 18:00.
+               </ContactInfoP>
+            </ContainerInfo>
+            <ContainerInfo>
+               <ContactInfo>Электронная почта :</ContactInfo>
+               <ContactInfoP> healthchek.kg</ContactInfoP>
+            </ContainerInfo>
+         </Wrapper>
+         <Map />
+      </div>
    )
 }
 
@@ -126,7 +118,7 @@ const Container = styled(Breadcrumbs)({
    fontWeight: 400,
    fontSize: '14px',
    lineHeight: '19px',
-   marginTop: '30px',
+   paddingTop: '25px',
    marginBottom: '26px',
    fontFamily: 'Manrope',
    fontStyle: 'normal',

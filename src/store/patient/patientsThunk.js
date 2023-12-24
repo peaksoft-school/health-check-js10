@@ -23,12 +23,13 @@ export const fetchPatients = createAsyncThunk(
 
 export const deletePatient = createAsyncThunk(
    'patients/deletePatient',
-   async (patientId, { rejectWithValue }) => {
+   async (patientId, { rejectWithValue, dispatch }) => {
       try {
          const response = await axiosInstance.delete(
             `/api/patients/${patientId}`
          )
-         return [...response.data]
+         dispatch(fetchPatients())
+         return response.data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -42,11 +43,9 @@ export const deletePatient = createAsyncThunk(
 
 export const searchPatients = createAsyncThunk(
    'patients/searchPatients',
-   async (searchTerm, { rejectWithValue }) => {
+   async (word, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get('/api/patients', {
-            params: { word: searchTerm },
-         })
+         const response = await axiosInstance.get(`/api/patients?word=${word}`)
          return response.data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
@@ -84,7 +83,7 @@ export const getPatientsResultThunk = createAsyncThunk(
 
 export const getPatientsAsyncThunk = createAsyncThunk(
    'patientsData/patientsById',
-   async (patientId, { dispatch, rejectWithValue }) => {
+   async ({ patientId }, { dispatch, rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(`/api/patients/${patientId}`)
          dispatch(getPatientsResultThunk(patientId))

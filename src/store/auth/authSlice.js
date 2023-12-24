@@ -24,12 +24,21 @@ export const authSlice = createSlice({
          state.role = action.payload.data.role
          state.token = action.payload.data.token
          state.email = action.payload.data.email
-         action.payload.navigate(routes[action.payload.data.role].path)
+         // action.payload.navigate(routes[action.payload.data.role].path)
       },
       logout() {
          const newState = initialState
          localStorage.removeItem(USER_KEY)
          return newState
+      },
+      setAuthData(state, action) {
+         return {
+            ...state,
+            isAuth: true,
+            role: action.payload.role,
+            token: action.payload.token,
+            email: action.payload.email,
+         }
       },
    },
    extraReducers: (builder) => {
@@ -53,4 +62,4 @@ export const authSlice = createSlice({
    },
 })
 
-export const { login, register, logout } = authSlice.actions
+export const { login, register, logout, setAuthData } = authSlice.actions

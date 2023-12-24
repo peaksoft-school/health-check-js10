@@ -1,6 +1,5 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { SelectUI } from '../UI/Select'
 import Button from '../UI/Button'
 import { MED_SERVICE } from '../../utils/services/med_service'
 import {
@@ -9,6 +8,7 @@ import {
    ChooseSpecialistIcon,
    Rating,
 } from '../../assets'
+import { SelectUI } from './Select'
 
 const MainOnlineAppointment = ({
    openChooseSpecialist,

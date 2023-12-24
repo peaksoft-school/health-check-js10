@@ -200,7 +200,7 @@ const Header = ({ logoutHandler, variant }) => {
                </div>
             </FirstNavStyle>
             <SecondNavStyle>
-               <StyleCheck>
+               <StyleCheck onClick={() => navigate('/homepage')}>
                   <GroupIcon />
                   <HealthCheckIcon />
                </StyleCheck>
@@ -319,6 +319,7 @@ const StyleCheck = styled('div')`
    display: flex;
    gap: 10px;
    align-items: center;
+   cursor: pointer;
 `
 
 const NavList = styled('div')`

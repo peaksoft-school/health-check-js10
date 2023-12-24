@@ -99,7 +99,6 @@ const FooterContainer = styled('footer')`
    align-items: center;
    background: #212529;
    padding: 4rem 0rem 1.2rem;
-   margin-top: 7rem;
    .line {
       width: 90%;
       height: 0.5px;

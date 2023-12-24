@@ -1,55 +1,42 @@
-import React, { useState, useEffect } from 'react'
+import { IconButton, InputAdornment, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { DeleteOutline } from '@mui/icons-material'
-import { TextField } from '@mui/material'
-import styled from '@emotion/styled'
+import React, { useEffect, useState } from 'react'
+import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
-import { SearchIcon } from '../../assets'
+import { AppDeleteIcon, SearchIcon } from '../../assets'
 import {
-   fetchPatients,
    deletePatient,
+   fetchPatients,
    searchPatients,
 } from '../../store/patient/patientsThunk'
-import { notify } from '../../utils/constants/snackbar'
 
-const Patients = () => {
+export const PatientsAdmin = () => {
    const dispatch = useDispatch()
-   const { patients, loading, error } = useSelector((state) => state.patients)
+   const { patients } = useSelector((state) => state.patients)
    const [searchTerm, setSearchTerm] = useState('')
-
    useEffect(() => {
       dispatch(fetchPatients())
    }, [dispatch])
-
-   function debounce(func, delay) {
-      let timer
-      return function fn(...args) {
-         clearTimeout(timer)
-         timer = setTimeout(() => {
-            func.apply(this, args)
-         }, delay)
-      }
+   const handleSearchById = (value) => {
+      dispatch(searchPatients(value))
    }
-
-   const debouncedSearch = debounce((input) => {
-      dispatch(searchPatients(input))
-   }, 2000)
-
-   const handleInputChange = (e) => {
-      const input = e.target.value
-      setSearchTerm(input)
-      debouncedSearch(input)
+   useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+         if (searchTerm) {
+            handleSearchById(searchTerm)
+         } else {
+            dispatch(fetchPatients())
+         }
+      }, 1000)
+      return () => clearTimeout(delayDebounceFn)
+   }, [searchTerm, dispatch])
+   const handleChange = (event) => {
+      const inputValue = event.target.value
+      setSearchTerm(inputValue)
    }
-
-   const handleDelete = async (patientId) => {
-      try {
-         await dispatch(deletePatient(patientId))
-         dispatch(fetchPatients())
-      } catch (error) {
-         notify('Ошибка при удалении пациента', 'error')
-      }
+   const handleDelete = (patientId) => {
+      dispatch(deletePatient(patientId))
    }
-
    const columns = [
       { id: 'id', label: '№' },
       { id: 'fullName', label: 'Имя Фамилия' },
@@ -59,133 +46,113 @@ const Patients = () => {
       {
          id: 'delete',
          label: 'Действия',
-         render: (patient) => (
-            <StyledBox>
-               <StyledDeleteButton
-                  variant="outlined"
-                  color="error"
-                  onClick={() => handleDelete(patient.id)}
-               >
-                  <DeleteOutline />
-               </StyledDeleteButton>
-            </StyledBox>
-         ),
+         render: (el) => {
+            return (
+               <th>
+                  <AppDeleteIcon
+                     className="delete-icon"
+                     onClick={() => handleDelete(el.id)}
+                  />
+               </th>
+            )
+         },
       },
    ]
-
-   const renderCellValue = (row, column) => {
-      const value = row[column.id]
-      if (value || value === 0) {
-         return value
-      }
-      return '—'
-   }
-
    return (
-      <TableContainer>
-         <h3>Пациенты</h3>
-         <StyledTextField
-            placeholder="Поиск..."
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleInputChange}
-            InputProps={{
-               endAdornment: <StyledSearchIcon />,
-            }}
-         />
-         {loading === 'loading' ? (
-            <h1>Loading...</h1>
-         ) : (
-            <>
-               {loading === 'failed' && <p>Error: {error}</p>}
-               {loading === 'succeeded' && (
-                  <AppTable
-                     data={patients}
-                     columns={columns}
-                     renderCellValue={renderCellValue}
-                  />
-               )}
-            </>
-         )}
-      </TableContainer>
+      <StyledContainerApp>
+         <div className="appInput">
+            <h3>Пациенты</h3>
+            <StyledInput
+               type="text"
+               placeholder="Поиск"
+               value={searchTerm}
+               onChange={handleChange}
+               InputProps={{
+                  endAdornment: (
+                     <InputAdornment position="end">
+                        <IconButton>
+                           <SearchIcon />
+                        </IconButton>
+                     </InputAdornment>
+                  ),
+               }}
+            />
+         </div>
+         <div className="table">
+            <AppTable
+               columns={columns}
+               data={patients}
+               empty={<h1>Пациенты отсутствуют</h1>}
+            />
+         </div>
+      </StyledContainerApp>
    )
 }
-
-export default Patients
-
-const TableContainer = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'flex-start',
-   minHeight: '100vh',
-   padding: '4rem',
-   paddingTop: 'calc(11vh + 3rem)',
-   background: '#f5f5f5',
-   fontFamily: 'Manrope',
-   table: {
-      width: '87rem',
+const StyledContainerApp = styled('div')`
+   background-color: #f5f5f5;
+   padding: calc(11vh + 3rem) 4% 3.8vh 4%;
+   height: 100%;
+   .delete-icon {
+      cursor: pointer;
+   }
+   .appInput {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      h3 {
+         font-size: 24px;
+         font-weight: 500;
+      }
+   }
+   .table {
+      background-color: #fff;
+      border-radius: 6px;
+      min-height: 64.4vh;
+      margin-top: 1.5rem;
+   }
+   .flxDTz {
+      margin-top: 1.5rem;
+   }
+   .ifFdNC .MuiTableCell-root {
+      width: 40px;
+   }
+   .css-15wwp11-MuiTableHead-root {
+      &:last-of-type th,
+      &:last-of-type > tr > th {
+         border-bottom: none;
+      }
+      thead,
+      tr:nth-of-type(2n + 2) {
+         background-color: rgba(245, 245, 245, 0.61);
+      }
+   }
+   .kRczSm .MuiTableCell-root {
+      background: none;
+   }
+   .css-13wgndv-MuiTableRow-root {
+      th:first-of-type {
+         padding-left: 27px;
+      }
+      th:last-of-type {
+         width: 10px;
+         text-align: end;
+         padding-right: 10px;
+      }
+      th:nth-last-of-type(-n + 2) {
+         width: 30px;
+         text-align: end;
+         padding-right: 10px;
+      }
+   }
+`
+const StyledInput = styled(Input)(() => ({
+   '.MuiOutlinedInput-root': {
+      borderRadius: '25px',
+      width: '43rem',
+      height: '2.4rem',
+      backgroundColor: '#fff',
    },
-   'th:nth-child(1)': {
-      width: '4%',
+   fieldset: {
+      border: 'none',
    },
-   'th:nth-child(2)': {
-      width: '27%',
-   },
-   'th:nth-child(3)': {
-      width: '20%',
-   },
-   'th:nth-child(4)': {
-      width: '10%',
-   },
-   'th:nth-child(5)': {
-      width: '9%',
-   },
-   h3: {
-      fontSize: '24px',
-      fontWeight: '500',
-      paddingBottom: '3rem',
-   },
-}))
-
-const StyledBox = styled('div')(() => ({
-   paddingLeft: '18rem',
-}))
-
-const StyledTextField = styled(TextField)(() => ({
-   '& .MuiInputBase-root': {
-      fontFamily: 'Manrope',
-      height: '2.5rem',
-      paddingLeft: '1rem',
-      width: '35rem',
-      background: '#ffff',
-      borderRadius: '50px',
-   },
-   '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-         borderColor: '#F5F5F5',
-      },
-      '&:hover fieldset': {
-         borderColor: 'gray',
-      },
-      '&.Mui-focused fieldset': {
-         borderColor: 'gray',
-      },
-      '& input': {
-         boxSizing: 'border-box',
-      },
-      '& .error': {
-         color: 'red',
-      },
-   },
-}))
-
-const StyledSearchIcon = styled(SearchIcon)(() => ({
-   color: 'gray',
-}))
-
-const StyledDeleteButton = styled('button')(() => ({
-   color: 'gray',
-   cursor: 'pointer',
-   border: 'none',
-   background: 'none',
 }))

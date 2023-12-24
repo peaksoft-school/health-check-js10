@@ -4,71 +4,65 @@ import { NavLink } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { DoctorImg, Rectange, Signature } from '../assets'
 import AboutClinicLayout from './AboutClinicLayout'
-import Header from '../layout/user/header/Header'
-import Footer from '../layout/Footer'
 
 const AboutHealth = () => {
    window.scrollTo({ top: 0 })
    return (
-      <>
-         <Header variant="hr" />
-         <StyledBox>
-            <Container>
-               <div>
-                  <NavigatePathTitle>
+      <StyledBox>
+         <Container>
+            <div>
+               <NavigatePathTitle>
+                  <p>
+                     <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+                     <span>О клинике</span>
+                  </p>
+               </NavigatePathTitle>
+               <StyledTitleSubject>
+                  Здоровье — самое
+                  <span style={{ color: '#048741' }}> ценное в жизни</span>
+               </StyledTitleSubject>
+               <StyledMainContainer>
+                  <StyledAboutText>
                      <p>
-                        <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-                        <span>О клинике</span>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum
                      </p>
-                  </NavigatePathTitle>
-                  <StyledTitleSubject>
-                     Здоровье — самое
-                     <span style={{ color: '#048741' }}> ценное в жизни</span>
-                  </StyledTitleSubject>
-                  <StyledMainContainer>
-                     <StyledAboutText>
-                        <p>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing
-                           elit, sed do eiusmod tempor incididunt ut labore et
-                           dolore magna aliqua. Ut enim ad minim veniam, quis
-                           nostrud exercitation ullamco laboris nisi ut aliquip
-                           ex ea commodo consequat. Duis aute irure dolor in
-                           reprehenderit in voluptate velit esse cillum dolore
-                           eu fugiat nulla pariatur. Excepteur sint occaecat
-                           cupidatat non proident, sunt in culpa qui officia
-                           deserunt mollit anim id est laborum
-                        </p>
-                        <br />
-                        <p>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing
-                           elit, sed do eiusmod tempor incididunt ut labore et
-                           dolore magna aliqua. Ut enim ad minim veniam, quis
-                           nostrud exercitation ullamco laboris nisi ut aliquip
-                           ex ea commodo consequat. Duis aute irure dolor in
-                           reprehenderit in voluptate velit esse cillum dolore
-                           eu fugiat nulla pariatur. Excepteur sint occaecat
-                           cupidatat non proident, sunt in culpa qui officia
-                           deserunt mollit anim id est laborum
-                        </p>
-                        <StyledSignatureImG>
-                           <img src={Signature} alt="main doctor" />
-                        </StyledSignatureImG>
-                     </StyledAboutText>
-                     <div>
-                        <StyledImageContainer>
-                           <Rectange />
-                           <StyledDoctorImG src={DoctorImg} alt="" />
-                           <h3>Руководитель клиники Medical Clinic</h3>
-                           <h2> Аниса Михаилова </h2>
-                        </StyledImageContainer>
-                     </div>
-                  </StyledMainContainer>
-               </div>
-            </Container>
-            <AboutClinicLayout />
-         </StyledBox>
-         <Footer />
-      </>
+                     <br />
+                     <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum
+                     </p>
+                     <StyledSignatureImG>
+                        <img src={Signature} alt="main doctor" />
+                     </StyledSignatureImG>
+                  </StyledAboutText>
+                  <div>
+                     <StyledImageContainer>
+                        <Rectange />
+                        <StyledDoctorImG src={DoctorImg} alt="" />
+                        <h3>Руководитель клиники Medical Clinic</h3>
+                        <h2> Аниса Михаилова </h2>
+                     </StyledImageContainer>
+                  </div>
+               </StyledMainContainer>
+            </div>
+         </Container>
+         <AboutClinicLayout />
+      </StyledBox>
    )
 }
 

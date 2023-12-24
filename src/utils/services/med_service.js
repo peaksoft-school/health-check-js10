@@ -67,7 +67,7 @@ export const MED_SERVICE = [
    {
       id: 8,
       img: <PsikhIcon />,
-      title: 'Психтерапия',
+      title: 'Психотерапия',
    },
    {
       id: 9,

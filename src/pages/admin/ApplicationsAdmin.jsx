@@ -1,7 +1,6 @@
-import { IconButton, InputAdornment, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import {
    applicationsThunk,
@@ -10,7 +9,8 @@ import {
    searchApplicationByIdAsyncThunk,
 } from '../../store/applications/applicationsThunk'
 import CheckboxUI from '../../components/UI/Checkbox'
-import { AppDeleteIcon, SearchIcon } from '../../assets'
+import { AppDeleteIcon } from '../../assets'
+import SearchInput from '../../components/UI/SearchInput'
 
 export const ApplicationsAdmin = () => {
    const { applications } = useSelector((state) => state.applications)
@@ -156,21 +156,7 @@ export const ApplicationsAdmin = () => {
       <StyledContainerApp>
          <div className="appInput">
             <h3>Заявки</h3>
-            <StyledInput
-               type="text"
-               placeholder="Поиск"
-               value={searchValue}
-               onChange={handleChange}
-               InputProps={{
-                  endAdornment: (
-                     <InputAdornment position="end">
-                        <IconButton>
-                           <SearchIcon />
-                        </IconButton>
-                     </InputAdornment>
-                  ),
-               }}
-            />
+            <SearchInput value={searchValue} onChange={handleChange} />
          </div>
          <div className="table">
             <AppTable
@@ -260,14 +246,3 @@ const StyledContainerApp = styled('div')`
       }
    }
 `
-const StyledInput = styled(Input)(() => ({
-   '.MuiOutlinedInput-root': {
-      borderRadius: '25px',
-      width: '43rem',
-      height: '2.4rem',
-      backgroundColor: '#fff',
-   },
-   fieldset: {
-      border: 'none',
-   },
-}))

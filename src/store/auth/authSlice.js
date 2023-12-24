@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { USER_KEY } from '../../utils/constants/constants'
-import { routes } from '../../utils/constants/routes'
 import { changePassword, forgotPassword, signIn, signUp } from './authThunk'
 
 const initialState = {
@@ -24,7 +23,6 @@ export const authSlice = createSlice({
          state.role = action.payload.data.role
          state.token = action.payload.data.token
          state.email = action.payload.data.email
-         // action.payload.navigate(routes[action.payload.data.role].path)
       },
       logout() {
          const newState = initialState

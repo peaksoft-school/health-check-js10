@@ -11,6 +11,7 @@ import { AdminAppointmentsPage } from '../../pages/admin/AdminAppointmetsPage'
 import SchedulePage from '../../pages/admin/schedule/SchedulePage'
 import { notify } from '../../utils/constants/snackbar'
 import { PatientsInternalPage } from '../../pages/admin/PatientsInternalPage'
+import { AdminSpecialists } from '../../pages/admin/AdminSpecialists'
 
 const AdminRoutes = () => {
    const dispatch = useDispatch()
@@ -64,7 +65,7 @@ const AdminRoutes = () => {
                path={routes.ADMIN.specialists}
                element={
                   <PrivateRoutes
-                     component={<PatientsAdmin />}
+                     component={<AdminSpecialists />}
                      isAuth={isAuth}
                   />
                }

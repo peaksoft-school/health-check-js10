@@ -1,12 +1,11 @@
-import { IconButton, InputAdornment, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import CheckboxUI from '../../components/UI/Checkbox'
-import { AppDeleteIcon, PlusIcon, SearchIcon } from '../../assets'
+import { AppDeleteIcon, PlusIcon } from '../../assets'
 import {
    StatusAppointments,
    adminAppointmentsThunk,
@@ -17,6 +16,7 @@ import Button from '../../components/UI/Button'
 import { ModalAppointments } from './ModalAppointments'
 import Modal from '../../components/UI/Modal'
 import { notify } from '../../utils/constants/snackbar'
+import SearchInput from '../../components/UI/SearchInput'
 
 export const AdminAppointmentsPage = () => {
    const { appointmentsAdmin } = useSelector((state) => state.appointmentsAdmin)
@@ -256,21 +256,7 @@ export const AdminAppointmentsPage = () => {
                </li>
             </ul>
          </div>
-         <StyledInput
-            type="text"
-            placeholder="Поиск"
-            value={searchValue}
-            onChange={handleChange}
-            InputProps={{
-               endAdornment: (
-                  <InputAdornment position="end">
-                     <IconButton>
-                        <SearchIcon />
-                     </IconButton>
-                  </InputAdornment>
-               ),
-            }}
-         />
+         <SearchInput value={searchValue} onChange={handleChange} />
          <ModalAppointments
             open={isModalOpen}
             onClose={handleCloseModal}
@@ -417,17 +403,6 @@ const StyleDeletedModal = styled('div')`
       gap: 20px;
    }
 `
-const StyledInput = styled(Input)(() => ({
-   '.MuiOutlinedInput-root': {
-      borderRadius: '25px',
-      width: '43rem',
-      height: '2.4rem',
-      backgroundColor: '#fff',
-   },
-   fieldset: {
-      border: 'none',
-   },
-}))
 
 const StyledNavLink = styled(NavLink)`
    text-decoration: none;

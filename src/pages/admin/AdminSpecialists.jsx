@@ -2,47 +2,54 @@ import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import AppTable from '../../components/UI/AppTable'
-import { AppDeleteIcon } from '../../assets'
-import {
-   deletePatient,
-   fetchPatients,
-   searchPatients,
-} from '../../store/patient/patientsThunk'
+import { AppDeleteIcon, PlusIcon } from '../../assets'
 import SearchInput from '../../components/UI/SearchInput'
+import Button from '../../components/UI/Button'
+import {
+   deleteSpecialist,
+   fetchSpecialists,
+   searchSpecialists,
+} from '../../store/specialists/specialistsThunk'
 
-export const PatientsAdmin = () => {
+export const AdminSpecialists = () => {
    const dispatch = useDispatch()
-   const { patients } = useSelector((state) => state.patients)
+   const { doctors } = useSelector((state) => state.specialists)
    const [searchTerm, setSearchTerm] = useState('')
+
    useEffect(() => {
-      dispatch(fetchPatients())
+      dispatch(fetchSpecialists())
    }, [dispatch])
+
    const handleSearchById = (value) => {
-      dispatch(searchPatients(value))
+      dispatch(searchSpecialists(value))
    }
+
    useEffect(() => {
       const delayDebounceFn = setTimeout(() => {
          if (searchTerm) {
             handleSearchById(searchTerm)
          } else {
-            dispatch(fetchPatients())
+            dispatch(fetchSpecialists())
          }
       }, 1000)
       return () => clearTimeout(delayDebounceFn)
    }, [searchTerm, dispatch])
+
    const handleChange = (event) => {
       const inputValue = event.target.value
       setSearchTerm(inputValue)
    }
+
    const handleDelete = (patientId) => {
-      dispatch(deletePatient(patientId))
+      dispatch(deleteSpecialist(patientId))
    }
+
    const columns = [
       { id: 'id', label: '№' },
-      { id: 'fullName', label: 'Имя Фамилия' },
-      { id: 'phoneNumber', label: 'Номер телефона' },
-      { id: 'email', label: 'Почта' },
-      { id: 'date', label: 'Дата сдачи' },
+      { id: 'isActive', label: 'Статус' },
+      { id: 'firstName', label: 'Специалист' },
+      { id: 'departmentName', label: 'Отделение' },
+      { id: 'scheduleUntil', label: 'Расписание' },
       {
          id: 'delete',
          label: 'Действия',
@@ -61,14 +68,23 @@ export const PatientsAdmin = () => {
    return (
       <StyledContainerApp>
          <div className="appInput">
-            <h3>Пациенты</h3>
+            <div className="title-button">
+               <h3>Специалисты</h3>
+               <Button
+                  className="customButtonStyle"
+                  startIcon={<PlusIcon />}
+                  //   onClick={handleOpenModal}
+               >
+                  ДОБАВИТЬ СПЕЦИАЛИСТА
+               </Button>
+            </div>
             <SearchInput value={searchTerm} onChange={handleChange} />
          </div>
          <div className="table">
             <AppTable
                columns={columns}
-               data={patients}
-               empty={<h1>Пациенты отсутствуют</h1>}
+               data={doctors}
+               empty={<h1>Специалисты отсутствуют</h1>}
             />
          </div>
       </StyledContainerApp>
@@ -85,10 +101,19 @@ const StyledContainerApp = styled('div')`
       display: flex;
       flex-direction: column;
       gap: 25px;
+   }
+   .title-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
       h3 {
          font-size: 24px;
          font-weight: 500;
       }
+   }
+   .customButtonStyle {
+      width: 16rem;
    }
    .table {
       background-color: #fff;

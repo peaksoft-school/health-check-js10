@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
 import AppRoutes from './routes/AppRoutes'
-import { Specialists } from './pages/admin/Specialists'
-import DoctorDetails from './pages/admin/DoctorDetails'
 
 function App() {
    const dispatch = useDispatch()
@@ -20,21 +18,8 @@ function App() {
    }, [])
 
    return (
-      <div>
-         <Routes>
-            <Route path="/specialists" element={<Specialists />} />
-            <Route
-               path="/specialists/doctor-details/:doctorId"
-               element={<DoctorDetails />}
-            />
-            <Route
-               path="/specialists/doctor-add"
-               element={<DoctorDetails variant="emtpy" />}
-            />
-         </Routes>
-         <div className="App">
-            <AppRoutes />
-         </div>
+      <div className="App">
+         <AppRoutes />
       </div>
    )
 }

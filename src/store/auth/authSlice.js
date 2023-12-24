@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { USER_KEY, routes } from '../../utils/constants/constants'
+import { USER_KEY } from '../../utils/constants/constants'
 import { changePassword, forgotPassword, signIn, signUp } from './authThunk'
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
    isLoading: false,
 }
 
-const authActions = [signIn, signUp, forgotPassword, changePassword]
+const authActions = [signUp, forgotPassword, changePassword]
 
 export const authSlice = createSlice({
    name: 'authorization',
@@ -23,15 +23,27 @@ export const authSlice = createSlice({
          state.role = action.payload.data.role
          state.token = action.payload.data.token
          state.email = action.payload.data.email
-         action.payload.navigate(routes[action.payload.data.role].path)
       },
       logout() {
          const newState = initialState
          localStorage.removeItem(USER_KEY)
          return newState
       },
+      setAuthData(state, action) {
+         return {
+            ...state,
+            isAuth: true,
+            role: action.payload.role,
+            token: action.payload.token,
+            email: action.payload.email,
+         }
+      },
    },
    extraReducers: (builder) => {
+      builder.addCase(signIn.fulfilled, (state) => {
+         state.isAuth = true
+      })
+
       authActions.forEach((action) => {
          builder
             .addCase(action.pending, (state) => {
@@ -48,4 +60,4 @@ export const authSlice = createSlice({
    },
 })
 
-export const { login, register, logout } = authSlice.actions
+export const { login, register, logout, setAuthData } = authSlice.actions

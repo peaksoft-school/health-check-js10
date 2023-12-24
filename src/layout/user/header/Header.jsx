@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { IconButton, InputAdornment, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Button from '../../../components/UI/Button'
@@ -23,8 +23,9 @@ import SignUp from '../../login/SignUp'
 import ForgotPassword from '../../login/ForgotPassword'
 import { localStorageKeys } from '../../../utils/constants/constants'
 import OnlineAppointment from '../../../components/appointment/OnlineAppointment'
+import { routes } from '../../../utils/constants/routes'
 
-const Header = ({ logoutHandler }) => {
+const Header = ({ logoutHandler, variant }) => {
    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
    const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
@@ -87,7 +88,7 @@ const Header = ({ logoutHandler }) => {
    }
 
    const navigateToProfile = () => {
-      navigate('profile')
+      navigate('/profile')
    }
 
    const menuItems = isAuth
@@ -199,15 +200,20 @@ const Header = ({ logoutHandler }) => {
                </div>
             </FirstNavStyle>
             <SecondNavStyle>
-               <StyleCheck>
+               <StyleCheck onClick={() => navigate('/homepage')}>
                   <GroupIcon />
                   <HealthCheckIcon />
                </StyleCheck>
                <NavList>
-                  <h3>О клинике</h3>
-                  <h3>Услуги</h3>
-                  <h3>Врачи</h3>
-                  <h3>Прайс</h3>
+                  <NavlinkStyled to={routes.USER.aboutClinic}>
+                     О клинике
+                  </NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.service}>Услуги</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.doctors}>Врачи</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.prices}>Прайс</NavlinkStyled>
+                  <NavlinkStyled to={routes.USER.contacts}>
+                     Контакты
+                  </NavlinkStyled>
                </NavList>
                <ContainerButton>
                   <StyledButton variant="outlined">
@@ -219,6 +225,7 @@ const Header = ({ logoutHandler }) => {
                </ContainerButton>
             </SecondNavStyle>
          </HeaderStyle>
+         {variant === 'hr' ? <Hr /> : null}
       </>
    )
 }
@@ -266,6 +273,27 @@ const HeaderStyle = styled('header')(() => ({
    },
 }))
 
+const Hr = styled('hr')(() => ({
+   width: '100%',
+   height: '10px',
+   marginBottom: '30px',
+   marginTop: '10px',
+   background: '#DBF0E5',
+   border: 'none',
+}))
+
+const NavlinkStyled = styled(NavLink)(() => ({
+   '&': {
+      display: 'inline-block',
+      fontFamily: 'Manrope',
+      fontWeight: '500',
+      fontSize: '18px',
+      lineHeight: '19px',
+      textDecoration: 'none',
+      color: '#222222',
+   },
+}))
+
 const FirstNavStyle = styled('nav')`
    display: flex;
    justify-content: space-between;
@@ -291,16 +319,12 @@ const StyleCheck = styled('div')`
    display: flex;
    gap: 10px;
    align-items: center;
+   cursor: pointer;
 `
 
 const NavList = styled('div')`
    display: flex;
    gap: 60px;
-   h3 {
-      font-weight: 500;
-      font-size: 1.1rem;
-      cursor: pointer;
-   }
 `
 const ContainerButton = styled('div')`
    display: flex;

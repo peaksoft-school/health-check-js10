@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { FormLabel, InputAdornment } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import PhotoWoman from '../assets/images/applicationform-woman.png'
 import Button from './UI/Button'
 import { UserIcon, PhoneIcon, ArrowIcon } from '../assets'
 import { Input } from './UI/input/Input'
+import { addApplications } from '../store/applications/applicationsThunk'
 
 const ApplicationForm = () => {
    const [formData, setFormData] = useState({
@@ -17,15 +19,20 @@ const ApplicationForm = () => {
       phoneNumber: '',
    })
 
+   const dispatch = useDispatch()
+
    const handleChange = (e) => {
       const { name, value } = e.target
+      const sanitizedValue =
+         name === 'phoneNumber' ? value.replace(/\s/g, '') : value
       setFormData({
          ...formData,
-         [name]: value,
+         [name]: sanitizedValue,
       })
+
       if (name === 'name') {
          const nameRegex = /^[A-Za-zА-Яа-я\s]+$/
-         if (!nameRegex.test(value)) {
+         if (!nameRegex.test(sanitizedValue)) {
             setErrors({
                ...errors,
                name: 'Неправильное имя',
@@ -37,8 +44,8 @@ const ApplicationForm = () => {
             })
          }
       } else if (name === 'phoneNumber') {
-         const phoneRegex = /^\+996\d{9}$/
-         if (!phoneRegex.test(value)) {
+         const phoneRegex = /^(?:\+996|0)\d{9}$/
+         if (!phoneRegex.test(sanitizedValue)) {
             setErrors({
                ...errors,
                phoneNumber: 'Неправильный номер',
@@ -62,7 +69,12 @@ const ApplicationForm = () => {
          })
          return
       }
-      console.log('Form Data:', formData)
+      dispatch(
+         addApplications({
+            name: formData.name,
+            phoneNumber: formData.phoneNumber,
+         })
+      )
    }
    return (
       <ApplicationFormContainer>

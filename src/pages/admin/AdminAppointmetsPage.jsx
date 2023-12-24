@@ -1,12 +1,11 @@
-import { IconButton, InputAdornment, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
 import CheckboxUI from '../../components/UI/Checkbox'
-import { AppDeleteIcon, PlusIcon, SearchIcon } from '../../assets'
+import { AppDeleteIcon, PlusIcon } from '../../assets'
 import {
    StatusAppointments,
    adminAppointmentsThunk,
@@ -17,6 +16,7 @@ import Button from '../../components/UI/Button'
 import { ModalAppointments } from './ModalAppointments'
 import Modal from '../../components/UI/Modal'
 import { notify } from '../../utils/constants/snackbar'
+import SearchInput from '../../components/UI/SearchInput'
 
 export const AdminAppointmentsPage = () => {
    const { appointmentsAdmin } = useSelector((state) => state.appointmentsAdmin)
@@ -228,7 +228,7 @@ export const AdminAppointmentsPage = () => {
       <StyledContainerApp>
          <div className="style-nav">
             <div className="title-button">
-               <span>Онлайн-запись</span>
+               <h3>Онлайн-запись</h3>
                <Button
                   className="customButtonStyle"
                   startIcon={<PlusIcon />}
@@ -247,27 +247,16 @@ export const AdminAppointmentsPage = () => {
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink to="/schedule" activeClassName="active">
+                  <StyledNavLink
+                     to="/online-registration/schedule"
+                     activeClassName="active"
+                  >
                      РАСПИСАНИЕ
                   </StyledNavLink>
                </li>
             </ul>
          </div>
-         <StyledInput
-            type="text"
-            placeholder="Поиск"
-            value={searchValue}
-            onChange={handleChange}
-            InputProps={{
-               endAdornment: (
-                  <InputAdornment position="end">
-                     <IconButton>
-                        <SearchIcon />
-                     </IconButton>
-                  </InputAdornment>
-               ),
-            }}
-         />
+         <SearchInput value={searchValue} onChange={handleChange} />
          <ModalAppointments
             open={isModalOpen}
             onClose={handleCloseModal}
@@ -309,7 +298,7 @@ export const AdminAppointmentsPage = () => {
 
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 16vh 4% 3.8vh 4%;
+   padding: calc(11vh + 3rem) 4% 3.8vh 4%;
    height: 100%;
    .style-nav {
       display: flex;
@@ -328,8 +317,9 @@ const StyledContainerApp = styled('div')`
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      span {
+      h3 {
          font-size: 24px;
+         font-weight: 500;
       }
    }
    .customButtonStyle {
@@ -413,17 +403,6 @@ const StyleDeletedModal = styled('div')`
       gap: 20px;
    }
 `
-const StyledInput = styled(Input)(() => ({
-   '.MuiOutlinedInput-root': {
-      borderRadius: '25px',
-      width: '43rem',
-      height: '2.4rem',
-      backgroundColor: '#fff',
-   },
-   fieldset: {
-      border: 'none',
-   },
-}))
 
 const StyledNavLink = styled(NavLink)`
    text-decoration: none;

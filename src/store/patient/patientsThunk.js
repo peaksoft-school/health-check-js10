@@ -83,7 +83,7 @@ export const getPatientsResultThunk = createAsyncThunk(
 
 export const getPatientsAsyncThunk = createAsyncThunk(
    'patientsData/patientsById',
-   async ({ patientId = 6 }, { dispatch, rejectWithValue }) => {
+   async ({ patientId }, { dispatch, rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(`/api/patients/${patientId}`)
          dispatch(getPatientsResultThunk(patientId))

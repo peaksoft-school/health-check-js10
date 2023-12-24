@@ -7,14 +7,15 @@ import {
    deleteDoctorThunk,
    doctorsAllThunk,
    doctorsSearchThunk,
-   spesialistThunk,
+   specialistThunk,
    statusDoctorThunk,
-} from '../../store/spesialist/spesialistThunk'
+} from '../../store/spesialists/specialistsThunk'
 import SwitchApp from '../../components/UI/switch/Switch'
-import { EditIcon, SearchIcon, TrashIcon } from '../../assets'
+import { EditIcon, PlusIcon, SearchIcon, TrashIcon } from '../../assets'
 import AppTable from '../../components/UI/AppTable'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import SearchInput from '../../components/UI/SearchInput'
 
 export const Specialists = () => {
    const navigate = useNavigate()
@@ -24,7 +25,7 @@ export const Specialists = () => {
    // const [isStatus, setIsStatus] = useState(false)
 
    const handleEditClick = (doctorId) => {
-      dispatch(spesialistThunk(doctorId))
+      dispatch(specialistThunk(doctorId))
    }
 
    useEffect(() => {
@@ -60,7 +61,7 @@ export const Specialists = () => {
    // }
 
    const handleAddSpecialistClick = () => {
-      navigate('/doctor-details')
+      navigate('/specialists/add-doctor')
    }
 
    const image = 'image'
@@ -124,30 +125,19 @@ export const Specialists = () => {
    return (
       <ContainerMain>
          <Container>
-            <Block>
-               <p>Специалисты</p>
-               <Link to="/specialists/doctor-add">
-                  <ButtonStyle
-                     onClick={() => navigate(handleAddSpecialistClick)}
+            <div className="appInput">
+               <div className="title-button">
+                  <h3>Специалисты</h3>
+                  <Button
+                     className="customButtonStyle"
+                     startIcon={<PlusIcon />}
+                     onClick={handleAddSpecialistClick}
                   >
-                     +Добавить специалиста
-                  </ButtonStyle>
-               </Link>
-            </Block>
-            <InputStyle
-               placeholder="Поиск"
-               value={searchTerm}
-               onChange={handleSearch}
-               InputProps={{
-                  endAdornment: (
-                     <InputAdornment position="end">
-                        <IconButton>
-                           <SearchIcon />
-                        </IconButton>
-                     </InputAdornment>
-                  ),
-               }}
-            />
+                     ДОБАВИТЬ СПЕЦИАЛИСТА
+                  </Button>
+               </div>
+               <SearchInput value={searchTerm} onChange={handleSearch} />
+            </div>
             <ContainerApp>
                <AppTable columns={columns} data={doctors} />
             </ContainerApp>
@@ -157,10 +147,30 @@ export const Specialists = () => {
 }
 
 const Container = styled('div')`
-   padding: 4vh 3%;
    text-align: start;
+   .appInput {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+   }
+   .title-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h3 {
+         font-size: 22px;
+         font-weight: 500;
+      }
+   }
+   .customButtonStyle {
+      width: 16rem;
+   }
 `
 const ContainerMain = styled('div')`
+   padding: calc(11vh + 3rem) 4% 3.8vh 4%;
+   .flxDTz {
+      margin-top: 1.5rem !important;
+   }
    tr {
       border-bottom: 1px solid #d9d9d9;
    }
@@ -198,35 +208,6 @@ const ContainerApp = styled('div')`
    background-color: #fff;
    height: max-content;
 `
-
-const Block = styled('div')`
-   display: flex;
-   justify-content: space-between;
-   text-align: center;
-   align-items: center;
-   margin-bottom: 4vh;
-   p {
-      font-size: 22px;
-      font-weight: 400;
-   }
-`
-
-const InputStyle = styled(Input)(() => ({
-   '.MuiOutlinedInput-root': {
-      borderRadius: '25px',
-      width: '35rem',
-      height: '2.1rem',
-      backgroundColor: '#fff',
-   },
-   fieldset: {
-      border: 'none',
-   },
-}))
-
-const ButtonStyle = styled(Button)(() => ({
-   width: '17rem',
-   height: '2.4rem',
-}))
 
 const ContainerDoctor = styled('div')(() => ({
    display: 'flex',

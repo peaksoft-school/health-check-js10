@@ -35,8 +35,8 @@ const Specialists = ({
 export default Specialists
 
 const Card = styled('div')(() => ({
-   margin: '6px',
    padding: '19px 16px',
+   margin: '6px',
    background: '#fff',
    color: '#222222',
    fontSize: '16px',

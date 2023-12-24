@@ -15,8 +15,8 @@ export const doctorsAllThunk = createAsyncThunk(
    }
 )
 
-export const spesialistThunk = createAsyncThunk(
-   'spesialist/doctors',
+export const specialistThunk = createAsyncThunk(
+   'specialist/doctors',
    async (doctorId, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(`/api/doctors/${doctorId}`)
@@ -79,7 +79,7 @@ export const changeDoctorThunk = createAsyncThunk(
             `/api/doctors/update?doctorId=${doctorId}&departmentId=${departmentId}`,
             doctorInfo
          )
-         dispatch(spesialistThunk(doctorId))
+         dispatch(specialistThunk(doctorId))
          return response.data
       } catch (error) {
          return error
@@ -108,13 +108,18 @@ export const postFile = createAsyncThunk(
 
 export const postNewDoctorsThunk = createAsyncThunk(
    'patientsResult/addResult',
-   async (addDoctor, { rejectWithValue, dispatch }) => {
+   async (addDoctor, getFile, departmentId, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(addDoctor.image)).unwrap()
-         const { data } = await axiosInstance.post('/api/doctors/', {
-            ...addDoctor,
-            image: getFile.link,
-         })
+         const { data } = await axiosInstance.post(
+            '/api/doctors/',
+            {
+               ...addDoctor,
+               image: getFile.link,
+            },
+            {
+               params: departmentId,
+            }
+         )
          dispatch(doctorsAllThunk(addDoctor.departmentId))
          return data
       } catch (error) {

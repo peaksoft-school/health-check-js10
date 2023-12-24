@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import { useDropzone } from 'react-dropzone'
 import {
    changeDoctorThunk,
-   spesialistThunk,
-} from '../../store/spesialist/spesialistThunk'
+   specialistThunk,
+} from '../../store/spesialists/specialistsThunk'
 import { PhotoPlass } from '../../assets'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
@@ -17,13 +17,10 @@ const DoctorDetails = ({ variant }) => {
    const navigate = useNavigate()
    const { doctorId } = useParams()
 
-   let { selectedDoctor } = useSelector((state) => state.doctors)
+   const { selectedDoctor } = useSelector((state) => state.doctors)
    const [doctorsId, setDoctorsId] = useState(selectedDoctor)
    const [isEditing, setIsEditing] = useState(false)
    const [image, setImage] = useState(null)
-   if (variant) {
-      selectedDoctor = null
-   }
 
    const { handleSubmit, register, reset, setValue, getValues } = useForm({
       defaultValues: {
@@ -35,7 +32,7 @@ const DoctorDetails = ({ variant }) => {
 
    useEffect(() => {
       if (doctorId) {
-         dispatch(spesialistThunk(doctorId))
+         dispatch(specialistThunk(doctorId))
       }
    }, [dispatch])
 
@@ -81,6 +78,8 @@ const DoctorDetails = ({ variant }) => {
       }
       dispatch(changeDoctorThunk({ doctorId, departmentId: 1, doctorInfo }))
    }
+
+   console.log(selectedDoctor, 'doctor')
    return (
       <div>
          {variant ? (

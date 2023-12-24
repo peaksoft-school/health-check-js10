@@ -3,9 +3,9 @@ import {
    deleteDoctorThunk,
    doctorsAllThunk,
    doctorsSearchThunk,
-   spesialistThunk,
+   specialistThunk,
    statusDoctorThunk,
-} from './spesialistThunk'
+} from './specialistsThunk'
 
 const initialState = {
    doctors: [],
@@ -14,7 +14,7 @@ const initialState = {
    selectedDoctor: null,
 }
 
-export const spesialistSlice = createSlice({
+export const specialistsSlice = createSlice({
    name: 'doctors',
    initialState,
    reducers: {
@@ -29,7 +29,7 @@ export const spesialistSlice = createSlice({
                ? action.payload
                : [action.payload]
          })
-         .addCase(spesialistThunk.fulfilled, (state, action) => {
+         .addCase(specialistThunk.fulfilled, (state, action) => {
             state.selectedDoctor = action.payload
          })
 
@@ -56,6 +56,6 @@ export const spesialistSlice = createSlice({
    },
 })
 
-export const { setSelectedDoctorId } = spesialistSlice.actions
+export const { setSelectedDoctorId } = specialistsSlice.actions
 
-export default spesialistSlice.reducer
+export default specialistsSlice.reducer

@@ -83,6 +83,8 @@ export { ReactComponent as List } from './icons/List.svg'
 export { ReactComponent as Num } from './icons/Num.svg'
 export { ReactComponent as TrashIcon } from './icons/TrashTable.svg'
 export { ReactComponent as UpdateIcon } from './icons/updateIcon.svg'
+export { ReactComponent as EditIcon } from './icons/edit.svg'
+export { ReactComponent as PhotoPlass } from './icons/PhotoPluss.svg'
 
 export { default as doctorAvatar } from './icons/Doctor.svg'
 export { default as doctorArtur } from './icons/DoctorArtur.svg'

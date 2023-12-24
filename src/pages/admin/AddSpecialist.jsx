@@ -12,18 +12,22 @@ import { useFormik } from 'formik'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { SelectUI } from '../../components/UI/Select'
+import { useDispatch } from 'react-redux'
 import Button from '../../components/UI/Button'
 import AvatarUpload from '../../components/UI/Avatar'
 import { B, I, U, List, Num } from '../../assets'
 import { addSpecialistSchema } from '../../utils/constants/columns'
 import { DEPARTMENTS } from '../../utils/services/med_service'
+import { SelectUI } from '../../components/appointment/Select'
+import { postNewDoctorsThunk } from '../../store/spesialists/specialistsThunk'
+import { postFile } from '../../store/patient/patientsThunk'
 
 const AddSpecialist = () => {
    const navigate = useNavigate()
    const [selected, setSelected] = useState('')
-   const [photo, setPhoto] = useState('')
+   const [photo, setPhoto] = useState(null)
    const [imgUrl, setImgUrl] = useState('')
+   const dispatch = useDispatch()
    const handleSelection = (event, newSelected) => {
       setSelected(newSelected)
    }
@@ -56,20 +60,27 @@ const AddSpecialist = () => {
       },
 
       validationSchema: addSpecialistSchema,
+      onSubmit: async (values) => {
+         const dataSpecialist = {
+            departmentId: values.department,
+            description: values.description,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            position: values.position,
+         }
 
-      //   onSubmit: async (values) => {
-      //      const dataSpecialist = {
-      //         departmentId: values.department,
-      //         description: values.description,
-      //         firstName: values.firstName,
-      //         lastName: values.lastName,
-      //         position: values.position,
-      //      }
-      //      const fileResponce = photo && (await postSpecialistImage())
-      //      if (fileResponce) {
-      //         postSpecialist({ ...dataSpecialist, image: fileResponce })
-      //      }
-      //   },
+         try {
+            const getFile = await dispatch(postFile(photo)).unwrap()
+            await dispatch(
+               postNewDoctorsThunk(dataSpecialist, getFile, {
+                  departmentId: values.department,
+               })
+            )
+            return Promise.resolve()
+         } catch (error) {
+            return Promise.reject(error)
+         }
+      },
    })
 
    return (
@@ -113,7 +124,7 @@ const AddSpecialist = () => {
                            )}
                            <StyledInputLabel>Отделение</StyledInputLabel>
                            <StyledSelect
-                              items={DEPARTMENTS}
+                              options={DEPARTMENTS}
                               onChange={handleChange}
                               value={values.department}
                               placeholder="Выберите отделение"
@@ -264,6 +275,7 @@ const Info = muiStyled('p')(() => ({
 const StyledSelect = styled(SelectUI)(() => ({
    fontSize: '14px',
    height: '35px',
+   borderRadius: '6px !important',
 }))
 
 const StyledCancel = styled(Button)(() => ({

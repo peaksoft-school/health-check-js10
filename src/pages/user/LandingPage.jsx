@@ -6,18 +6,17 @@ import { FeedbackSlider } from '../../components/UI/slider/FeedbackSlider'
 import Modal from '../../components/UI/Modal'
 import ApplicationForm from '../../components/ApplicationForm'
 import { MainDoctorImage, WelcomeWord } from '../../assets'
+import AboutClinicLayout from '../../components/AboutClinicLayout'
 import {
    BEST_DOCTORS_IMAGES,
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
-import AboutClinicLayout from '../../components/AboutClinicLayout'
 import { ApplicationModal } from '../../components/ApplicationModal'
 
 const LandingPage = () => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
-
    const navigate = useNavigate()
 
    const showModalHandler = () => {

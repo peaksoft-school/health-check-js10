@@ -11,7 +11,9 @@ import { AdminAppointmentsPage } from '../../pages/admin/AdminAppointmetsPage'
 import SchedulePage from '../../pages/admin/schedule/SchedulePage'
 import { notify } from '../../utils/constants/snackbar'
 import { PatientsInternalPage } from '../../pages/admin/PatientsInternalPage'
-import { AdminSpecialists } from '../../pages/admin/AdminSpecialists'
+import { Specialists } from '../../pages/admin/Specialists'
+import DoctorDetails from '../../pages/admin/DoctorDetails'
+import AddSpecialist from '../../pages/admin/AddSpecialist'
 
 const AdminRoutes = () => {
    const dispatch = useDispatch()
@@ -64,12 +66,14 @@ const AdminRoutes = () => {
             <Route
                path={routes.ADMIN.specialists}
                element={
-                  <PrivateRoutes
-                     component={<AdminSpecialists />}
-                     isAuth={isAuth}
-                  />
+                  <PrivateRoutes component={<Specialists />} isAuth={isAuth} />
                }
             />
+            <Route
+               path="/specialists/doctor-details/:doctorId"
+               element={<DoctorDetails />}
+            />
+            <Route path="/specialists/add-doctor" element={<AddSpecialist />} />
             <Route
                path={routes.ADMIN.patients}
                element={

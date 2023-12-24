@@ -303,7 +303,6 @@ const Container = styled('div')`
       color: #959595;
    }
 `
-
 const StyledPatientsCard = styled('div')`
    display: flex;
    flex-direction: column;

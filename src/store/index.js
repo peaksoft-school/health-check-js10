@@ -7,7 +7,7 @@ import { departmentSlice } from './department/departmentSlice'
 import { patientSlice } from './patient/patientsSlice'
 import { appointmentsSlice } from './appointments/adminAppointmentsSlice'
 import { scheduleSlice } from './schedule/scheduleSlice'
-import { specialistsSlice } from './specialists/specialistsSlice'
+import { specialistsSlice } from './spesialists/specialistsSlice'
 
 export const store = configureStore({
    reducer: {

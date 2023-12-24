@@ -22,7 +22,6 @@ import { getAllDepartments } from '../../store/department/departmentThunk'
 import { DEPARTMENTS } from '../../utils/services/med_service'
 import DatePicker from '../../components/UI/DatePicker'
 import { notify } from '../../utils/constants/snackbar'
-import '@react-pdf-viewer/core/lib/styles/index.css'
 
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
@@ -103,7 +102,7 @@ export const PatientsInternalPage = () => {
          postPatientsResultThunk({
             departmentId: newData.service,
             dueDate: newData.date,
-            patientId: 3,
+            // patientId: data.patientId,
             pdgFileCheque: image,
          })
       )
@@ -301,10 +300,6 @@ const Container = styled('div')`
       font-weight: 400;
       color: #959595;
    }
-`
-
-const Img = styled('img')`
-   height: 15vh;
 `
 const StyledPatientsCard = styled('div')`
    display: flex;

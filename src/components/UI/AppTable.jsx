@@ -7,7 +7,6 @@ const AppTable = ({ columns, data, empty }) => {
    if (!data || data.length === 0) {
       return <StyledAbsence>{empty}</StyledAbsence>
    }
-
    // if (data.length === 0) {
    //    return (
    //       <StyledError>
@@ -20,7 +19,6 @@ const AppTable = ({ columns, data, empty }) => {
    //       </StyledError>
    //    )
    // }
-
    return (
       <Container>
          <Table className="navlink">
@@ -97,7 +95,6 @@ const Container = styled('div')({
       marginLeft: '0.6rem',
    },
 })
-
 const TableHeadStyle = styled(TableHead)(() => ({
    '.MuiTableCell-root ': {
       width: '160px',
@@ -110,7 +107,6 @@ const TableHeadStyle = styled(TableHead)(() => ({
       marginTop: '1rem',
    },
 }))
-
 const TableBodyStyle = styled(TableHead)(() => ({
    '.MuiTableCell-root': {
       width: '10px',
@@ -122,7 +118,6 @@ const TableBodyStyle = styled(TableHead)(() => ({
       background: '#ffff',
    },
 }))
-
 const getConditionColor = (condition) => {
    switch (condition) {
       case 'Отменён':

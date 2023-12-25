@@ -8,6 +8,8 @@ import { patientSlice } from './patient/patientsSlice'
 import { appointmentsSlice } from './appointments/adminAppointmentsSlice'
 import { scheduleSlice } from './schedule/scheduleSlice'
 import doctorsSlice from './doctors/doctorsSlice'
+import { specialistsSlice } from './spesialists/specialistsSlice'
+
 
 export const store = configureStore({
    reducer: {
@@ -20,5 +22,7 @@ export const store = configureStore({
       [appointmentsSlice.name]: appointmentsSlice.reducer,
       [scheduleSlice.name]: scheduleSlice.reducer,
       doctors: doctorsSlice,
+
+      [specialistsSlice.name]: specialistsSlice.reducer,
    },
 })

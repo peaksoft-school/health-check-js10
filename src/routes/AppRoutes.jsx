@@ -1,12 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
-import ChangePassword from '../layout/login/ChangePassword'
-import { routes } from '../utils/constants/constants'
 import AdminRoutes from './adminRoutes/AdminRoutes'
-import DoctorRoutes from './doctorRoutes/DoctorRoutes'
-import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
 import UserRoutes from './userRoutes/UserRoutes'
+
 import { ApplicationsAdmin } from '../pages/admin/ApplicationsAdmin'
 import LandingPage from '../pages/user/LandingPage'
 // import Patients from '../pages/admin/Patients'
@@ -15,9 +11,12 @@ import PatientTable from '../components/UI/PatientTable'
 import { PatientsInternalPage } from '../pages/admin/PatientsInternalPage'
 import Doctors from '../pages/user/Doctors'
 import DoctorInnerPage from '../pages/user/DoctorInnerPage'
+=======
+import GuestRoutes from './GuestRoutes'
+import { USER_KEY } from '../utils/constants/constants'
 
 const AppRoutes = () => {
-   const { isAuth } = useSelector((state) => state.authorization)
+   const { isAuth, role } = useSelector((state) => state.authorization)
 
    return (
       <Routes>
@@ -90,6 +89,15 @@ const AppRoutes = () => {
             }
          />
       </Routes>
+   const storedData = JSON.parse(localStorage.getItem(USER_KEY)) || {}
+   const restoredRole = storedData.role
+
+   return (
+      <>
+         {isAuth && (role || restoredRole) === 'ADMIN' ? <AdminRoutes /> : null}
+         {isAuth && (role || restoredRole) === 'USER' ? <UserRoutes /> : null}
+         {!isAuth ? <GuestRoutes /> : null}
+      </>
    )
 }
 

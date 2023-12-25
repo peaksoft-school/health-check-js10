@@ -2,15 +2,15 @@ import { Formik, Form, ErrorMessage } from 'formik'
 import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 import { styled } from '@mui/material'
-import { Input } from '../components/UI/input/Input'
-import Button from '../components/UI/Button'
+import { Input } from '../../components/UI/input/Input'
+import Button from '../../components/UI/Button'
 
 const Profile = () => {
    const initialValues = {
       username: '',
       userlastname: '',
       useremail: '',
-      usertelefone: '+996',
+      usertelefone: '',
    }
 
    const validationSchema = Yup.object({
@@ -23,7 +23,7 @@ const Profile = () => {
          .required('Телефонь обязателен')
          .min(13, 'Телефон должен содержать максимум 12 символов')
          .max(13, 'Номер телефона слишком длинный')
-         .required('Телефонь обязателен'),
+         .required('Телефон обязателен'),
    })
    const onSubmit = (values) => {
       console.log(values)
@@ -43,11 +43,11 @@ const Profile = () => {
             <FormStyled>
                <h2 className="cap">Профиль</h2>
                <div className="LinkTwo">
-                  <NavLink to="/Profile" className={setActive}>
+                  <NavLink to="/profile" className={setActive}>
                      личные данные
                   </NavLink>
-                  <NavLink to="/PasswordChange" className={setActive}>
-                     Сменить пароль
+                  <NavLink to="/profile/password-change" className={setActive}>
+                     cменить пароль
                   </NavLink>
                </div>
                <h4 className="personalData">Ваши личные данные</h4>
@@ -61,7 +61,6 @@ const Profile = () => {
                         <InputStyled
                            onChange={handleChange}
                            value={values.username}
-                           width="20rem"
                            type="text"
                            name="username"
                            placeholder="Имя"
@@ -73,7 +72,6 @@ const Profile = () => {
                            E-mail
                         </label>
                         <InputStyled
-                           width="20rem"
                            type="text"
                            name="useremail"
                            placeholder="Email"
@@ -92,7 +90,6 @@ const Profile = () => {
                         <InputStyled
                            onChange={handleChange}
                            value={values.userlastname}
-                           width="20rem"
                            type="text"
                            name="userlastname"
                            placeholder="Фамилия"
@@ -110,7 +107,6 @@ const Profile = () => {
                         <InputStyled
                            onChange={handleChange}
                            value={values.usertelefone}
-                           width="20rem"
                            type="text"
                            name="usertelefone"
                            placeholder="+996 (_ _ _) _ _  _ _  _ _"
@@ -177,7 +173,7 @@ const FormStyled = styled(Form)(() => ({
       marginLeft: '7.6rem',
       letterSpacing: '0.2px',
       fontWeight: '600',
-      fontSize: '1.125rem',
+      fontSize: '1.2rem',
    },
    '.cap': {
       marginTop: '1.875rem',
@@ -210,20 +206,22 @@ const FormStyled = styled(Form)(() => ({
 }))
 
 const ErrorMessageStyled = styled(ErrorMessage)(() => ({
-   marginTop: '3.3rem',
+   marginTop: '3.8rem',
    color: 'red',
-   fontSize: '0.7rem',
+   fontSize: '0.8rem',
    fontFamily: 'Manrope',
    position: 'absolute',
 }))
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      height: '2.1rem',
+      widht: '20.625rem',
+      height: '2.4rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',
+      padding: '8px 12px',
       '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-         padding: '0.300rem',
+         padding: '0.3rem',
          fontSize: '1rem',
       },
    },
@@ -231,15 +229,15 @@ const InputStyled = styled(Input)(() => ({
 
 const ButtonStyled = styled('div')(() => ({
    display: 'flex',
-   marginLeft: '29.3rem',
+   marginLeft: '37.4%',
    marginTop: '1.5rem',
+   gap: '1rem',
    '& .buttonStyle': {
-      height: '1.813rem',
-      width: '9.6rem',
+      height: '2.3rem',
+      width: '12.5rem',
       borderRadius: ' 0.625rem',
-      fontSize: '0.675rem',
+      fontSize: '0.75rem',
       fontFamily: 'Manrope',
-      marginLeft: '0.425rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
    },

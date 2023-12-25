@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDropzone } from 'react-dropzone'
+import { useParams } from 'react-router-dom'
 import {
    FileGoogleIcon,
    FileGoogleIconWhite,
@@ -22,7 +23,6 @@ import { getAllDepartments } from '../../store/department/departmentThunk'
 import { DEPARTMENTS } from '../../utils/services/med_service'
 import DatePicker from '../../components/UI/DatePicker'
 import { notify } from '../../utils/constants/snackbar'
-import '@react-pdf-viewer/core/lib/styles/index.css'
 
 export const PatientsInternalPage = () => {
    const [isModalOpen, setIsModalOpen] = useState(false)
@@ -32,6 +32,7 @@ export const PatientsInternalPage = () => {
    const [isHovered, setIsHovered] = useState({ id: 0, isHovered: false })
 
    const { data, results } = useSelector((state) => state.patients)
+   const { patientId } = useParams()
 
    const handleChange = (e) => {
       const file = e.target.files[0]
@@ -59,7 +60,7 @@ export const PatientsInternalPage = () => {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(getPatientsAsyncThunk(3))
+      dispatch(getPatientsAsyncThunk({ patientId }))
       dispatch(getAllDepartments())
    }, [])
 
@@ -103,7 +104,7 @@ export const PatientsInternalPage = () => {
          postPatientsResultThunk({
             departmentId: newData.service,
             dueDate: newData.date,
-            patientId: 3,
+            patientId: data.id,
             pdgFileCheque: image,
          })
       )
@@ -301,10 +302,6 @@ const Container = styled('div')`
       font-weight: 400;
       color: #959595;
    }
-`
-
-const Img = styled('img')`
-   height: 15vh;
 `
 const StyledPatientsCard = styled('div')`
    display: flex;

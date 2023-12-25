@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
-import Logo from '../assets/icons/logo.svg'
-import PhoneIcon from '../assets/icons/phone-outlined1.svg'
-import Email from '../assets/icons/email-outlined.svg'
-import TimeIcon from '../assets/icons/time-outlined.svg'
-import LocationIcon from '../assets/icons/location-outlined.svg'
-import InstagramIcon from '../assets/icons/instagram-icon.svg'
-import TelegramIcon from '../assets/icons/telegram-icon.svg'
-import WhatsappIcon from '../assets/icons/whatsapp-icon.svg'
+import {
+   Email,
+   InstagramWhite,
+   LocationIcon,
+   Logo,
+   PhoneIcon,
+   TelegramWhite,
+   TimeIcon,
+   WhatsAppWhite,
+} from '../assets'
 
 const Footer = () => {
    return (
@@ -17,7 +19,7 @@ const Footer = () => {
             <InfoBlock>
                <LogoContainer>
                   <NavLink to="/homepage">
-                     <img src={Logo} alt="healthcheck" />
+                     <Logo />
                   </NavLink>
                </LogoContainer>
                <span>Медицинская клиника «HealthCheck»</span>
@@ -31,21 +33,21 @@ const Footer = () => {
             <InfoBlock>
                <span>Контактная информация</span>
                <li>
-                  <img src={LocationIcon} alt="location" />
+                  <LocationIcon />
                   <p>106452, г. Бишкек, Гражданская 119</p>
                </li>
                <li>
-                  <img src={TimeIcon} alt="time" />
+                  <TimeIcon />
                   <p>пн-сб 08:00 до 18:00</p>
                </li>
                <li>
-                  <img src={PhoneIcon} alt="phone" />
+                  <PhoneIcon />
                   <p>
                      +996(800) 000 000 <br /> +996(505) 000 000
                   </p>
                </li>
                <li>
-                  <img src={Email} alt="email" />
+                  <Email />
                   <p>healthchek.kg</p>
                </li>
             </InfoBlock>
@@ -57,31 +59,30 @@ const Footer = () => {
                      target="_blank"
                      rel="noreferrer"
                   >
-                     <img src={InstagramIcon} alt="instagram" />
+                     <InstagramWhite />
                   </a>
                   <a
                      href="https://telegram.org/"
                      target="_blank"
                      rel="noreferrer"
                   >
-                     <img src={TelegramIcon} alt="telegram" />
+                     <TelegramWhite />
                   </a>
                   <a
                      href="https://whatsapp.com/"
                      target="_blank"
                      rel="noreferrer"
                   >
-                     <img src={WhatsappIcon} alt="whatsapp" />
+                     <WhatsAppWhite />
                   </a>
                </SocialLinks>
             </InfoBlock>
          </InfoContainer>
          <Navigations>
-            <NavLink to="/aboutClinic">О клинике</NavLink>
-            <NavLink to="/services">Услуги</NavLink>
+            <NavLink to="/about-clinic">О клинике</NavLink>
+            <NavLink to="/service">Услуги</NavLink>
             <NavLink to="/doctors">Врачи</NavLink>
-            <NavLink to="/price">Прайс</NavLink>
-            <NavLink to="/reviews">Отзывы</NavLink>
+            <NavLink to="/prices">Прайс</NavLink>
             <NavLink to="/contacts">Контакты</NavLink>
          </Navigations>
          <div className="line" />

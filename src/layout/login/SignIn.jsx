@@ -52,6 +52,7 @@ const SignIn = ({
          signIn({
             values,
             handleClose,
+            navigate,
          })
       )
       values.email = ''
@@ -66,6 +67,7 @@ const SignIn = ({
          })
          .then((token) => {
             dispatch(authWithGoogle({ token, navigate }))
+            handleClose()
          })
          .catch((error) => {
             if (error.code === 'auth/cancelled-popup-request') {
@@ -123,10 +125,6 @@ const SignIn = ({
                   {...register('password', {
                      setValueAs: (v) => v.trim(),
                      required: 'Поле не заполнено',
-                     maxLength: {
-                        value: 12,
-                        message: 'Слишком длинный пароль',
-                     },
                      minLength: {
                         value: 8,
                         message: 'Пароль должен содержать не менее 8 символов',

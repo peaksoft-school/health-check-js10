@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
+import { useNavigate } from 'react-router'
 import Button from '../../components/UI/Button'
 import { FeedbackSlider } from '../../components/UI/slider/FeedbackSlider'
 import Modal from '../../components/UI/Modal'
 import ApplicationForm from '../../components/ApplicationForm'
 import { MainDoctorImage, WelcomeWord } from '../../assets'
+import AboutClinicLayout from '../../components/AboutClinicLayout'
 import {
    BEST_DOCTORS_IMAGES,
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
-import Header from '../../layout/user/header/Header'
-import Footer from '../../components/Footer'
-import AboutClinicLayout from '../../components/AboutClinicLayout'
+import { ApplicationModal } from '../../components/ApplicationModal'
 
-const LandingPage = ({ logoutHandler }) => {
+const LandingPage = () => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
+   const navigate = useNavigate()
 
    const showModalHandler = () => {
       setShowApplicationModal(true)
@@ -26,9 +27,12 @@ const LandingPage = ({ logoutHandler }) => {
       setShowApplicationModal(false)
    }
 
+   const naviageteToServicePage = () => {
+      navigate('/service')
+   }
+
    return (
       <>
-         <Header logoutHandler={logoutHandler} />
          <GlobalContainer>
             <div>
                <Box>
@@ -46,7 +50,7 @@ const LandingPage = ({ logoutHandler }) => {
                         open={showApplicationModal}
                         onClose={closeModalHandler}
                      >
-                        <ApplicationForm onClose={closeModalHandler} />
+                        <ApplicationModal onClose={closeModalHandler} />
                      </BasicModalStyle>
                   </InfoBox>
                   <img src={MainDoctorImage} alt="mainPageDoctor" />
@@ -98,7 +102,12 @@ const LandingPage = ({ logoutHandler }) => {
                         ))}
                      </ServiceBox>
                      <ButtonBox>
-                        <Button variant="outlined">Смотреть все</Button>
+                        <Button
+                           variant="outlined"
+                           onClick={naviageteToServicePage}
+                        >
+                           Смотреть все
+                        </Button>
                      </ButtonBox>
                   </div>
                </DetailsBox>
@@ -135,7 +144,6 @@ const LandingPage = ({ logoutHandler }) => {
          </GlobalDoctorContainer>
          <FeedbackSlider />
          <ApplicationForm />
-         <Footer />
       </>
    )
 }
@@ -157,8 +165,8 @@ const Box = styled('div')(() => ({
 const BasicModalStyle = styled(Modal)(() => ({
    '& .MuiBox-root': {
       borderRadius: '20px',
+      background: '#EBF2FC',
       width: '659px',
-      height: '10rem',
       padding: '10px 10px 60px 20px',
    },
 }))

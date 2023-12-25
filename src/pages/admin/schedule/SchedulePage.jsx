@@ -1,19 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/system'
 import { useDispatch, useSelector } from 'react-redux'
-import { MinusIcon } from '../../../assets'
+import { NavLink } from 'react-router-dom'
+import { IconButton, InputAdornment } from '@mui/material'
+import { MinusIcon, SearchIcon } from '../../../assets'
 import Button from '../../../components/UI/Button'
 import TableSchedule from '../../../components/UI/TableSchedule'
 import DatePicker from '../../../components/UI/DatePicker'
 import { getAllSchedules } from '../../../store/schedule/scheduleThunk'
 import AddTemplate from './AddTemplate'
 import ChangeTemplate from './ChangeTemplate'
+import { Input } from '../../../components/UI/input/Input'
 
 const SchedulePage = () => {
    const [startDate, setStartDate] = useState('')
    const [endDate, setEndDate] = useState('')
    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false)
    const [isChangeModalOpen, setIsChangeModalOpen] = useState(false)
+   const [searchValue, setSearchValue] = useState('')
    const [selectedCell, setSelectedCell] = useState({
       date: '',
       doctor: null,
@@ -77,6 +81,10 @@ const SchedulePage = () => {
 
    const handleChangeModalOpen = () => {
       setIsChangeModalOpen(true)
+   }
+
+   const handleChange = (event) => {
+      setSearchValue(event.target.value)
    }
 
    const handleCellClick = async (doctor, rowIndex, date) => {
@@ -192,7 +200,43 @@ const SchedulePage = () => {
       return result
    }, [currentDate, uniqueDates])
    return (
-      <div>
+      <Container>
+         <div className="style-nav">
+            <h3>Онлайн-запись</h3>
+            <ul>
+               <li>
+                  <StyledeNavLink
+                     to="/online-registration"
+                     activeClassName="active"
+                  >
+                     ОНЛАЙН-ЗАПИСЬ
+                  </StyledeNavLink>
+               </li>
+               <li>
+                  <StyledNavLink
+                     to="/online-registration/schedule"
+                     activeClassName="active"
+                  >
+                     РАСПИСАНИЕ
+                  </StyledNavLink>
+               </li>
+            </ul>
+         </div>
+         <StyledInput
+            type="text"
+            placeholder="Поиск"
+            value={searchValue}
+            onChange={handleChange}
+            InputProps={{
+               endAdornment: (
+                  <InputAdornment position="end">
+                     <IconButton>
+                        <SearchIcon />
+                     </IconButton>
+                  </InputAdornment>
+               ),
+            }}
+         />
          <Box>
             <div>
                <ButtonsStyled
@@ -262,11 +306,46 @@ const SchedulePage = () => {
                />
             </>
          )}
-      </div>
+      </Container>
    )
 }
 
 export default SchedulePage
+
+const Container = styled('div')(() => ({
+   paddingTop: 'calc(11vh + 3rem)',
+   padding: 'calc(11vh + 3rem) 4% 3.8vh 4%',
+   backgroundColor: '#F5F5F5',
+   '.style-nav': {
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: '3rem',
+      ul: {
+         display: 'flex',
+         gap: '40px',
+      },
+      li: {
+         listStyle: 'none',
+      },
+      h3: {
+         fontSize: '24px',
+         fontWeight: '500',
+         marginBottom: '1.5rem',
+      },
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '.MuiOutlinedInput-root': {
+      borderRadius: '25px',
+      width: '43rem',
+      height: '2.4rem',
+      backgroundColor: '#fff',
+   },
+   fieldset: {
+      border: 'none',
+   },
+}))
 
 const StyledDoctorImage = styled('img')(() => ({
    width: '46px',
@@ -295,6 +374,7 @@ const Box = styled('div')`
    justify-content: space-between;
    background-color: #fff;
    padding: 20px 20px 20px 0;
+   margin-top: 1.5rem;
    .info {
       display: flex;
       justify-content: center;
@@ -327,6 +407,34 @@ const GlobalContainer = styled('div')`
    background-color: #fff;
    padding: 10px 0;
    height: 100vh;
+`
+
+const StyledNavLink = styled(NavLink)`
+   text-decoration: none;
+   font-size: 13px;
+   font-weight: 600;
+   color: #707070;
+   border-bottom: 2px solid transparent;
+   padding-bottom: 1.6vh;
+   &:active {
+      color: #048741;
+   }
+   &.active {
+      border-color: #048741;
+      color: #048741;
+   }
+`
+
+const StyledeNavLink = styled(NavLink)`
+   text-decoration: none;
+   font-size: 13px;
+   font-weight: 600;
+   color: #707070;
+   border-bottom: 2px solid transparent;
+   padding-bottom: 1.6vh;
+   &:active {
+      color: #048741;
+   }
 `
 
 const TableBox = styled('div')`

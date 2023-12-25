@@ -16,6 +16,7 @@ import {
 } from '../../store/appointment/appointmentThunk'
 import { MED_SERVICE } from '../../utils/services/med_service'
 import { notify } from '../../utils/constants/snackbar'
+import { clearError } from '../../store/appointment/appointmentSlice'
 
 const OnlineAppointment = ({ open, setOpen }) => {
    const [mainPage, setMainPage] = useState(true)
@@ -27,6 +28,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
 
    const [service, setService] = useState('')
+   const [selectedService, setSelectedService] = useState('')
    const [specialist, setSpecialist] = useState('')
    const [date, setDate] = useState('')
 
@@ -47,8 +49,9 @@ const OnlineAppointment = ({ open, setOpen }) => {
       setService(selectedService)
       setDate(updatedDate)
       const selectedServiceObject = MED_SERVICE.find(
-         (service) => service.title === selectedService
+         (service) => service.id === selectedService
       )
+      setSelectedService(selectedServiceObject.title)
       if (selectedServiceObject) {
          const departmentId = selectedServiceObject.id
          dispatch(getAllDoctors({ departmentId }))
@@ -115,6 +118,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
    const goBackInSpecialists = () => {
       setSpecialistTimePage(false)
       setSpecialistPage(true)
+      dispatch(clearError())
    }
 
    const dateChangeHandler = (date) => {
@@ -180,7 +184,7 @@ const OnlineAppointment = ({ open, setOpen }) => {
             {datePage && <ChooseDate dateChangeHandler={dateChangeHandler} />}
             {formPage && (
                <AppointmentForm
-                  service={service}
+                  service={selectedService}
                   specialist={specialist}
                   date={date}
                   openRegistered={openRegistered}

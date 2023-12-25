@@ -1,29 +1,25 @@
-import { IconButton, InputAdornment, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { Input } from '../../components/UI/input/Input'
 import AppTable from '../../components/UI/AppTable'
-import { AppDeleteIcon, SearchIcon } from '../../assets'
-import { selectPatients } from '../../store/patient/patientsSlice'
+import { AppDeleteIcon } from '../../assets'
 import {
    deletePatient,
    fetchPatients,
    searchPatients,
 } from '../../store/patient/patientsThunk'
+import SearchInput from '../../components/UI/SearchInput'
 
 export const PatientsAdmin = () => {
    const dispatch = useDispatch()
-   const patients = useSelector(selectPatients)
+   const { patients } = useSelector((state) => state.patients)
    const [searchTerm, setSearchTerm] = useState('')
-
    useEffect(() => {
       dispatch(fetchPatients())
    }, [dispatch])
-
    const handleSearchById = (value) => {
       dispatch(searchPatients(value))
    }
-
    useEffect(() => {
       const delayDebounceFn = setTimeout(() => {
          if (searchTerm) {
@@ -32,19 +28,15 @@ export const PatientsAdmin = () => {
             dispatch(fetchPatients())
          }
       }, 1000)
-
       return () => clearTimeout(delayDebounceFn)
    }, [searchTerm, dispatch])
-
    const handleChange = (event) => {
       const inputValue = event.target.value
       setSearchTerm(inputValue)
    }
-
    const handleDelete = (patientId) => {
       dispatch(deletePatient(patientId))
    }
-
    const columns = [
       { id: 'id', label: '№' },
       { id: 'fullName', label: 'Имя Фамилия' },
@@ -66,26 +58,11 @@ export const PatientsAdmin = () => {
          },
       },
    ]
-
    return (
       <StyledContainerApp>
          <div className="appInput">
-            <span>Пациенты</span>
-            <StyledInput
-               type="text"
-               placeholder="Поиск"
-               value={searchTerm}
-               onChange={handleChange}
-               InputProps={{
-                  endAdornment: (
-                     <InputAdornment position="end">
-                        <IconButton>
-                           <SearchIcon />
-                        </IconButton>
-                     </InputAdornment>
-                  ),
-               }}
-            />
+            <h3>Пациенты</h3>
+            <SearchInput value={searchTerm} onChange={handleChange} />
          </div>
          <div className="table">
             <AppTable
@@ -97,10 +74,9 @@ export const PatientsAdmin = () => {
       </StyledContainerApp>
    )
 }
-
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
-   padding: 16vh 4% 3.8vh 4%;
+   padding: calc(11vh + 3rem) 4% 3.8vh 4%;
    height: 100%;
    .delete-icon {
       cursor: pointer;
@@ -109,18 +85,17 @@ const StyledContainerApp = styled('div')`
       display: flex;
       flex-direction: column;
       gap: 25px;
-      span {
-         font-size: 22px;
+      h3 {
+         font-size: 24px;
+         font-weight: 500;
       }
    }
-
    .table {
       background-color: #fff;
       border-radius: 6px;
       min-height: 64.4vh;
       margin-top: 1.5rem;
    }
-
    .flxDTz {
       margin-top: 1.5rem;
    }
@@ -156,14 +131,3 @@ const StyledContainerApp = styled('div')`
       }
    }
 `
-const StyledInput = styled(Input)(() => ({
-   '.MuiOutlinedInput-root': {
-      borderRadius: '25px',
-      width: '43rem',
-      height: '2.4rem',
-      backgroundColor: '#fff',
-   },
-   fieldset: {
-      border: 'none',
-   },
-}))

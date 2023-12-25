@@ -6,11 +6,7 @@ import { applicationsThunk } from './store/applications/applicationsThunk'
 
 import { login } from './store/auth/authSlice'
 import { USER_KEY } from './utils/constants/constants'
-// eslint-disable-next-line import/no-unresolved
-import 'react-pdf/dist/Page/TextLayer.css'
-import GetResult from './components/GetResult'
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()

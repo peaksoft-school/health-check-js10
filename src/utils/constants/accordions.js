@@ -449,7 +449,7 @@ export const prices = [
    },
    {
       id: 16,
-      title: 'Психтерапия',
+      title: 'Психотерапия',
       data: 'Проведение пробы на гипнабельность',
       price: 2920,
       description:

@@ -88,6 +88,7 @@ const AppointmentForm = ({
    const submitAppointment = async (data, e) => {
       e.preventDefault()
       const department = departments[service]
+      console.log(department, 'asfasf', service)
       const formatDate = `2023-${getMonthNumber(date.month)}-${getDay(
          date.day
       )}`

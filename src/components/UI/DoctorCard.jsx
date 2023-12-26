@@ -1,24 +1,26 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
 import Button from './Button'
 
 export default function DoctorCard({ doctor }) {
-   const { id, image, fullName, position } = doctor
+   const { id, image, firstName, lastName, position } = doctor
    return (
       <Container>
-         <Link to={`/doctors/${id}`}>
-            <img src={image} alt={fullName} />
-         </Link>
-         <Link to={`/doctors/${id}`} className="title">
-            {`${fullName}`}
-         </Link>
-         <Link to={`/doctors/${id}`} className="position">
-            {position}
-         </Link>
-         <Button variant="outlined" type="submit">
-            Записаться на прием
-         </Button>
+         <div key={id}>
+            <Link to={`/doctors/${id}`}>
+               <img src={image} alt={firstName} />
+            </Link>
+            <Link to={`/doctors/${id}`} className="title">
+               {`${firstName} ${lastName}`}
+            </Link>
+            <Link to={`/doctors/${id}`} className="position">
+               {position}
+            </Link>
+            <Button variant="outlined" type="submit">
+               Записаться на прием
+            </Button>
+         </div>
       </Container>
    )
 }
@@ -45,6 +47,7 @@ const Container = styled('div')(() => ({
       justifyContent: 'flex-start',
       fontSize: '1.125rem',
       fontWeight: '31.25rem',
+      color: 'black',
    },
    '& .position': {
       display: 'flex',

@@ -5,9 +5,12 @@ import { applicationsSlice } from './applications/applicationsSlice'
 import myappointmentsSlice from './myappointments/myappointmentsSlice'
 import { departmentSlice } from './department/departmentSlice'
 import { patientSlice } from './patient/patientsSlice'
+import { resultSlice } from './getresult/resultSlice'
 import { appointmentsSlice } from './appointments/adminAppointmentsSlice'
 import { scheduleSlice } from './schedule/scheduleSlice'
+import doctorsSlice from './doctors/doctorsSlice'
 import { specialistsSlice } from './spesialists/specialistsSlice'
+
 
 export const store = configureStore({
    reducer: {
@@ -19,6 +22,7 @@ export const store = configureStore({
       [departmentSlice.name]: departmentSlice.reducer,
       [appointmentsSlice.name]: appointmentsSlice.reducer,
       [scheduleSlice.name]: scheduleSlice.reducer,
+      doctors: doctorsSlice,
       [specialistsSlice.name]: specialistsSlice.reducer,
    },
 })

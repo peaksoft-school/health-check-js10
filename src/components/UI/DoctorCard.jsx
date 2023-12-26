@@ -1,14 +1,25 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
+import Button from './Button'
 
-export default function DoctorCard({ id, image, title, description }) {
+export default function DoctorCard({ doctor }) {
+   const { id, image, firstName, lastName, position } = doctor
    return (
       <Container>
          <div key={id}>
-            <img src={image} alt={title} />
-            <p className="title">{title}</p>
-            <p className="description">{description}</p>
-            <button type="submit">Записаться на прием</button>
+            <Link to={`/doctors/${id}`}>
+               <img src={image} alt={firstName} />
+            </Link>
+            <Link to={`/doctors/${id}`} className="title">
+               {`${firstName} ${lastName}`}
+            </Link>
+            <Link to={`/doctors/${id}`} className="position">
+               {position}
+            </Link>
+            <Button variant="outlined" type="submit">
+               Записаться на прием
+            </Button>
          </div>
       </Container>
    )
@@ -18,13 +29,13 @@ const Container = styled('div')(() => ({
       display: 'flex',
       flexDirection: 'column',
       gap: '0.5rem',
-      width: '12.5rem',
-      height: '19.5rem',
+      width: '19rem',
+      height: '26rem',
       borderRadius: '4px',
    },
    '& img': {
       width: '100%',
-      height: '12.813rem',
+      height: '20rem',
    },
    '& button': {
       padding: '10px 20px',
@@ -36,8 +47,9 @@ const Container = styled('div')(() => ({
       justifyContent: 'flex-start',
       fontSize: '1.125rem',
       fontWeight: '31.25rem',
+      color: 'black',
    },
-   '& .description': {
+   '& .position': {
       display: 'flex',
       justifyContent: 'flex-start',
       fontSize: '1rem',

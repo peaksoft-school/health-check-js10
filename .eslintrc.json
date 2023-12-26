@@ -31,7 +31,6 @@
       "no-irregular-whitespace": "warn",
       "react/no-unknown-property": "warn",
       "no-unused-vars": "warn",
-      "no-plusplus": "warn",
       "max-len": [
          "error",
          {

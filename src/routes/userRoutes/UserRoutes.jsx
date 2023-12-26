@@ -11,6 +11,7 @@ import Contacts from '../../components/Contacts'
 import Profile from '../../pages/user/Profile'
 import Footer from '../../layout/Footer'
 import { notify } from '../../utils/constants/snackbar'
+import ServiceDetails from '../../components/UI/ServiceDetails'
 
 const UserRoutes = () => {
    const dispatch = useDispatch()
@@ -32,6 +33,7 @@ const UserRoutes = () => {
             <Route path="/prices" element={<Prices />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
+            <Route path="/service/:id/details" element={<ServiceDetails />} />
             <Route path="/profile" element={<Profile />} />
             {/* <Route
                path="/profile/password-change"

@@ -10,21 +10,23 @@ function ServiceCard() {
          {MED_SERVICE.map((el) => {
             return (
                <Grid item xs={6} key={el.id}>
-                  <div className="grid" href="#top">
-                     <NavLink
-                        to={`${el.id}/details/`}
-                        state={{ departName: el.title }}
-                        className="img"
-                     >
-                        {el.img}
-                     </NavLink>
-                     <NavLink
-                        to={`${el.id}/details/`}
-                        state={{ departName: el.title }}
-                     >
-                        {el.title}
-                     </NavLink>
-                  </div>
+                  <NavLink to={`${el.id}/details/`}>
+                     <div className="grid" href="#top">
+                        <NavLink
+                           to={`${el.id}/details/`}
+                           state={{ departName: el.title }}
+                           className="img"
+                        >
+                           {el.img}
+                        </NavLink>
+                        <NavLink
+                           to={`${el.id}/details/`}
+                           state={{ departName: el.title }}
+                        >
+                           {el.title}
+                        </NavLink>
+                     </div>
+                  </NavLink>
                </Grid>
             )
          })}
@@ -39,7 +41,7 @@ const GridContainer = styled(Grid)(() => ({
    height: '1252px',
    // marginLeft: '95px',
    paddingTop: '60px',
-   marginBottom: '120px',
+   marginBottom: '25rem',
    '& .grid': {
       display: 'flex',
       alignItems: 'center',

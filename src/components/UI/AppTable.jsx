@@ -38,11 +38,11 @@ const AppTable = ({ columns, data, empty }) => {
                </TableRow>
             </TableHeadStyle>
             <TableBodyStyle>
-               {data?.map((item) => (
+               {data?.map((item, index) => (
                   <TableRow key={item.id}>
                      {columns?.map((column) => {
                         if (column.render) {
-                           return column.render(item)
+                           return column.render(item, index)
                         }
                         return (
                            <TableCell

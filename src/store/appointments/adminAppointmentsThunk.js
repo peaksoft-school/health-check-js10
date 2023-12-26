@@ -85,6 +85,7 @@ export const postNewAppointmentsThunk = createAsyncThunk(
    async (formData, { rejectWithValue }) => {
       try {
          const { data } = await axiosInstance.post('/api/schedules', formData)
+         notify('Запись успешно добавлен')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(

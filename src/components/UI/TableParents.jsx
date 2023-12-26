@@ -4,7 +4,7 @@ import AppTable from './AppTable'
 import { ReactComponent as DeleteIcon } from '../../assets/images/deleteX.svg'
 import { fetchMyAppointments } from '../../store/myappointments/myappointmentsThunk'
 
-export const Parents = () => {
+export const TableParents = () => {
    const dispatch = useDispatch()
    const myAppointmentsData = useSelector((state) => state.myappointments.data)
    const status = useSelector((state) => state.myappointments.status)

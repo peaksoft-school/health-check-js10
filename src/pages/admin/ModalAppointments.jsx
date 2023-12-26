@@ -120,12 +120,6 @@ export const ModalAppointments = ({ open, onClose, setIsModalOpen }) => {
                   ],
             })
          )
-            .then(() => {
-               notify('Запись добавлен')
-            })
-            .catch(() => {
-               notify('Ошибка при записи', 'error')
-            })
          setIsModalOpen(false)
          reset()
       }

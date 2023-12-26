@@ -10,6 +10,7 @@ import Prices from '../components/Prices'
 import Contacts from '../components/Contacts'
 import Profile from '../pages/user/Profile'
 import Footer from '../layout/Footer'
+import { routes } from '../utils/constants/routes'
 
 const GuestRoutes = () => {
    const dispatch = useDispatch()
@@ -20,6 +21,9 @@ const GuestRoutes = () => {
    return (
       <>
          <Header logoutHandler={logoutHandler} variant="hr" />
+         {window.location.pathname === routes.LOGIN.changePassword ? (
+            <LandingPage />
+         ) : null}
          <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/homepage" element={<LandingPage />} />
@@ -29,6 +33,10 @@ const GuestRoutes = () => {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
             <Route path="/profile" element={<Profile />} />
+            <Route
+               path={routes.LOGIN.changePassword}
+               element={<LandingPage variant="password" />}
+            />
             {/* <Route
                path="/profile/password-change"
                element={<PasswordChange />}

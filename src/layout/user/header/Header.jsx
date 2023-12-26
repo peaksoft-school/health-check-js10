@@ -91,8 +91,17 @@ const Header = ({ logoutHandler, variant }) => {
       navigate('/profile')
    }
 
+   const navigateToMyNotes = () => {
+      navigate('/profile/my-notes')
+   }
+
    const menuItems = isAuth
       ? [
+           {
+              title: 'Мои записи',
+              id: 3,
+              onClick: navigateToMyNotes,
+           },
            {
               title: 'Профиль',
               id: 2,
@@ -187,8 +196,8 @@ const Header = ({ logoutHandler, variant }) => {
                   <div className="numbers">
                      <PhoneIcon />
                      <div>
-                        <h3>+996(800) 000 000</h3>
-                        <h3>+996(505) 000 000</h3>
+                        <h3>+996(500) 344 433</h3>
+                        <h3>+996(999) 344 433</h3>
                      </div>
                   </div>
 

@@ -1,6 +1,6 @@
 export const routes = {
    LOGIN: {
-      changePassword: '/change-password',
+      changePassword: '/change-password/:uniqueId',
    },
    ADMIN: {
       path: '/online-registration',

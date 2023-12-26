@@ -11,6 +11,9 @@ import Contacts from '../../components/Contacts'
 import Profile from '../../pages/user/Profile'
 import Footer from '../../layout/Footer'
 import { notify } from '../../utils/constants/snackbar'
+import { TableParents } from '../../components/UI/TableParents'
+import PatientTable from '../../components/UI/PatientTable'
+import { PasswordChange } from '../../pages/user/PasswordChange'
 
 const UserRoutes = () => {
    const dispatch = useDispatch()
@@ -33,10 +36,15 @@ const UserRoutes = () => {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
             <Route path="/profile" element={<Profile />} />
-            {/* <Route
+            <Route path="/profile/my-notes" element={<TableParents />} />
+            <Route
+               path="/profile/my-notes/:appointmentId"
+               element={<PatientTable />}
+            />
+            <Route
                path="/profile/password-change"
                element={<PasswordChange />}
-            /> */}
+            />
          </Routes>
          <Footer />
       </>

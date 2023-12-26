@@ -3,6 +3,7 @@ import { ErrorMessage, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
+import { NavLink } from 'react-router-dom'
 import { HideIcon, ShowIcon } from '../../assets'
 import Button from '../../components/UI/Button'
 import { Input } from '../../components/UI/input/Input'
@@ -29,6 +30,9 @@ export const PasswordChange = () => {
    const togglePasswordVisibility = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
    }
+
+   const setActive = ({ isActive }) => `Enabled  ${isActive && 'active-link'}`
+
    return (
       <Formik
          initialValues={{
@@ -63,6 +67,15 @@ export const PasswordChange = () => {
       >
          {({ values, handleChange }) => (
             <FormStyled>
+               <h2 className="cap">Профиль</h2>
+               <div className="LinkTwo">
+                  <NavLink to="/profile" className="my-dates">
+                     ЛИЧНЫЕ ДАННЫЕ
+                  </NavLink>
+                  <NavLink to="/profile/password-change" className={setActive}>
+                     СМЕНИТЬ ПАРОЛЬ
+                  </NavLink>
+               </div>
                <DivContainerStyled>
                   <h4 className="changePassword">Смена пароля</h4>
                   <div className="boxOne">
@@ -70,6 +83,8 @@ export const PasswordChange = () => {
                         Старый пароль
                      </label>
                      <InputStyled
+                        width="28rem"
+                        height="2.5rem"
                         type={showPassword ? 'text' : 'password'}
                         name="lastpassword"
                         placeholder="Введите ваш пароль"
@@ -97,6 +112,8 @@ export const PasswordChange = () => {
                         Новый пароль
                      </label>
                      <InputStyled
+                        width="28rem"
+                        height="2.5rem"
                         type={showPasswordCopy ? 'text' : 'password'}
                         name="newpassword"
                         placeholder="Введите новый пароль"
@@ -127,6 +144,8 @@ export const PasswordChange = () => {
                         Подтвердить новый пароль
                      </label>
                      <InputStyled
+                        width="28rem"
+                        height="2.5rem"
                         type={showPasswordEnd ? 'text' : 'password'}
                         name="confirmpassword"
                         placeholder="Подтвердите пароль"
@@ -158,10 +177,10 @@ export const PasswordChange = () => {
 
                <div className="buttonStyle">
                   <Button className="buttons" type="button" variant="outlined">
-                     назад
+                     НАЗАД
                   </Button>
                   <Button className="buttons" type="submit">
-                     подтвердить
+                     ПОДТВЕРДИТЬ
                   </Button>
                </div>
             </FormStyled>
@@ -174,8 +193,10 @@ const FormStyled = styled(Form)(() => ({
    display: 'flex',
    flexDirection: 'column',
    fontFamily: 'Manrope',
-   marginLeft: '7.7rem',
-   marginTop: '2.9rem',
+   marginTop: '1rem',
+   marginBottom: '8%',
+   marginLeft: '7%',
+   width: '62rem',
    '.buttonStyle': {
       display: 'flex',
       gap: '1rem',
@@ -183,7 +204,7 @@ const FormStyled = styled(Form)(() => ({
    },
    '.buttons': {
       height: '2.3rem',
-      width: '12.5rem',
+      width: '13.5rem',
       borderRadius: ' 0.625rem',
       fontSize: '0.675rem',
       fontFamily: 'Manrope',
@@ -196,7 +217,6 @@ const FormStyled = styled(Form)(() => ({
    },
    '&h4': {
       marginTop: '1.6rem',
-      marginLeft: '1.6rem',
       background: 'red',
       fontSize: '1.5rem',
    },
@@ -212,14 +232,26 @@ const FormStyled = styled(Form)(() => ({
          cursor: 'pointer',
       },
    },
+   '.cap': {
+      marginTop: '1.875rem',
+      color: '#222222',
+      fontSize: '1.5rem',
+   },
    '.Enabled': {
       fontFamily: 'Manrope',
       color: '#959595',
       textDecoration: 'none',
+      fontWeight: '600',
    },
    '.Enabled.active-link': {
       color: '#048741',
       textDecoration: 'underline',
+   },
+   '.my-dates': {
+      fontFamily: 'Manrope',
+      color: '#959595',
+      textDecoration: 'none',
+      fontWeight: '600',
    },
 }))
 const DivContainerStyled = styled('div')(() => ({
@@ -252,8 +284,6 @@ const ErrorMessageStyled = styled(ErrorMessage)(() => ({
 
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      widht: '20.625rem',
-      height: '2.4rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',

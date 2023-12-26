@@ -79,6 +79,7 @@ export const changeDoctorThunk = createAsyncThunk(
             `/api/doctors/update?doctorId=${doctorId}&departmentId=${departmentId}`,
             doctorInfo
          )
+         notify('Данные успешно сохранены')
          dispatch(specialistThunk(doctorId))
          return response.data
       } catch (error) {
@@ -87,40 +88,19 @@ export const changeDoctorThunk = createAsyncThunk(
    }
 )
 
-export const postFile = createAsyncThunk(
-   'cards/postFile',
-   async (data, { rejectWithValue }) => {
-      try {
-         const response = await fileAxiosInstanse.post('/api/files', {
-            file: data,
-         })
-         return response.data
-      } catch (error) {
-         const errorMessage = error.response.data.message.replace(
-            /^\[|\]$/g,
-            ''
-         )
-         notify(errorMessage, 'error')
-         return rejectWithValue(error)
-      }
-   }
-)
-
 export const postNewDoctorsThunk = createAsyncThunk(
    'patientsResult/addResult',
-   async (addDoctor, getFile, departmentId, { rejectWithValue, dispatch }) => {
+   async ({ dataSpecialist, departmentId }, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await axiosInstance.post(
-            '/api/doctors/',
+            `/api/doctors/${departmentId}`,
             {
-               ...addDoctor,
-               image: getFile.link,
-            },
-            {
-               params: departmentId,
+               ...dataSpecialist,
             }
          )
-         dispatch(doctorsAllThunk(addDoctor.departmentId))
+
+         // dispatch(doctorsAllThunk(dataSpecialist.departmentId))
+         notify('Специалист успешно добавлен')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(

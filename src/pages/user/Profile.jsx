@@ -44,10 +44,10 @@ const Profile = () => {
                <h2 className="cap">Профиль</h2>
                <div className="LinkTwo">
                   <NavLink to="/profile" className={setActive}>
-                     личные данные
+                     ЛИЧНЫЕ ДАННЫЕ
                   </NavLink>
                   <NavLink to="/profile/password-change" className={setActive}>
-                     cменить пароль
+                     СМЕНИТЬ ПАРОЛЬ
                   </NavLink>
                </div>
                <h4 className="personalData">Ваши личные данные</h4>
@@ -59,6 +59,7 @@ const Profile = () => {
                            Имя
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.username}
                            type="text"
@@ -72,6 +73,7 @@ const Profile = () => {
                            E-mail
                         </label>
                         <InputStyled
+                           width="30rem"
                            type="text"
                            name="useremail"
                            placeholder="Email"
@@ -88,6 +90,7 @@ const Profile = () => {
                            Фамилия
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.userlastname}
                            type="text"
@@ -105,6 +108,7 @@ const Profile = () => {
                            Телефон
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.usertelefone}
                            type="text"
@@ -145,10 +149,12 @@ const FormStyled = styled(Form)(() => ({
    flexDirection: 'column',
    fontFamily: 'Manrope',
    marginTop: '1rem',
+   marginBottom: '8%',
+   marginLeft: '7%',
+   width: '62rem',
    '.firstContainer': {
       display: 'flex',
       gap: '2rem',
-      marginLeft: '7.5rem',
    },
    '&h2': {
       marginTop: '1.8rem',
@@ -164,20 +170,18 @@ const FormStyled = styled(Form)(() => ({
    '.label': {
       fontFamily: 'Manrope',
       color: '#464444',
-      fontSize: '0.875rem',
+      fontSize: '1rem',
    },
    '.personalData': {
       color: '#222222',
       fontFamily: 'Manrope',
       marginTop: '1.5rem',
-      marginLeft: '7.6rem',
       letterSpacing: '0.2px',
       fontWeight: '600',
       fontSize: '1.2rem',
    },
    '.cap': {
       marginTop: '1.875rem',
-      marginLeft: '7.7rem',
       color: '#222222',
       fontSize: '1.5rem',
    },
@@ -186,7 +190,6 @@ const FormStyled = styled(Form)(() => ({
       flexDirection: 'row',
       gap: '1.875rem',
       marginTop: '1.3rem',
-      marginLeft: '7.6rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
@@ -198,6 +201,7 @@ const FormStyled = styled(Form)(() => ({
       fontFamily: 'Manrope',
       color: '#959595',
       textDecoration: 'none',
+      fontWeight: '600',
    },
    '.Enabled.active-link': {
       color: '#048741',
@@ -214,8 +218,7 @@ const ErrorMessageStyled = styled(ErrorMessage)(() => ({
 }))
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      widht: '20.625rem',
-      height: '2.4rem',
+      height: '2.5rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',
@@ -229,12 +232,12 @@ const InputStyled = styled(Input)(() => ({
 
 const ButtonStyled = styled('div')(() => ({
    display: 'flex',
-   marginLeft: '37.4%',
    marginTop: '1.5rem',
    gap: '1rem',
+   justifyContent: 'end',
    '& .buttonStyle': {
       height: '2.3rem',
-      width: '12.5rem',
+      width: '23.4%',
       borderRadius: ' 0.625rem',
       fontSize: '0.75rem',
       fontFamily: 'Manrope',

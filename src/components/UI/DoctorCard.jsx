@@ -34,7 +34,7 @@ const Container = styled('div')(() => ({
       borderRadius: '4px',
    },
    '& img': {
-      width: '100%',
+      width: '19rem',
       height: '20rem',
    },
    '& button': {

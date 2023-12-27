@@ -10,6 +10,7 @@ import Prices from '../components/Prices'
 import Contacts from '../components/Contacts'
 import Profile from '../pages/user/Profile'
 import Footer from '../layout/Footer'
+import ServiceDetails from '../components/UI/ServiceDetails'
 
 const GuestRoutes = () => {
    const dispatch = useDispatch()
@@ -28,6 +29,7 @@ const GuestRoutes = () => {
             <Route path="/prices" element={<Prices />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
+            <Route path="/service/:id/details" element={<ServiceDetails />} />
             <Route path="/profile" element={<Profile />} />
             {/* <Route
                path="/profile/password-change"

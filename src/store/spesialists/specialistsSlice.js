@@ -15,7 +15,7 @@ const initialState = {
 }
 
 export const specialistsSlice = createSlice({
-   name: 'doctors',
+   name: 'specialists',
    initialState,
    reducers: {
       setSelectedDoctorId: (state, action) => {

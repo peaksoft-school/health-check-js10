@@ -11,6 +11,8 @@ import Contacts from '../components/Contacts'
 import Profile from '../pages/user/Profile'
 import Footer from '../layout/Footer'
 import { routes } from '../utils/constants/routes'
+import Doctors from '../pages/user/Doctors'
+import DoctorInnerPage from '../pages/user/DoctorInnerPage'
 
 const GuestRoutes = () => {
    const dispatch = useDispatch()
@@ -37,10 +39,11 @@ const GuestRoutes = () => {
                path={routes.LOGIN.changePassword}
                element={<LandingPage variant="password" />}
             />
-            {/* <Route
-               path="/profile/password-change"
-               element={<PasswordChange />}
-            /> */}
+            <Route path={routes.USER.doctors} element={<Doctors />} />
+            <Route
+               path={routes.USER.doctorDetails}
+               element={<DoctorInnerPage />}
+            />
          </Routes>
          <Footer />
       </>

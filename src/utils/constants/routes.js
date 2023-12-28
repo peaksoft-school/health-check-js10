@@ -14,6 +14,7 @@ export const routes = {
       path: '/homepage',
       service: '/service',
       doctors: '/doctors',
+      doctorDetails: '/doctors/:doctorId',
       aboutClinic: '/about-clinic',
       prices: '/prices',
       contacts: '/contacts',

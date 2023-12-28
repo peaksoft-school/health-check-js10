@@ -1,17 +1,39 @@
+import { useEffect, useState } from 'react'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
+import { useSelector, useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { getProfileById, updateProfile } from '../../store/profile/profileThunk'
 
 const Profile = () => {
-   const initialValues = {
+   const dispatch = useDispatch()
+
+   const { data } = useSelector((state) => state.profile) || {}
+
+   console.log(data, 'data')
+
+   const [initialValues, setInitialValues] = useState({
       username: '',
       userlastname: '',
       useremail: '',
       usertelefone: '',
-   }
+   })
+
+   useEffect(() => {
+      dispatch(getProfileById())
+   }, [dispatch])
+
+   useEffect(() => {
+      setInitialValues({
+         username: data?.firstName,
+         useremail: data?.email,
+         userlastname: data?.lastName,
+         usertelefone: data?.phoneNumber,
+      })
+   }, [data])
 
    const validationSchema = Yup.object({
       username: Yup.string().required('Имя обязательно'),
@@ -26,7 +48,14 @@ const Profile = () => {
          .required('Телефон обязателен'),
    })
    const onSubmit = (values) => {
-      console.log(values)
+      dispatch(
+         updateProfile({
+            firstName: values.username,
+            lastName: values.userlastname,
+            email: values.useremail,
+            phoneNumber: values.usertelefone,
+         })
+      )
    }
    const handleCancel = (initialValues) => {
       console.log(initialValues)

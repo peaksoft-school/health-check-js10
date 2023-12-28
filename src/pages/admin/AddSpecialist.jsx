@@ -93,6 +93,7 @@ const AddSpecialist = () => {
                postNewDoctorsThunk({
                   dataSpecialist,
                   departmentId: values.department,
+                  navigate,
                })
             )
          } catch (error) {

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { notify } from '../../utils/constants/snackbar'
-import { fileAxiosInstanse } from '../../config/fileAxiosInstanse'
 
 export const doctorsAllThunk = createAsyncThunk(
    'doctorsAll/doctors',
@@ -10,7 +9,12 @@ export const doctorsAllThunk = createAsyncThunk(
          const response = await axiosInstance.get('/api/doctors')
          return response.data
       } catch (error) {
-         return rejectWithValue
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
@@ -51,14 +55,19 @@ export const deleteDoctorThunk = createAsyncThunk(
          await axiosInstance.delete(`/api/doctors/${doctorId}`)
          return dispatch(doctorsAllThunk())
       } catch (error) {
-         return rejectWithValue
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
 
 export const statusDoctorThunk = createAsyncThunk(
    'doctorsStatus/doctorsStatusId',
-   async ({ doctorId, value }, { dispatch }) => {
+   async ({ doctorId, value }, { dispatch, rejectWithValue }) => {
       try {
          const response = await axiosInstance.put(
             `/api/doctors/status?doctorId=${doctorId}&isActive=${value}`
@@ -66,7 +75,12 @@ export const statusDoctorThunk = createAsyncThunk(
          dispatch(doctorsAllThunk())
          return response.data
       } catch (error) {
-         return error
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         notify(errorMessage, 'error')
+         return rejectWithValue(error)
       }
    }
 )
@@ -90,7 +104,7 @@ export const changeDoctorThunk = createAsyncThunk(
 
 export const postNewDoctorsThunk = createAsyncThunk(
    'patientsResult/addResult',
-   async ({ dataSpecialist, departmentId }, { rejectWithValue, dispatch }) => {
+   async ({ dataSpecialist, departmentId, navigate }, { rejectWithValue }) => {
       try {
          const { data } = await axiosInstance.post(
             `/api/doctors/${departmentId}`,
@@ -101,6 +115,7 @@ export const postNewDoctorsThunk = createAsyncThunk(
 
          // dispatch(doctorsAllThunk(dataSpecialist.departmentId))
          notify('Специалист успешно добавлен')
+         navigate('/specialists')
          return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(

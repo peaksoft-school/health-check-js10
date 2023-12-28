@@ -95,6 +95,18 @@ const Header = ({ logoutHandler, variant }) => {
       navigate('/profile/my-notes')
    }
 
+   const navigateToGetResult = () => {
+      if (isAuth) {
+         navigate('/results')
+      } else {
+         setIsLoginModalOpen(true)
+         localStorage.setItem(
+            localStorageKeys.SIGN_IN_MODAL_KEY,
+            JSON.stringify(true)
+         )
+      }
+   }
+
    const menuItems = isAuth
       ? [
            {
@@ -185,7 +197,7 @@ const Header = ({ logoutHandler, variant }) => {
                   <a href="https://www.instagram.com">
                      <InstagramIcon />
                   </a>
-                  <a href="https://t.me/">
+                  <a href="https://web.telegram.org/k/#-4032240673">
                      <TelegramIcon />
                   </a>
                   <a href="https://www.whatsapp.com">
@@ -225,7 +237,10 @@ const Header = ({ logoutHandler, variant }) => {
                   </NavlinkStyled>
                </NavList>
                <ContainerButton>
-                  <StyledButton variant="outlined">
+                  <StyledButton
+                     variant="outlined"
+                     onClick={navigateToGetResult}
+                  >
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
                   <StyledButton onClick={isDrawerOpenHandler}>

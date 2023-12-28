@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import { Button } from '@mui/material'
 import styled from '@emotion/styled'
 import { fetchAppointmentById } from '../../store/myappointments/myappointmentsThunk'
-import { notify } from '../../utils/constants/snackbar'
 
 const PatientTable = () => {
    const { appointmentId } = useParams()

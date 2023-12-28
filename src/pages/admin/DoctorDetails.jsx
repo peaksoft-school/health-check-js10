@@ -19,7 +19,7 @@ const DoctorDetails = () => {
    const navigate = useNavigate()
    const { doctorId } = useParams()
 
-   const { selectedDoctor } = useSelector((state) => state.doctors)
+   const { selectedDoctor } = useSelector((state) => state.specialists)
    const [isEditing, setIsEditing] = useState(false)
    const [image, setImage] = useState(null)
 

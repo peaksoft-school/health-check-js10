@@ -18,7 +18,7 @@ import SearchInput from '../../components/UI/SearchInput'
 
 export const Specialists = () => {
    const navigate = useNavigate()
-   const { doctors } = useSelector((state) => state.doctors)
+   const { doctors } = useSelector((state) => state.specialists)
    const dispatch = useDispatch()
    const [searchTerm, setSearchTerm] = useState('')
    // const [isStatus, setIsStatus] = useState(false)

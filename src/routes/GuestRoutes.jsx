@@ -13,6 +13,7 @@ import Footer from '../layout/Footer'
 import { routes } from '../utils/constants/routes'
 import Doctors from '../pages/user/Doctors'
 import DoctorInnerPage from '../pages/user/DoctorInnerPage'
+import ServiceDetails from '../components/UI/ServiceDetails'
 
 const GuestRoutes = () => {
    const dispatch = useDispatch()
@@ -34,6 +35,7 @@ const GuestRoutes = () => {
             <Route path="/prices" element={<Prices />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
+            <Route path="/service/:id/details" element={<ServiceDetails />} />
             <Route path="/profile" element={<Profile />} />
             <Route
                path={routes.LOGIN.changePassword}

@@ -18,6 +18,7 @@ import GetResult from '../../pages/user/GetResult'
 import Doctors from '../../pages/user/Doctors'
 import DoctorInnerPage from '../../pages/user/DoctorInnerPage'
 import { routes } from '../../utils/constants/routes'
+import ServiceDetails from '../../components/UI/ServiceDetails'
 
 const UserRoutes = () => {
    const dispatch = useDispatch()
@@ -41,6 +42,7 @@ const UserRoutes = () => {
             <Route path="/prices" element={<Prices />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/service" element={<OurAllServices />} />
+            <Route path="/service/:id/details" element={<ServiceDetails />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/my-notes" element={<TableParents />} />
             <Route

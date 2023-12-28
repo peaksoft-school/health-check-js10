@@ -2,10 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getProfileById } from './profileThunk'
 
 const initialState = {
-   firstName: '',
-   lastName: '',
-   email: '',
-   phoneNumber: '',
+   data: {},
 }
 
 export const profileSlice = createSlice({
@@ -14,7 +11,7 @@ export const profileSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder.addCase(getProfileById.fulfilled, (state, action) => {
-         return { ...action.payload }
+         state.data = action.payload
       })
    },
 })

@@ -29,7 +29,7 @@ const Contacts = () => {
             <ContainerInfo>
                <ContactInfo>Контактные номера:</ContactInfo>
                <ContactInfoP>
-                  +996(800) 000 000 ; +996(505) 000 000
+                  +996(500) 344 433 ; +996(999) 344 433
                </ContactInfoP>
             </ContainerInfo>
             <ContainerInfo>

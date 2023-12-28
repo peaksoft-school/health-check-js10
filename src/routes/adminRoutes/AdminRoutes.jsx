@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { logout } from '../../store/auth/authSlice'
@@ -26,6 +26,10 @@ const AdminRoutes = () => {
       notify('Выход успешно выполнен')
       navigate('/homepage')
    }
+
+   useEffect(() => {
+      navigate(routes.ADMIN.onlineRegistration)
+   }, [])
    return (
       <>
          <Header logoutHandler={logoutHandler} />

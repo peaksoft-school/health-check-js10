@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { TableCell, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import AppTable from '../../components/UI/AppTable'
@@ -119,7 +119,13 @@ export const ApplicationsAdmin = () => {
             />
          ),
       },
-      { id: 'id', label: '№' },
+      {
+         id: 'id',
+         label: '№',
+         render: (_, index) => (
+            <TableCell key={index + 1}>{index + 1}</TableCell>
+         ),
+      },
       { id: 'name', label: 'Имя' },
       { id: 'createdAt', label: 'Дата' },
       { id: 'phoneNumber', label: 'Номер телефона' },

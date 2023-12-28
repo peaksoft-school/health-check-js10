@@ -91,8 +91,29 @@ const Header = ({ logoutHandler, variant }) => {
       navigate('/profile')
    }
 
+   const navigateToMyNotes = () => {
+      navigate('/profile/my-notes')
+   }
+
+   const navigateToGetResult = () => {
+      if (isAuth) {
+         navigate('/results')
+      } else {
+         setIsLoginModalOpen(true)
+         localStorage.setItem(
+            localStorageKeys.SIGN_IN_MODAL_KEY,
+            JSON.stringify(true)
+         )
+      }
+   }
+
    const menuItems = isAuth
       ? [
+           {
+              title: 'Мои записи',
+              id: 3,
+              onClick: navigateToMyNotes,
+           },
            {
               title: 'Профиль',
               id: 2,
@@ -176,7 +197,7 @@ const Header = ({ logoutHandler, variant }) => {
                   <a href="https://www.instagram.com">
                      <InstagramIcon />
                   </a>
-                  <a href="https://t.me/">
+                  <a href="https://web.telegram.org/k/#-4032240673">
                      <TelegramIcon />
                   </a>
                   <a href="https://www.whatsapp.com">
@@ -187,8 +208,8 @@ const Header = ({ logoutHandler, variant }) => {
                   <div className="numbers">
                      <PhoneIcon />
                      <div>
-                        <h3>+996(800) 000 000</h3>
-                        <h3>+996(505) 000 000</h3>
+                        <h3>+996(500) 344 433</h3>
+                        <h3>+996(999) 344 433</h3>
                      </div>
                   </div>
 
@@ -216,7 +237,10 @@ const Header = ({ logoutHandler, variant }) => {
                   </NavlinkStyled>
                </NavList>
                <ContainerButton>
-                  <StyledButton variant="outlined">
+                  <StyledButton
+                     variant="outlined"
+                     onClick={navigateToGetResult}
+                  >
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
                   <StyledButton onClick={isDrawerOpenHandler}>

@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { TableCell, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
 import React, { useEffect, useState } from 'react'
@@ -165,7 +165,13 @@ export const AdminAppointmentsPage = () => {
             />
          ),
       },
-      { id: 'id', label: '№' },
+      {
+         id: 'id',
+         label: '№',
+         render: (_, index) => (
+            <TableCell key={index + 1}>{index + 1}</TableCell>
+         ),
+      },
       {
          id: 'patientFullName',
          label: 'Имя и Фамилия',
@@ -247,12 +253,12 @@ export const AdminAppointmentsPage = () => {
                   </StyledNavLink>
                </li>
                <li>
-                  <StyledNavLink
+                  <StyledScheduleLink
                      to="/online-registration/schedule"
                      activeClassName="active"
                   >
                      РАСПИСАНИЕ
-                  </StyledNavLink>
+                  </StyledScheduleLink>
                </li>
             </ul>
          </div>
@@ -299,7 +305,7 @@ export const AdminAppointmentsPage = () => {
 const StyledContainerApp = styled('div')`
    background-color: #f5f5f5;
    padding: calc(11vh + 3rem) 4% 3.8vh 4%;
-   height: 100%;
+   height: 101vh;
    .style-nav {
       display: flex;
       flex-direction: column;
@@ -323,7 +329,7 @@ const StyledContainerApp = styled('div')`
       }
    }
    .customButtonStyle {
-      width: 16rem;
+      width: 15rem;
    }
    tr {
       border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -411,11 +417,21 @@ const StyledNavLink = styled(NavLink)`
    color: #707070;
    border-bottom: 2px solid transparent;
    padding-bottom: 1.6vh;
+   border-color: #048741;
+   color: #048741;
    &:active {
       color: #048741;
    }
-   &.active {
-      border-color: #048741;
+`
+
+const StyledScheduleLink = styled(NavLink)`
+   text-decoration: none;
+   font-size: 13px;
+   font-weight: 600;
+   color: #707070;
+   border-bottom: 2px solid transparent;
+   padding-bottom: 1.6vh;
+   &:active {
       color: #048741;
    }
 `

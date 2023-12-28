@@ -11,6 +11,13 @@ import Contacts from '../../components/Contacts'
 import Profile from '../../pages/user/Profile'
 import Footer from '../../layout/Footer'
 import { notify } from '../../utils/constants/snackbar'
+import { TableParents } from '../../components/UI/TableParents'
+import PatientTable from '../../components/UI/PatientTable'
+import { PasswordChange } from '../../pages/user/PasswordChange'
+import GetResult from '../../pages/user/GetResult'
+import Doctors from '../../pages/user/Doctors'
+import DoctorInnerPage from '../../pages/user/DoctorInnerPage'
+import { routes } from '../../utils/constants/routes'
 import ServiceDetails from '../../components/UI/ServiceDetails'
 
 const UserRoutes = () => {
@@ -24,7 +31,9 @@ const UserRoutes = () => {
    }
    return (
       <>
-         <Header logoutHandler={logoutHandler} variant="hr" />
+         {window.location.pathname !== '/results' ? (
+            <Header logoutHandler={logoutHandler} variant="hr" />
+         ) : null}
          <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/homepage" element={<LandingPage />} />
@@ -35,12 +44,23 @@ const UserRoutes = () => {
             <Route path="/service" element={<OurAllServices />} />
             <Route path="/service/:id/details" element={<ServiceDetails />} />
             <Route path="/profile" element={<Profile />} />
-            {/* <Route
+            <Route path="/profile/my-notes" element={<TableParents />} />
+            <Route
+               path="/profile/my-notes/:appointmentId"
+               element={<PatientTable />}
+            />
+            <Route
                path="/profile/password-change"
                element={<PasswordChange />}
-            /> */}
+            />
+            <Route path={routes.USER.doctors} element={<Doctors />} />
+            <Route
+               path={routes.USER.doctorDetails}
+               element={<DoctorInnerPage />}
+            />
+            <Route path="/results" element={<GetResult />} />
          </Routes>
-         <Footer />
+         {window.location.pathname !== '/results' ? <Footer /> : null}
       </>
    )
 }

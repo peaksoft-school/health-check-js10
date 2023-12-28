@@ -13,9 +13,6 @@ export const addSpecialistSchema = yup.object().shape({
    position: yup
       .string()
       .required('Поле "position" обязательно для заполнения'),
-   description: yup
-      .string()
-      .required('Поле "description" обязательно для заполнения'),
    department: yup
       .string()
       .required('Поле "Отделение" обязательно для заполнения'),

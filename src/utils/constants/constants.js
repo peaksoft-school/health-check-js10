@@ -14,11 +14,11 @@ export const routes = {
       patientsId: 'patients/:id',
    },
    USER: {
-      path: '/user',
-      appointments: '/user/appointments',
-      appointment: '/user/appointments/:appointmentId',
-      doctors: '/user/doctors',
-      doctor: '/user/doctors/:id',
+      path: 'user',
+      appointments: '/appointments',
+      appointment: '/appointments/:appointmentId',
+      doctors: '/doctors',
+      doctor: '/doctors/:id',
    },
    DOCTOR: {
       path: '/doctor',

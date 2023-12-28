@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { IconButton, InputAdornment, styled } from '@mui/material'
+import { TableCell, styled } from '@mui/material'
 
 import {
    deleteDoctorThunk,
@@ -11,15 +11,14 @@ import {
    statusDoctorThunk,
 } from '../../store/spesialists/specialistsThunk'
 import SwitchApp from '../../components/UI/switch/Switch'
-import { EditIcon, PlusIcon, SearchIcon, TrashIcon } from '../../assets'
+import { EditIcon, PlusIcon, TrashIcon } from '../../assets'
 import AppTable from '../../components/UI/AppTable'
-import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/SearchInput'
 
 export const Specialists = () => {
    const navigate = useNavigate()
-   const { doctors } = useSelector((state) => state.doctors)
+   const { doctors } = useSelector((state) => state.specialists)
    const dispatch = useDispatch()
    const [searchTerm, setSearchTerm] = useState('')
    // const [isStatus, setIsStatus] = useState(false)
@@ -70,7 +69,13 @@ export const Specialists = () => {
    const position = 'position'
    const scheduleUntil = 'scheduleUntil'
    const columns = [
-      { id: 'id', label: '№' },
+      {
+         id: 'id',
+         label: '№',
+         render: (_, index) => (
+            <TableCell key={index + 1}>{index + 1}</TableCell>
+         ),
+      },
       {
          id: 'isActive',
          render: (item) => (
@@ -136,7 +141,7 @@ export const Specialists = () => {
                      ДОБАВИТЬ СПЕЦИАЛИСТА
                   </Button>
                </div>
-               <SearchInput value={searchTerm} onChange={handleSearch} />
+               <StyledSearchInput value={searchTerm} onChange={handleSearch} />
             </div>
             <ContainerApp>
                <AppTable columns={columns} data={doctors} />
@@ -148,6 +153,7 @@ export const Specialists = () => {
 
 const Container = styled('div')`
    text-align: start;
+   height: 80vh;
    .appInput {
       display: flex;
       flex-direction: column;
@@ -169,7 +175,7 @@ const Container = styled('div')`
 const ContainerMain = styled('div')`
    padding: calc(11vh + 3rem) 4% 3.8vh 4%;
    .flxDTz {
-      margin-top: 1.5rem !important;
+      margin-top: 0 !important;
    }
    tr {
       border-bottom: 1px solid #d9d9d9;
@@ -208,6 +214,10 @@ const ContainerApp = styled('div')`
    background-color: #fff;
    height: max-content;
 `
+
+const StyledSearchInput = styled(SearchInput)(() => ({
+   paddingBottom: '1.5rem',
+}))
 
 const ContainerDoctor = styled('div')(() => ({
    display: 'flex',

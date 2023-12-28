@@ -12,8 +12,9 @@ import {
    MAIN_MED_SERVICES,
 } from '../../utils/services/med_service'
 import { ApplicationModal } from '../../components/ApplicationModal'
+import ChangePassword from '../../layout/login/ChangePassword'
 
-const LandingPage = () => {
+const LandingPage = ({ variant }) => {
    window.scrollTo({ top: 0 })
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
@@ -33,6 +34,7 @@ const LandingPage = () => {
 
    return (
       <>
+         {variant === 'password' ? <ChangePassword /> : null}
          <GlobalContainer>
             <div>
                <Box>

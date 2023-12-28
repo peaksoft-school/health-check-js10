@@ -1,17 +1,39 @@
+import { useEffect, useState } from 'react'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
+import { useSelector, useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import { Input } from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { getProfileById, updateProfile } from '../../store/profile/profileThunk'
 
 const Profile = () => {
-   const initialValues = {
+   const dispatch = useDispatch()
+
+   const { data } = useSelector((state) => state.profile) || {}
+
+   console.log(data, 'data')
+
+   const [initialValues, setInitialValues] = useState({
       username: '',
       userlastname: '',
       useremail: '',
       usertelefone: '',
-   }
+   })
+
+   useEffect(() => {
+      dispatch(getProfileById())
+   }, [dispatch])
+
+   useEffect(() => {
+      setInitialValues({
+         username: data?.firstName,
+         useremail: data?.email,
+         userlastname: data?.lastName,
+         usertelefone: data?.phoneNumber,
+      })
+   }, [data])
 
    const validationSchema = Yup.object({
       username: Yup.string().required('Имя обязательно'),
@@ -26,7 +48,14 @@ const Profile = () => {
          .required('Телефон обязателен'),
    })
    const onSubmit = (values) => {
-      console.log(values)
+      dispatch(
+         updateProfile({
+            firstName: values.username,
+            lastName: values.userlastname,
+            email: values.useremail,
+            phoneNumber: values.usertelefone,
+         })
+      )
    }
    const handleCancel = (initialValues) => {
       console.log(initialValues)
@@ -44,10 +73,10 @@ const Profile = () => {
                <h2 className="cap">Профиль</h2>
                <div className="LinkTwo">
                   <NavLink to="/profile" className={setActive}>
-                     личные данные
+                     ЛИЧНЫЕ ДАННЫЕ
                   </NavLink>
                   <NavLink to="/profile/password-change" className={setActive}>
-                     cменить пароль
+                     СМЕНИТЬ ПАРОЛЬ
                   </NavLink>
                </div>
                <h4 className="personalData">Ваши личные данные</h4>
@@ -59,6 +88,7 @@ const Profile = () => {
                            Имя
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.username}
                            type="text"
@@ -72,6 +102,7 @@ const Profile = () => {
                            E-mail
                         </label>
                         <InputStyled
+                           width="30rem"
                            type="text"
                            name="useremail"
                            placeholder="Email"
@@ -88,6 +119,7 @@ const Profile = () => {
                            Фамилия
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.userlastname}
                            type="text"
@@ -105,6 +137,7 @@ const Profile = () => {
                            Телефон
                         </label>
                         <InputStyled
+                           width="30rem"
                            onChange={handleChange}
                            value={values.usertelefone}
                            type="text"
@@ -145,10 +178,12 @@ const FormStyled = styled(Form)(() => ({
    flexDirection: 'column',
    fontFamily: 'Manrope',
    marginTop: '1rem',
+   marginBottom: '8%',
+   marginLeft: '7%',
+   width: '62rem',
    '.firstContainer': {
       display: 'flex',
       gap: '2rem',
-      marginLeft: '7.5rem',
    },
    '&h2': {
       marginTop: '1.8rem',
@@ -164,20 +199,18 @@ const FormStyled = styled(Form)(() => ({
    '.label': {
       fontFamily: 'Manrope',
       color: '#464444',
-      fontSize: '0.875rem',
+      fontSize: '1rem',
    },
    '.personalData': {
       color: '#222222',
       fontFamily: 'Manrope',
       marginTop: '1.5rem',
-      marginLeft: '7.6rem',
       letterSpacing: '0.2px',
       fontWeight: '600',
       fontSize: '1.2rem',
    },
    '.cap': {
       marginTop: '1.875rem',
-      marginLeft: '7.7rem',
       color: '#222222',
       fontSize: '1.5rem',
    },
@@ -186,7 +219,6 @@ const FormStyled = styled(Form)(() => ({
       flexDirection: 'row',
       gap: '1.875rem',
       marginTop: '1.3rem',
-      marginLeft: '7.6rem',
       letterSpacing: '1px',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
@@ -198,6 +230,7 @@ const FormStyled = styled(Form)(() => ({
       fontFamily: 'Manrope',
       color: '#959595',
       textDecoration: 'none',
+      fontWeight: '600',
    },
    '.Enabled.active-link': {
       color: '#048741',
@@ -214,8 +247,7 @@ const ErrorMessageStyled = styled(ErrorMessage)(() => ({
 }))
 const InputStyled = styled(Input)(() => ({
    '.MuiOutlinedInput-root': {
-      widht: '20.625rem',
-      height: '2.4rem',
+      height: '2.5rem',
       fontFamily: 'Manrope',
       color: '#222222',
       fontSize: '1rem',
@@ -229,12 +261,12 @@ const InputStyled = styled(Input)(() => ({
 
 const ButtonStyled = styled('div')(() => ({
    display: 'flex',
-   marginLeft: '37.4%',
    marginTop: '1.5rem',
    gap: '1rem',
+   justifyContent: 'end',
    '& .buttonStyle': {
       height: '2.3rem',
-      width: '12.5rem',
+      width: '23.4%',
       borderRadius: ' 0.625rem',
       fontSize: '0.75rem',
       fontFamily: 'Manrope',

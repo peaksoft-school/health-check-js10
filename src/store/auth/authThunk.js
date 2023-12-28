@@ -6,7 +6,7 @@ import { notify } from '../../utils/constants/snackbar'
 
 export const forgotPassword = createAsyncThunk(
    'authorization/forgotPassword',
-   async ({ email, link, handleClose }, { rejectWithValue, dispatch }) => {
+   async ({ email, link, handleClose }, { rejectWithValue }) => {
       try {
          const { data } = await axiosInstance.put(
             '/api/auth/forgot-password',
@@ -19,7 +19,7 @@ export const forgotPassword = createAsyncThunk(
          localStorage.setItem('EMAIL_KEY_FROM_FORGOT_PASSWORD', email)
          notify('Вам была отправлена ссылка для сброса вашего пароля')
          handleClose()
-         return dispatch(login({ data }))
+         return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,
@@ -33,10 +33,7 @@ export const forgotPassword = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
    'authorization/changePassword',
-   async (
-      { uniqueId, newPassword, navigate },
-      { rejectWithValue, dispatch }
-   ) => {
+   async ({ uniqueId, newPassword, navigate }, { rejectWithValue }) => {
       try {
          const { data } = await axiosInstance.put(
             '/api/auth/replace-password',
@@ -50,7 +47,7 @@ export const changePassword = createAsyncThunk(
          localStorage.removeItem('EMAIL_KEY_FROM_FORGOT_PASSWORD')
          notify('Пароль успешно изменён')
          navigate('/homepage')
-         return dispatch(login({ data }))
+         return data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,

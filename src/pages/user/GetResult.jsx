@@ -11,12 +11,12 @@ import {
    RemoveIcon,
    SortDescIcon,
    Stotoskop,
-} from '../assets'
+} from '../../assets'
 
-import { notify } from '../utils/constants/snackbar'
-import Button from './UI/Button'
-import { Input } from './UI/input/Input'
-import { getResultByResultNumber } from '../store/getresult/resultThunk'
+import { notify } from '../../utils/constants/snackbar'
+import Button from '../../components/UI/Button'
+import { Input } from '../../components/UI/input/Input'
+import { getResultByResultNumber } from '../../store/getresult/resultThunk'
 
 const GetResult = () => {
    const [searchWord, setSearchWord] = useState('')
@@ -81,14 +81,14 @@ const GetResult = () => {
                      type="text"
                      placeholder="Введите номер заказа..."
                   />
-                  <Button
+                  <StyledButton
                      onClick={handleClick}
                      disabled={isDisabled}
                      variant="contained"
                      type="submit"
                   >
-                     найти
-                  </Button>
+                     Найти
+                  </StyledButton>
                </div>
             </div>
          </FormContainer>
@@ -129,7 +129,7 @@ const GetResult = () => {
 
                   <li>
                      Распечатать результат можно непосредсвенно с этой страницы
-                     или сохранить вP DF формате с помощью кнопок, расположенной
+                     или сохранить в PDF формате с помощью кнопок, расположенной
                      в верхней части сайта;
                   </li>
                   <li className="liRed">
@@ -167,7 +167,7 @@ const Container = styled('div')(() => ({
    backgroundPositionY: 'center',
    backgroundRepeat: 'no-repeat',
    width: '100%',
-   height: '100vh',
+   height: '137vh',
    display: 'flex',
    border: '2 solid tertiary-dark-blue',
    zIndex: 1,
@@ -194,7 +194,7 @@ const HeaderContainer = styled('div')(() => ({
 
 const FormContainer = styled('div')(() => ({
    width: '41rem',
-   height: '10rem',
+   height: '14rem',
    margin: '1.7rem 1.9rem',
    display: 'flex',
    flexDirection: 'column',
@@ -209,14 +209,15 @@ const FormContainer = styled('div')(() => ({
       display: 'flex',
       alignItems: 'center',
       gap: '1rem',
+      padding: '1rem 0',
    },
    '.FormInput': {
       div: { display: 'flex', flexDirection: 'row', gap: '1rem' },
    },
 }))
 const Box = styled('div')(() => ({
-   width: '51rem',
-   height: '100vh',
+   width: '50.1rem',
+   height: '137vh',
    display: 'flex',
    borderLeft: '0.625rem solid #3977C0',
    color: '#346EFB',
@@ -244,9 +245,15 @@ const Box = styled('div')(() => ({
       li: {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
+         fontSize: '15px',
+         fontWeight: '400',
       },
       '.liRed': {
          color: 'red',
       },
    },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   width: '7rem',
 }))

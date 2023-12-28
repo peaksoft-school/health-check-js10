@@ -1,6 +1,6 @@
 export const routes = {
    LOGIN: {
-      changePassword: '/change-password',
+      changePassword: '/change-password/:uniqueId',
    },
    ADMIN: {
       path: '/online-registration',
@@ -14,6 +14,7 @@ export const routes = {
       path: '/homepage',
       service: '/service',
       doctors: '/doctors',
+      doctorDetails: '/doctors/:doctorId',
       aboutClinic: '/about-clinic',
       prices: '/prices',
       contacts: '/contacts',

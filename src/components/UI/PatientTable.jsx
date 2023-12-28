@@ -7,14 +7,15 @@ import { fetchAppointmentById } from '../../store/myappointments/myappointmentsT
 
 const PatientTable = () => {
    const { appointmentId } = useParams()
-   const dispatch = useDispatch()
-   const appointmentData = useSelector(
-      (state) => state.myappointments.selectedAppointment
+   const { status, selectedAppointment } = useSelector(
+      (state) => state.myappointments
    )
-   const status = useSelector((state) => state.myappointments.status)
+
+   const dispatch = useDispatch()
 
    useEffect(() => {
       if (status === 'idle') {
+         console.log(appointmentId, 'error')
          dispatch(fetchAppointmentById(appointmentId))
       }
    }, [dispatch, appointmentId, status])
@@ -37,38 +38,38 @@ const PatientTable = () => {
             <ul>
                <ul className="child">
                   <li>Имя</li>
-                  <li>{appointmentData.firstName}</li>
+                  <li>{selectedAppointment.firstName}</li>
                </ul>
 
                <ul className="child">
                   <li>Фамилия</li>
-                  <li>{appointmentData.lastName}</li>
+                  <li>{selectedAppointment.lastName}</li>
                </ul>
 
                <ul className="child">
                   <li>Email</li>
-                  <li>{appointmentData.email}</li>
+                  <li>{selectedAppointment.email}</li>
                </ul>
                <ul className="child">
                   <li>Номер телефона</li>
-                  <li>{appointmentData.phoneNumber}</li>
+                  <li>{selectedAppointment.phoneNumber}</li>
                </ul>
             </ul>
 
             <ul className="boxtwo">
                <ul className="child">
                   <li>Дата и время</li>
-                  <li>{appointmentData.localDate}</li>
-                  <li>{appointmentData.time}</li>
+                  <li>{selectedAppointment.localDate}</li>
+                  <li>{selectedAppointment.time}</li>
                </ul>
 
                <ul className="child">
                   <li>Специалист</li>
-                  <li>{appointmentData.doctorFullName}</li>
+                  <li>{selectedAppointment.doctorFullName}</li>
                </ul>
                <ul className="child">
                   <li>Услуга</li>
-                  <li>{appointmentData.departmentName}</li>
+                  <li>{selectedAppointment.departmentName}</li>
                </ul>
             </ul>
          </div>

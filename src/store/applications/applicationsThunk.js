@@ -10,6 +10,7 @@ export const addApplications = createAsyncThunk(
             name,
             phoneNumber,
          })
+         notify('Ваша заявка принята')
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
             /^\[|\]$/g,

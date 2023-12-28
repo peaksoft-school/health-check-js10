@@ -264,10 +264,11 @@ const SchedulePage = () => {
             </div>
             <div className="info">
                <div className="inner-block">
-                  <div className="blue-block" /> <span>- Свободные дни</span>
+                  <div className="blue-block" /> <span>- Свободное время</span>
                </div>
                <div className="inner-block">
-                  <div className="green-block" /> <span>- Записанные дни</span>
+                  <div className="green-block" />
+                  <span>- Не свободное время</span>
                </div>
             </div>
             <div>
@@ -316,6 +317,7 @@ const Container = styled('div')(() => ({
    paddingTop: 'calc(11vh + 3rem)',
    padding: 'calc(11vh + 3rem) 4% 3.8vh 4%',
    backgroundColor: '#F5F5F5',
+   height: '101vh',
    '.style-nav': {
       display: 'flex',
       flexDirection: 'column',

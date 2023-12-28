@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
+import { Breadcrumbs, Stack } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import DoctorCard from '../../components/UI/DoctorCard'
 import { fetchDoctors } from '../../store/doctors/doctorsThunk'
 
 const Doctors = () => {
-   const doctors = useSelector((state) => state.doctors.doctors)
+   const { doctors } = useSelector((state) => state.doctors)
    const [showAllDepartments, setShowAllDepartments] = useState(false)
 
    const dispatch = useDispatch()
@@ -36,17 +38,27 @@ const Doctors = () => {
       ? Object.keys(groupedDoctors)
       : Object.keys(groupedDoctors).slice(0, 4)
 
+   console.log(visibleDepartments, 'psjsp')
+
    return (
       <StyledDoctorsContainer>
-         <h2>
-            Наши <GreenText>врачи</GreenText>
-         </h2>
-         <p>
+         <Stack spacing={2}>
+            <Container separator="›" aria-label="breadcrumb">
+               <StyledNavLink to="/">
+                  <p>Главная</p>
+               </StyledNavLink>
+               <p>Врачи</p>
+            </Container>
+         </Stack>
+         <Titl>
+            Наши <span style={{ color: '#048741' }}>врачи</span>
+         </Titl>
+         <p className="text">
             Попасть в команду медицинской клиники «Medical Clinic» могут <br />
             только лучшие специалисты c многолетней практикой и доказанным
             опытом.
          </p>
-         <p>
+         <p className="text">
             Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
             ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе к
             совершенству.
@@ -88,9 +100,10 @@ const StyledDoctorsContainer = styled('div')(() => ({
    flexDirection: 'column',
    justifyContent: 'center',
    marginTop: '30px',
-   padding: '0 9%',
+   paddingLeft: '100px',
+   paddingBottom: '120px',
    fontFamily: 'Manrope',
-   '& p': {
+   '.text': {
       paddingTop: '2rem',
    },
 }))
@@ -128,6 +141,37 @@ const StyledSpan = styled('span')(() => ({
    margin: '7rem auto',
 }))
 
-const GreenText = styled('span')(() => ({
-   color: '#048741',
+const Titl = styled('h2')(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      fontSize: '36px',
+      lineHeight: '49px',
+      color: '#222222',
+      marginTop: '2rem',
+   },
 }))
+
+const Container = styled(Breadcrumbs)({
+   fontWeight: 400,
+   fontSize: '14px',
+   lineHeight: '19px',
+   paddingTop: '25px',
+   marginBottom: '26px',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   '& .css-1bifq5f-MuiTypography-root-MuiBreadcrumbs-root': {
+      fontFamily: 'Manrope',
+   },
+   ':last-child': {
+      color: '#048741',
+   },
+})
+
+const StyledNavLink = styled(NavLink)({
+   textDecoration: 'none',
+   color: ' #959595',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+})

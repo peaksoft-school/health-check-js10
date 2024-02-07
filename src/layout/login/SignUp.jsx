@@ -35,6 +35,7 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
       defaultValues: {
          firstName: '',
          lastName: '',
+         middleName: '',
          phoneNumber: '',
          email: '',
          password: '',
@@ -61,6 +62,7 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
          )
          values.firstName = ''
          values.lastName = ''
+         values.middleName = ''
          values.email = ''
          values.phoneNumber = ''
          values.password = ''
@@ -138,6 +140,19 @@ const SignUp = ({ open, setOpen, navigateToSignIn }) => {
                   />
                   {errors.lastName && (
                      <p className="message">{errors.lastName?.message}</p>
+                  )}
+               </div>
+               <div className="inputWrapper">
+                  <Input
+                     placeholder="Отчество"
+                     error={errors.lastName}
+                     {...register('middleName', {
+                        setValueAs: (v) => v.trim(),
+                        required: 'Поле не заполнено',
+                     })}
+                  />
+                  {errors.middleName && (
+                     <p className="message">{errors.middleName?.message}</p>
                   )}
                </div>
                <div className="inputWrapper">
